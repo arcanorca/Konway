@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+
+  <group name="General">
+    <entry name="enabled" type="Bool">
+      <label>Enable simulation</label>
+      <default>true</default>
+    </entry>
+    <entry name="preset" type="String">
+      <label>Quality preset name</label>
+      <default>Balanced</default>
+    </entry>
+    <entry name="debugLogging" type="Bool">
+      <label>Enable debug logging</label>
+      <default>false</default>
+    </entry>
+    <entry name="reseedRequest" type="String">
+      <label>Monotonic token used to request manual reseed</label>
+      <default></default>
+    </entry>
+    <entry name="clockMode" type="String">
+      <label>Clock overlay mode</label>
+      <default>Off</default>
+    </entry>
+    <entry name="clockScale" type="Double">
+      <label>Clock overlay size multiplier</label>
+      <default>1.00</default>
+    </entry>
+  </group>
+
+  <group name="Simulation">
+    <entry name="cellSize" type="Int">
+      <label>Rendered cell size in screen pixels</label>
+      <default>10</default>
+    </entry>
+    <entry name="tps" type="Int">
+      <label>Target simulation ticks per second</label>
+      <default>3</default>
+    </entry>
+    <entry name="stepsPerFrame" type="Int">
+      <label>Simulation bursts per timer frame</label>
+      <default>1</default>
+    </entry>
+    <entry name="wrapEdges" type="Bool">
+      <label>Wrap simulation at edges</label>
+      <default>true</default>
+    </entry>
+    <entry name="ruleString" type="String">
+      <label>Cellular automata rule string</label>
+      <default>B3/S23</default>
+    </entry>
+    <entry name="initialDensity" type="Double">
+      <label>Startup seed intensity</label>
+      <default>0.50</default>
+    </entry>
+  </group>
+
+  <group name="Autonomy">
+    <entry name="autoInject" type="Bool">
+      <label>Enable automatic pattern injection</label>
+      <default>true</default>
+    </entry>
+    <entry name="injectIntervalMs" type="Int">
+      <label>Interval between injection checks in milliseconds</label>
+      <default>2000</default>
+    </entry>
+    <entry name="minAliveRatio" type="Double">
+      <label>Desired minimum alive ratio target</label>
+      <default>0.20</default>
+    </entry>
+    <entry name="rarePatternChance" type="Double">
+      <label>Chance of selecting rare methuselah patterns</label>
+      <default>0.10</default>
+    </entry>
+    <entry name="forcedInjectChance" type="Double">
+      <label>Random seeding chance per check</label>
+      <default>0.10</default>
+    </entry>
+  </group>
+
+  <group name="Patterns">
+    <entry name="injectorMode" type="String">
+      <label>Pattern injector strategy mode</label>
+      <default>Mixed</default>
+    </entry>
+    <entry name="categoryWeights" type="String">
+      <label>Category weighting JSON</label>
+      <default>{"gliders":1.1,"spaceships":1.0,"methuselahs":0.8,"oscillators":0.6,"guns":0.12,"still_lifes":0.25}</default>
+    </entry>
+    <entry name="enabledCategories" type="String">
+      <label>Comma separated enabled categories</label>
+      <default>gliders,spaceships,methuselahs,oscillators,guns,still_lifes</default>
+    </entry>
+    <entry name="maxPatternSize" type="Int">
+      <label>Maximum pattern bounding box side</label>
+      <default>96</default>
+    </entry>
+    <entry name="allowLargePatterns" type="Bool">
+      <label>Allow very large pattern stamps</label>
+      <default>false</default>
+    </entry>
+    <entry name="previewPatternId" type="String">
+      <label>Pattern id selected for preview seeding</label>
+      <default>glider</default>
+    </entry>
+    <entry name="previewSeedRequest" type="String">
+      <label>Monotonic token used to request seed preview</label>
+      <default></default>
+    </entry>
+    <entry name="cursorDrawEnabled" type="Bool">
+      <label>Enable mouse drawing for seeding</label>
+      <default>true</default>
+    </entry>
+    <entry name="cursorBrushSize" type="Int">
+      <label>Mouse seed brush size in cells</label>
+      <default>2</default>
+    </entry>
+  </group>
+
+  <group name="Appearance">
+    <entry name="palette" type="String">
+      <label>Palette preset</label>
+      <default>Calm Dark</default>
+    </entry>
+    <entry name="aliveColor" type="Color">
+      <label>Alive cell color</label>
+      <default>#50C878</default>
+    </entry>
+    <entry name="deadColor" type="Color">
+      <label>Dead cell color</label>
+      <default>#1A1A1A</default>
+    </entry>
+    <entry name="backgroundColor" type="Color">
+      <label>Background color</label>
+      <default>#1A1A1A</default>
+    </entry>
+    <entry name="cellShape" type="String">
+      <label>Rendered cell shape</label>
+      <default>Go Board</default>
+    </entry>
+    <entry name="dyingFadeEnabled" type="Bool">
+      <label>Enable soft fading for dying cells</label>
+      <default>false</default>
+    </entry>
+  </group>
+
+  <group name="Safety">
+    <entry name="photosensitiveSafe" type="Bool">
+      <label>Enable photosensitive-safe clamping</label>
+      <default>false</default>
+    </entry>
+    <entry name="safeContrast" type="Double">
+      <label>Contrast level while safe mode is enabled</label>
+      <default>0.78</default>
+    </entry>
+    <entry name="safeSaturation" type="Double">
+      <label>Color saturation level while safe mode is enabled</label>
+      <default>0.50</default>
+    </entry>
+    <entry name="safeUltraLowTpsEnabled" type="Bool">
+      <label>Enable extra ultra-low TPS limiter in safe mode</label>
+      <default>false</default>
+    </entry>
+    <entry name="safeUltraLowTps" type="Double">
+      <label>Speed scale multiplier while safe mode is enabled</label>
+      <default>0.50</default>
+    </entry>
+  </group>
+
+  <group name="Performance">
+    <entry name="simDownscale" type="Int">
+      <label>Simulation downscale multiplier</label>
+      <default>1</default>
+    </entry>
+    <entry name="syncFpsWithTps" type="Bool">
+      <label>Sync internal driver rate with TPS</label>
+      <default>true</default>
+    </entry>
+    <entry name="maxFps" type="Int">
+      <label>Manual internal driver rate cap (Hz) when TPS sync is disabled</label>
+      <default>60</default>
+    </entry>
+    <entry name="pauseWhenHidden" type="Bool">
+      <label>Pause simulation when wallpaper is hidden</label>
+      <default>false</default>
+    </entry>
+  </group>
+</kcfg>

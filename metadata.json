@@ -1,0 +1,22 @@
+{
+  "KPackageStructure": "Plasma/Wallpaper",
+  "KPlugin": {
+    "Id": "com.github.arcanorca.konway",
+    "Name": "Konway",
+    "Description": "GPU-accelerated Konway live wallpaper with safe visuals and pattern energy injection.",
+    "Icon": "preferences-desktop-wallpaper",
+    "License": "GPL-3.0-or-later",
+    "Version": "0.1.0",
+    "Website": "https://example.invalid/konway",
+    "Category": "Appearance",
+    "Authors": [
+      {
+        "Name": "ArcAnOrca",
+        "Email": ""
+      }
+    ]
+  },
+  "X-Plasma-API": "declarativeappletscript",
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-KDE-ParentApp": "org.kde.plasmashell"
+}
