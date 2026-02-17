@@ -1,0 +1,9 @@
+#N cappedp87gun.rle
+#C https://conwaylife.com/wiki/Pi-heptomino_hasslers
+#C https://www.conwaylife.com/patterns/cappedp87gun.rle
+x = 49, y = 34, rule = B3/S23
+44bo$43bobo$43bo2bo$39b2ob2ob2o$24b2o13b2obo2bo$25bo9b2o7bo2bo$13bo11b
+obo7b2o8b3o$12bobo11b2o14b3o$13bo27bo3bo$35b3o3bob2obo$35bo2bo3bo3bo$
+39bo4b2ob2o$35bo2bo6bobo$35b3o7bobo$46bo5$2bo$bobo7b3o$bobo6bo2bo$2ob
+2o4bo$2bo3bo3bo2bo$2bob2obo3b3o$3bo3bo27bo$4b3o14b2o11bobo$b3o8b2o7bo
+bo11bo$bo2bo7b2o9bo$3bo2bob2o13b2o$2b2ob2ob2o$2bo2bo$3bobo$4bo!

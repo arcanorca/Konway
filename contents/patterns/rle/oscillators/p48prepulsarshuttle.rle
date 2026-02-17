@@ -1,0 +1,7 @@
+#N p48prepulsarshuttle.rle
+#C https://conwaylife.com/wiki/Pre-pulsar_shuttle
+#C https://www.conwaylife.com/patterns/p48prepulsarshuttle.rle
+x = 28, y = 13, rule = B3/S23
+11b3o$11bobo$5bo5b3o8bo$4bobo14bobo$3bo3bo12bo3bo$2bo3bo14bo3bo$bo3bo
+5b3o8bo3bo$o3bo6bobo9bo3bo$bobo7b3o10bobo$2bo4b2o10b2o4bo$6bobo10bobo$
+6bo14bo$5b2o14b2o!

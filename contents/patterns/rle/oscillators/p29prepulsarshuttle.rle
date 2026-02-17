@@ -1,0 +1,9 @@
+#N p29 pre-pulsar shuttle
+#O David Buckingham
+#C A period-29 pre-pulsar shuttle oscillator found on August 2, 1980.
+#C This was the first period-29 oscillator to be discovered.
+#C https://conwaylife.com/wiki/p29_Pre-pulsar_shuttle
+x = 28, y = 28, rule = B3/S23
+15bo$13b3o$12bo$12b2o2$bo$obo4bo$bo5b2o6b2o$7bo7b2o3$19b2o$7bo11b2o5b
+2o$bo5b2o17bo$obo4bo16bobo$bo22b2o4$14bo5bo$13b3o3b3o5$13bo7bo$12bobo
+5bobo$13bo7bo!

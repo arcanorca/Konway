@@ -1,0 +1,11 @@
+#N switchablelwssgun.rle
+#C https://conwaylife.com/wiki/Switchable_gun
+#C https://www.conwaylife.com/patterns/switchablelwssgun.rle
+x = 122, y = 100, rule = B3/S23
+bo$2bo$3o49$120bo$119bo$119b3o2$77b2o$77bo2bo2$81bo2$79b2o$78bo3$75b2o
+3b2o$75b2o3b2o$76b5o$77bobo2$77b3o$96bobo$96bo3bo$100bo7bo$86b2o8bo4bo
+4b4o$86b2o12bo4bobob2o$81bo14bo3bo3bo2bob3o8b2o$82bo13bobo6bobob2o9b2o
+$80b3o23b4o$76bo31bo$75b3o19bo$74b5o18bobo5bo$73b2o3b2o17b2o4b3o$102bo
+$89bo12b2o$87bo2bo9b3o$75b3o10b3o9b2o$75b3o10bo10bobo$89bo$89b3o$76b2o
+$76b2o$81bo$79b4o6b2o2b2o$73b2o3bobob2o5b4obo2bobo$73b2o2bo2bob3o5b2ob
+o3bo3bo$78bobob2o4bo12bo5b2o$79b4o14bo4bo4b2o$81bo19bo$97bo3bo$97bobo!

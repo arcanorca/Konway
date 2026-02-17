@@ -1,0 +1,1248 @@
+{
+  "formatVersion": 1,
+  "generatedBy": "tools/build_patterns_index.py",
+  "patternCount": 73,
+  "patterns": [
+    {
+      "id": "2x2glider",
+      "name": "2x2glider",
+      "category": "gliders",
+      "tags": [
+        "2x2glider",
+        "gliders"
+      ],
+      "period": null,
+      "speed": "c/8",
+      "bboxW": 5,
+      "bboxH": 4,
+      "rule": "125/36",
+      "weight": 1.2,
+      "source": "https://conwaylife.com/patterns/2x2glider.rle",
+      "rleFile": "rle/gliders/2x2glider.rle"
+    },
+    {
+      "id": "bigglider",
+      "name": "Bigglider",
+      "category": "gliders",
+      "tags": [
+        "bigglider",
+        "gliders"
+      ],
+      "period": 4,
+      "speed": "c/4",
+      "bboxW": 18,
+      "bboxH": 18,
+      "rule": "B3/S23",
+      "weight": 1.2,
+      "source": "https://conwaylife.com/patterns/bigglider.rle",
+      "rleFile": "rle/gliders/bigglider.rle"
+    },
+    {
+      "id": "glider",
+      "name": "Glider",
+      "category": "gliders",
+      "tags": [
+        "glider",
+        "gliders"
+      ],
+      "period": 4,
+      "speed": "c/4",
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 1.2,
+      "source": "https://conwaylife.com/patterns/glider.rle",
+      "rleFile": "rle/gliders/glider.rle"
+    },
+    {
+      "id": "bistableswitchgun",
+      "name": "Bistableswitchgun",
+      "category": "guns",
+      "tags": [
+        "bistableswitchgun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 123,
+      "bboxH": 93,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/bistableswitchgun.rle",
+      "rleFile": "rle/guns/bistableswitchgun.rle"
+    },
+    {
+      "id": "cappedp27gun",
+      "name": "Cappedp27gun",
+      "category": "guns",
+      "tags": [
+        "cappedp27gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 65,
+      "bboxH": 40,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp27gun.rle",
+      "rleFile": "rle/guns/cappedp27gun.rle"
+    },
+    {
+      "id": "cappedp37gun",
+      "name": "Cappedp37gun",
+      "category": "guns",
+      "tags": [
+        "cappedp37gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 55,
+      "bboxH": 45,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp37gun.rle",
+      "rleFile": "rle/guns/cappedp37gun.rle"
+    },
+    {
+      "id": "cappedp42glidergun",
+      "name": "Cappedp42glidergun",
+      "category": "guns",
+      "tags": [
+        "cappedp42glidergun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 32,
+      "bboxH": 23,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp42glidergun.rle",
+      "rleFile": "rle/guns/cappedp42glidergun.rle"
+    },
+    {
+      "id": "cappedp43glidergun",
+      "name": "Cappedp43glidergun",
+      "category": "guns",
+      "tags": [
+        "cappedp43glidergun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 32,
+      "bboxH": 25,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp43glidergun.rle",
+      "rleFile": "rle/guns/cappedp43glidergun.rle"
+    },
+    {
+      "id": "cappedp48gun",
+      "name": "Cappedp48gun",
+      "category": "guns",
+      "tags": [
+        "cappedp48gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 33,
+      "bboxH": 21,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp48gun.rle",
+      "rleFile": "rle/guns/cappedp48gun.rle"
+    },
+    {
+      "id": "cappedp74gun",
+      "name": "Cappedp74gun",
+      "category": "guns",
+      "tags": [
+        "cappedp74gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 53,
+      "bboxH": 50,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp74gun.rle",
+      "rleFile": "rle/guns/cappedp74gun.rle"
+    },
+    {
+      "id": "cappedp87gun",
+      "name": "Cappedp87gun",
+      "category": "guns",
+      "tags": [
+        "cappedp87gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 49,
+      "bboxH": 34,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp87gun.rle",
+      "rleFile": "rle/guns/cappedp87gun.rle"
+    },
+    {
+      "id": "cappedp91gun",
+      "name": "Cappedp91gun",
+      "category": "guns",
+      "tags": [
+        "cappedp91gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 54,
+      "bboxH": 37,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/cappedp91gun.rle",
+      "rleFile": "rle/guns/cappedp91gun.rle"
+    },
+    {
+      "id": "duelingbanjosp24gun",
+      "name": "Duelingbanjosp24gun",
+      "category": "guns",
+      "tags": [
+        "duelingbanjosp24gun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 40,
+      "bboxH": 31,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/duelingbanjosp24gun.rle",
+      "rleFile": "rle/guns/duelingbanjosp24gun.rle"
+    },
+    {
+      "id": "duelingbanjosp48glidergun",
+      "name": "Duelingbanjosp48glidergun",
+      "category": "guns",
+      "tags": [
+        "duelingbanjosp48glidergun",
+        "guns"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 51,
+      "bboxH": 35,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/duelingbanjosp48glidergun.rle",
+      "rleFile": "rle/guns/duelingbanjosp48glidergun.rle"
+    },
+    {
+      "id": "gosperglidergun",
+      "name": "Gosperglidergun",
+      "category": "guns",
+      "tags": [
+        "gosperglidergun",
+        "guns"
+      ],
+      "period": 30,
+      "speed": null,
+      "bboxW": 36,
+      "bboxH": 9,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/gosperglidergun.rle",
+      "rleFile": "rle/guns/gosperglidergun.rle"
+    },
+    {
+      "id": "lwssgun1",
+      "name": "Lwssgun1",
+      "category": "guns",
+      "tags": [
+        "guns",
+        "lwssgun1"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 40,
+      "bboxH": 42,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/lwssgun1.rle",
+      "rleFile": "rle/guns/lwssgun1.rle"
+    },
+    {
+      "id": "queenbeeshuttlepairgun",
+      "name": "Queenbeeshuttlepairgun",
+      "category": "guns",
+      "tags": [
+        "guns",
+        "queenbeeshuttlepairgun"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 150,
+      "bboxH": 131,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/queenbeeshuttlepairgun.rle",
+      "rleFile": "rle/guns/queenbeeshuttlepairgun.rle"
+    },
+    {
+      "id": "switchablelwssgun",
+      "name": "Switchablelwssgun",
+      "category": "guns",
+      "tags": [
+        "guns",
+        "switchablelwssgun"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 122,
+      "bboxH": 100,
+      "rule": "B3/S23",
+      "weight": 0.6,
+      "source": "https://conwaylife.com/patterns/switchablelwssgun.rle",
+      "rleFile": "rle/guns/switchablelwssgun.rle"
+    },
+    {
+      "id": "acorn",
+      "name": "Acorn",
+      "category": "methuselahs",
+      "tags": [
+        "acorn",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/acorn.rle",
+      "rleFile": "rle/methuselahs/acorn.rle"
+    },
+    {
+      "id": "diehard",
+      "name": "Diehard",
+      "category": "methuselahs",
+      "tags": [
+        "diehard",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 8,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/diehard.rle",
+      "rleFile": "rle/methuselahs/diehard.rle"
+    },
+    {
+      "id": "diehard1192",
+      "name": "Diehard1192",
+      "category": "methuselahs",
+      "tags": [
+        "diehard1192",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 16,
+      "bboxH": 16,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/diehard1192.rle",
+      "rleFile": "rle/methuselahs/diehard1192.rle"
+    },
+    {
+      "id": "diehard1217",
+      "name": "Diehard1217",
+      "category": "methuselahs",
+      "tags": [
+        "diehard1217",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 16,
+      "bboxH": 16,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/diehard1217.rle",
+      "rleFile": "rle/methuselahs/diehard1217.rle"
+    },
+    {
+      "id": "diehard1277",
+      "name": "Diehard1277",
+      "category": "methuselahs",
+      "tags": [
+        "diehard1277",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 16,
+      "bboxH": 16,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/diehard1277.rle",
+      "rleFile": "rle/methuselahs/diehard1277.rle"
+    },
+    {
+      "id": "diehard1398",
+      "name": "Diehard1398",
+      "category": "methuselahs",
+      "tags": [
+        "diehard1398",
+        "methuselahs"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 16,
+      "bboxH": 16,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/diehard1398.rle",
+      "rleFile": "rle/methuselahs/diehard1398.rle"
+    },
+    {
+      "id": "piheptomino",
+      "name": "Piheptomino",
+      "category": "methuselahs",
+      "tags": [
+        "methuselahs",
+        "piheptomino"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/piheptomino.rle",
+      "rleFile": "rle/methuselahs/piheptomino.rle"
+    },
+    {
+      "id": "rpentomino",
+      "name": "Rpentomino",
+      "category": "methuselahs",
+      "tags": [
+        "methuselahs",
+        "rpentomino"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.9,
+      "source": "https://conwaylife.com/patterns/rpentomino.rle",
+      "rleFile": "rle/methuselahs/rpentomino.rle"
+    },
+    {
+      "id": "beacon",
+      "name": "Beacon",
+      "category": "oscillators",
+      "tags": [
+        "beacon",
+        "oscillators"
+      ],
+      "period": 2,
+      "speed": null,
+      "bboxW": 4,
+      "bboxH": 4,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/beacon.rle",
+      "rleFile": "rle/oscillators/beacon.rle"
+    },
+    {
+      "id": "blinker",
+      "name": "Blinker",
+      "category": "oscillators",
+      "tags": [
+        "blinker",
+        "oscillators"
+      ],
+      "period": 2,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 1,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/blinker.rle",
+      "rleFile": "rle/oscillators/blinker.rle"
+    },
+    {
+      "id": "carnivalshuttle",
+      "name": "Carnivalshuttle",
+      "category": "oscillators",
+      "tags": [
+        "carnivalshuttle",
+        "oscillators"
+      ],
+      "period": 12,
+      "speed": null,
+      "bboxW": 38,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/carnivalshuttle.rle",
+      "rleFile": "rle/oscillators/carnivalshuttle.rle"
+    },
+    {
+      "id": "p25prepulsarshuttle",
+      "name": "P25prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p25prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 21,
+      "bboxH": 22,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p25prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p25prepulsarshuttle.rle"
+    },
+    {
+      "id": "p28prepulsarshuttle",
+      "name": "P28prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p28prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 17,
+      "bboxH": 22,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p28prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p28prepulsarshuttle.rle"
+    },
+    {
+      "id": "p29prepulsarshuttle",
+      "name": "P29prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p29prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 28,
+      "bboxH": 28,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p29prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p29prepulsarshuttle.rle"
+    },
+    {
+      "id": "p32blinkerhassler",
+      "name": "P32blinkerhassler",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p32blinkerhassler"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 21,
+      "bboxH": 23,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p32blinkerhassler.rle",
+      "rleFile": "rle/oscillators/p32blinkerhassler.rle"
+    },
+    {
+      "id": "p47prepulsarshuttle",
+      "name": "P47prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p47prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 30,
+      "bboxH": 31,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p47prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p47prepulsarshuttle.rle"
+    },
+    {
+      "id": "p48prepulsarshuttle",
+      "name": "P48prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p48prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 28,
+      "bboxH": 13,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p48prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p48prepulsarshuttle.rle"
+    },
+    {
+      "id": "p55prepulsarshuttle",
+      "name": "P55prepulsarshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p55prepulsarshuttle"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 29,
+      "bboxH": 37,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p55prepulsarshuttle.rle",
+      "rleFile": "rle/oscillators/p55prepulsarshuttle.rle"
+    },
+    {
+      "id": "p60trafficlighthassler",
+      "name": "P60trafficlighthassler",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "p60trafficlighthassler"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 36,
+      "bboxH": 40,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/p60trafficlighthassler.rle",
+      "rleFile": "rle/oscillators/p60trafficlighthassler.rle"
+    },
+    {
+      "id": "pentadecathlon",
+      "name": "Pentadecathlon",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "pentadecathlon"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 10,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/pentadecathlon.rle",
+      "rleFile": "rle/oscillators/pentadecathlon.rle"
+    },
+    {
+      "id": "prepulsar",
+      "name": "Prepulsar",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "prepulsar"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 9,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/prepulsar.rle",
+      "rleFile": "rle/oscillators/prepulsar.rle"
+    },
+    {
+      "id": "pulsar",
+      "name": "Pulsar",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "pulsar"
+      ],
+      "period": 3,
+      "speed": null,
+      "bboxW": 13,
+      "bboxH": 13,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/pulsar.rle",
+      "rleFile": "rle/oscillators/pulsar.rle"
+    },
+    {
+      "id": "queenbee",
+      "name": "Queenbee",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "queenbee"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 5,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/queenbee.rle",
+      "rleFile": "rle/oscillators/queenbee.rle"
+    },
+    {
+      "id": "queenbeeshuttle",
+      "name": "Queenbeeshuttle",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "queenbeeshuttle"
+      ],
+      "period": 30,
+      "speed": null,
+      "bboxW": 22,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/queenbeeshuttle.rle",
+      "rleFile": "rle/oscillators/queenbeeshuttle.rle"
+    },
+    {
+      "id": "toad",
+      "name": "Toad",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "toad"
+      ],
+      "period": 2,
+      "speed": null,
+      "bboxW": 4,
+      "bboxH": 2,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/toad.rle",
+      "rleFile": "rle/oscillators/toad.rle"
+    },
+    {
+      "id": "trafficlight",
+      "name": "Trafficlight",
+      "category": "oscillators",
+      "tags": [
+        "oscillators",
+        "trafficlight"
+      ],
+      "period": 2,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.8,
+      "source": "https://conwaylife.com/patterns/trafficlight.rle",
+      "rleFile": "rle/oscillators/trafficlight.rle"
+    },
+    {
+      "id": "10enginecordership",
+      "name": "10enginecordership",
+      "category": "spaceships",
+      "tags": [
+        "10enginecordership",
+        "spaceships"
+      ],
+      "period": 96,
+      "speed": "c/12",
+      "bboxW": 88,
+      "bboxH": 88,
+      "rule": "23/3",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/10enginecordership.rle",
+      "rleFile": "rle/spaceships/10enginecordership.rle"
+    },
+    {
+      "id": "13enginecordership",
+      "name": "13enginecordership",
+      "category": "spaceships",
+      "tags": [
+        "13enginecordership",
+        "spaceships"
+      ],
+      "period": null,
+      "speed": "c/12",
+      "bboxW": 97,
+      "bboxH": 98,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/13enginecordership.rle",
+      "rleFile": "rle/spaceships/13enginecordership.rle"
+    },
+    {
+      "id": "4enginecordership",
+      "name": "4enginecordership",
+      "category": "spaceships",
+      "tags": [
+        "4enginecordership",
+        "spaceships"
+      ],
+      "period": 96,
+      "speed": "c/12",
+      "bboxW": 76,
+      "bboxH": 76,
+      "rule": "23/3",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/4enginecordership.rle",
+      "rleFile": "rle/spaceships/4enginecordership.rle"
+    },
+    {
+      "id": "6enginecordership",
+      "name": "6enginecordership",
+      "category": "spaceships",
+      "tags": [
+        "6enginecordership",
+        "spaceships"
+      ],
+      "period": 96,
+      "speed": "c/12",
+      "bboxW": 66,
+      "bboxH": 61,
+      "rule": "23/3",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/6enginecordership.rle",
+      "rleFile": "rle/spaceships/6enginecordership.rle"
+    },
+    {
+      "id": "hwss",
+      "name": "Hwss",
+      "category": "spaceships",
+      "tags": [
+        "hwss",
+        "spaceships"
+      ],
+      "period": 4,
+      "speed": "c/2",
+      "bboxW": 7,
+      "bboxH": 5,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/hwss.rle",
+      "rleFile": "rle/spaceships/hwss.rle"
+    },
+    {
+      "id": "lwss",
+      "name": "Lwss",
+      "category": "spaceships",
+      "tags": [
+        "lwss",
+        "spaceships"
+      ],
+      "period": 4,
+      "speed": "c/2",
+      "bboxW": 5,
+      "bboxH": 4,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/lwss.rle",
+      "rleFile": "rle/spaceships/lwss.rle"
+    },
+    {
+      "id": "mwss",
+      "name": "Mwss",
+      "category": "spaceships",
+      "tags": [
+        "mwss",
+        "spaceships"
+      ],
+      "period": 4,
+      "speed": "c/2",
+      "bboxW": 6,
+      "bboxH": 5,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/mwss.rle",
+      "rleFile": "rle/spaceships/mwss.rle"
+    },
+    {
+      "id": "pufferfish",
+      "name": "Pufferfish",
+      "category": "spaceships",
+      "tags": [
+        "pufferfish",
+        "spaceships"
+      ],
+      "period": null,
+      "speed": "c/2",
+      "bboxW": 15,
+      "bboxH": 12,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/pufferfish.rle",
+      "rleFile": "rle/spaceships/pufferfish.rle"
+    },
+    {
+      "id": "switchengine",
+      "name": "Switchengine",
+      "category": "spaceships",
+      "tags": [
+        "spaceships",
+        "switchengine"
+      ],
+      "period": null,
+      "speed": "c/12",
+      "bboxW": 6,
+      "bboxH": 4,
+      "rule": "B3/S23",
+      "weight": 1.0,
+      "source": "https://conwaylife.com/patterns/switchengine.rle",
+      "rleFile": "rle/spaceships/switchengine.rle"
+    },
+    {
+      "id": "beehive",
+      "name": "Beehive",
+      "category": "still_lifes",
+      "tags": [
+        "beehive",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 4,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/beehive.rle",
+      "rleFile": "rle/still_lifes/beehive.rle"
+    },
+    {
+      "id": "beehiveandcap",
+      "name": "Beehiveandcap",
+      "category": "still_lifes",
+      "tags": [
+        "beehiveandcap",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 5,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/beehiveandcap.rle",
+      "rleFile": "rle/still_lifes/beehiveandcap.rle"
+    },
+    {
+      "id": "beehiveanddock",
+      "name": "Beehiveanddock",
+      "category": "still_lifes",
+      "tags": [
+        "beehiveanddock",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 6,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/beehiveanddock.rle",
+      "rleFile": "rle/still_lifes/beehiveanddock.rle"
+    },
+    {
+      "id": "beehiveandtable",
+      "name": "Beehiveandtable",
+      "category": "still_lifes",
+      "tags": [
+        "beehiveandtable",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 5,
+      "bboxH": 6,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/beehiveandtable.rle",
+      "rleFile": "rle/still_lifes/beehiveandtable.rle"
+    },
+    {
+      "id": "beehiveatbeehive",
+      "name": "Beehiveatbeehive",
+      "category": "still_lifes",
+      "tags": [
+        "beehiveatbeehive",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 6,
+      "bboxH": 6,
+      "rule": "23/3",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/beehiveatbeehive.rle",
+      "rleFile": "rle/still_lifes/beehiveatbeehive.rle"
+    },
+    {
+      "id": "biblock",
+      "name": "Biblock",
+      "category": "still_lifes",
+      "tags": [
+        "biblock",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 5,
+      "bboxH": 2,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/biblock.rle",
+      "rleFile": "rle/still_lifes/biblock.rle"
+    },
+    {
+      "id": "biloaf1",
+      "name": "Biloaf1",
+      "category": "still_lifes",
+      "tags": [
+        "biloaf1",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/biloaf1.rle",
+      "rleFile": "rle/still_lifes/biloaf1.rle"
+    },
+    {
+      "id": "biloaf2",
+      "name": "Biloaf2",
+      "category": "still_lifes",
+      "tags": [
+        "biloaf2",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/biloaf2.rle",
+      "rleFile": "rle/still_lifes/biloaf2.rle"
+    },
+    {
+      "id": "biloaf4",
+      "name": "Biloaf4",
+      "category": "still_lifes",
+      "tags": [
+        "biloaf4",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 6,
+      "bboxH": 6,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/biloaf4.rle",
+      "rleFile": "rle/still_lifes/biloaf4.rle"
+    },
+    {
+      "id": "block",
+      "name": "Block",
+      "category": "still_lifes",
+      "tags": [
+        "block",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 2,
+      "bboxH": 2,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/block.rle",
+      "rleFile": "rle/still_lifes/block.rle"
+    },
+    {
+      "id": "blockade",
+      "name": "Blockade",
+      "category": "still_lifes",
+      "tags": [
+        "blockade",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 23,
+      "bboxH": 10,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/blockade.rle",
+      "rleFile": "rle/still_lifes/blockade.rle"
+    },
+    {
+      "id": "blockandcap",
+      "name": "Blockandcap",
+      "category": "still_lifes",
+      "tags": [
+        "blockandcap",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 4,
+      "bboxH": 6,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/blockandcap.rle",
+      "rleFile": "rle/still_lifes/blockandcap.rle"
+    },
+    {
+      "id": "blockanddock",
+      "name": "Blockanddock",
+      "category": "still_lifes",
+      "tags": [
+        "blockanddock",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 6,
+      "bboxH": 6,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/blockanddock.rle",
+      "rleFile": "rle/still_lifes/blockanddock.rle"
+    },
+    {
+      "id": "blockandtwotails",
+      "name": "Blockandtwotails",
+      "category": "still_lifes",
+      "tags": [
+        "blockandtwotails",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 5,
+      "bboxH": 5,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/blockandtwotails.rle",
+      "rleFile": "rle/still_lifes/blockandtwotails.rle"
+    },
+    {
+      "id": "boat",
+      "name": "Boat",
+      "category": "still_lifes",
+      "tags": [
+        "boat",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/boat.rle",
+      "rleFile": "rle/still_lifes/boat.rle"
+    },
+    {
+      "id": "boattie",
+      "name": "Boattie",
+      "category": "still_lifes",
+      "tags": [
+        "boattie",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 6,
+      "bboxH": 6,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/boattie.rle",
+      "rleFile": "rle/still_lifes/boattie.rle"
+    },
+    {
+      "id": "boattielongboat",
+      "name": "Boattielongboat",
+      "category": "still_lifes",
+      "tags": [
+        "boattielongboat",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 7,
+      "bboxH": 7,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/boattielongboat.rle",
+      "rleFile": "rle/still_lifes/boattielongboat.rle"
+    },
+    {
+      "id": "loaf",
+      "name": "Loaf",
+      "category": "still_lifes",
+      "tags": [
+        "loaf",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 4,
+      "bboxH": 4,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/loaf.rle",
+      "rleFile": "rle/still_lifes/loaf.rle"
+    },
+    {
+      "id": "ship",
+      "name": "Ship",
+      "category": "still_lifes",
+      "tags": [
+        "ship",
+        "still_lifes"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/ship.rle",
+      "rleFile": "rle/still_lifes/ship.rle"
+    },
+    {
+      "id": "tub",
+      "name": "Tub",
+      "category": "still_lifes",
+      "tags": [
+        "still_lifes",
+        "tub"
+      ],
+      "period": null,
+      "speed": null,
+      "bboxW": 3,
+      "bboxH": 3,
+      "rule": "B3/S23",
+      "weight": 0.4,
+      "source": "https://conwaylife.com/patterns/tub.rle",
+      "rleFile": "rle/still_lifes/tub.rle"
+    }
+  ]
+}

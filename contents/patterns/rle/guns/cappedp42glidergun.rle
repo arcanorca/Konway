@@ -1,0 +1,7 @@
+#N cappedp42glidergun.rle
+#C https://conwaylife.com/wiki/Period-42_R-pentomino_hasslers
+#C https://www.conwaylife.com/patterns/cappedp42glidergun.rle
+x = 32, y = 23, rule = B3/S23
+11b2o$11bo3bob2o$7b2o3b5obo$7bo2bobo$9b2o2bo2b2o$11b2o2bobo$11bobo$12b
+o$b2o5b2o19bo$2bo5bo18b3o$26bo$18b2o6b2o$3b2ob2o9b2o$18bo$2bobobobo$bo
+7bo$o2bo3bo2bo$3o5b3o$28b2o$28bo$29b3o$b2o5b2o21bo$b2o5b2o!

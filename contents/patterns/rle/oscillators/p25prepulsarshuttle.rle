@@ -1,0 +1,8 @@
+#N p25prepulsarshuttle.rle
+#O Jason Summers, 2007
+#C https://conwaylife.com/wiki/P25_pre-pulsar_shuttle
+#C https://www.conwaylife.com/patterns/p25prepulsarshuttle.rle
+x = 21, y = 22, rule = B3/S23
+18bo$b2o13b3o$o2bo2b2o7bo$b2o2bobo7b2o$3b2o$3bo$2obo9bo$o2bob2o5b2o4b
+2o$2b2obo7bo4b2o4$2b2obo7bo$o2bob2o5b2o$2obo9bo$3bo13b2o$3b2o12bobo$b
+2o2bobo11bo$o2bo2b2o2b2o7b2o$b2o8bo$5bob4o$5b2obo!

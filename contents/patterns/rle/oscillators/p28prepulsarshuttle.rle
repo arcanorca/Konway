@@ -1,0 +1,6 @@
+#N p28 pre-pulsar shuttle
+#C A period-28 oscillator with components found by David Buckingham,
+#C Bill Gosper, and thunk
+x = 17, y = 22, rule = B3/S23
+4b2o$3bo2bo$2bobobo4bo$2bo2bo4bobo$bo9bo3b2o$2bobo10b2o2$9bo$8b2o$9bo
+3b3o4$2o7bo3b3o$2o6b2o$9bo2$15b2o$3b2o6bo3b2o$4bo5bobo$b3o7bo$bo!

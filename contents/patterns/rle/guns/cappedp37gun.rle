@@ -1,0 +1,11 @@
+#N cappedp37gun.rle
+#C https://conwaylife.com/wiki/Honey_farm_hasslers
+#C https://www.conwaylife.com/patterns/cappedp37gun.rle
+x = 55, y = 45, rule = B3/S23
+36bo$36b3o14b2o$39bo13bo$38b2o11bobo$51b2o2$46b2o$45bo2bo$45bo2bo$28b
+2o14bo2b2o$29bo14bobo$29bobo12b3o4b2o$30b2o4b3o12bobo$36bobo14bo$34b2o
+2bo14b2o$34bo2bo$34bo2bo$35b2o3$19b2o22b2o$8bo11bo22bo$8b3o9bobo21b3o$
+11bo9b2o8b3o12bo$10bo19bo3bo$10bo2bo15bo5bo$29bo5bo$11bo17bo5bo$11b3o
+2bo13bo3bo2b2o$14b2obo13b3o3bobo$2o12b2obo21bo$bo14bo22b2o$bobo19b2o$
+2b2o19bobo$10bo14bo9b2o$9bob2o12b2o8bobo$9bob2o24bo$10bo2b3o21b2o$15bo
+2$2b2o9bo2bo$bobo12bo$bo13bo$2o14b3o$18bo!

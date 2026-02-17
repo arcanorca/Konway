@@ -1,0 +1,10 @@
+#N lwssgun1.rle
+#C https://conwaylife.com/wiki/Gliderless_gun
+#C https://conwaylife.com/patterns/lwssgun1.rle
+x = 40, y = 42, rule = B3/S23
+23b2o$23bo$17b2ob2obo$15bo2bobobo$15b2o4bo13bo$33b3o$32bo$32b2o2$12b2o
+$11bobo5b2ob2o7b2o$10bo7b2o3b2o6b2o$9bo9b2ob2o$9b2o9b3o$21bo$3b2o$4bo$
+2bo$2b2o2$2b2o7bobo2bobo11bo2bo$2bobo6bo2bo3bo15bo$3bo5b2o3bobobo11bo
+3bo$3o7b3obo16b4o$o6b2o5b2o$7b2o4b2o$7b2o3bo$7b2obobo$7b2obobo2$24b3o
+8b2o$10b2o12bobo8b2o$6b2o2b2o5b2o5bobo$5bobo8bobo$5bo10bo19b2o$4b2o9b
+2o19bo$37b3o$19b2o4bo13bo$19bo2bobobo$21b2ob2obo$27bo$27b2o!

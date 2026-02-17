@@ -1,0 +1,29 @@
+#N queenbeeshuttlepairgun.rle
+#C https://conwaylife.com/wiki/Queen_bee_shuttle_pair
+#C https://conwaylife.com/patterns/queenbeeshuttlepairgun.rle
+x = 150, y = 131, rule = B3/S23
+125b3o$124bo2bo$127bo$127bo$124bobo$90bo$90b3o$93bo$92b2o4$16bo$16b3o$
+19bo$18b2o46bo$66bobo6bo16b2o3b2o$67bobo4bobo$67bo2bo3bobo16bo3bo$67bo
+bo5bo18b3o$56b2o8bobo25b3o$55bobo8bo$55bo16b2o3b2o$2o52b2o16bo5bo19bo
+2b2o4b2o2bo$bo16b2o3b2o72bo3b3o2b3o3bo$bobo5bobo8b3o50bo3bo15b3o2bo2b
+2o4b2o2bo$2b2o5bo2bo6bo3bo50b3o10bobo3b3o$12b2o6bobo64b2o3bo3bo$10bo3b
+2o5bo66bo2bo5bo$12b2o78bo3bo$9bo2bo80b3o29b3o$9bobo112bo2bo$26b2o99bo$
+26bobo45b2o51bo$26bo47b2o3b2o43bobo$79b2o3$96b2o$96bo$97b3o$72bobo24bo
+$72b2o$73bo$14bo15b2o$14b3o13bobo$17bo14bo60bo$16b2o13b2ob2o5b2o49b2o$
+32bobo6bobo48bobo$30bobo2bo5bo$30b2o2b2o3$19b2o8b2obo7b2o$18bob2o7b2ob
+3o4bobo71bo$18bo3bo12bo3bo73b3o$19b3o7b2ob3o3b2o17bobo17bo38bo$12b2o6b
+o4b2o3bobo4bo19b2o7bo9b3o36b2o$11bobo11bobo2bobo4bo20bo6b3o7b5o$11bo
+15bo3bo4b2obo7bo$10b2o15b2o6bo2b2o7bobo68bo6b3o$35b2o13b2o13b3o40bo9bo
+5bo2bo$50b2o55b2o8bobo7bo$50b2o13bobo39bobo6b2ob2o6bo$47bobo5b2o8bobo
+47bo5bo2bobo$47bo7bobo17b5o38bo$57bo7b3o8b3o36b2o3b2o$57b2o18bo$85b3o$
+65b3o19bo26b3o$31bo34bo19bo26b2obo$32bo80b2o$30b3o81b2o$90b2o23bobo$
+48bo42bo12b2o9bo2b2o$15b2o29b2ob2o40bobo10b2o$16bo33bo41b2o$16bobo6bob
+o18bo3bo16bobo34b4o$17b2o6bo3bo17b3o16bo2bo33bo3bo$29bo37bo2bob2o30bo$
+25bo4bo39bo2bo28bobo9b5o$29bo41b2o29b2o9bob3obo$25bo3bo6bo34b2o19b2o
+12b2o6bo3bo$25bobo6b2ob2o52b2ob2o11bo7b3o$47b2o32b2o8b2ob2o11bobo6bo$
+33bo5bo7bo20b2o11b2o10b3o12b2o$48bo20bo43b2o$33b2obob2o7b2o17b3o45bo$
+66bo44b3o$91bo19bo$91bo33b3o$90b3o13bo17bo2bo$104bobo20bo$105b2o20bo$
+38b2o50b3o31bobo$38bo52bo$39b3o49bo$41bo49bo$91bo$90b3o3$90b3o$91bo$
+91bo2$121bo$119bobo$120b2o3$141bo$140b4o$139b2obobo$138b3obo2bo$139b2o
+bob2o$140b4ob3o$128bo12bo4bobo$127b3o18bo$126b5o17b2o$125bobobobo$125b
+2o3b2o6$130b2o$130bo$131b3o$133bo!

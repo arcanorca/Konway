@@ -1,0 +1,9 @@
+#N p47 pre-pulsar shuttle
+#O David Buckingham, December 5, 1982
+#C This was the first period-47 oscillator to be found.
+#C https://conwaylife.com/wiki/P47_pre-pulsar_shuttle
+x = 30, y = 31, rule = B3/S23
+2bo24bo$2b3o20b3o$5bo18bo$4b2o18b2o3$6b3o12b3o$14b2o$14b2o2$bo9bo6bo9b
+o$obo7bo8bo7bobo$bo8bo8bo8bo$10bo8bo$11bo6bo2$11bo6bo$10bo8bo$bo8bo8bo
+8bo$obo7bo8bo7bobo$bo9bo6bo9bo2$14b2o$14b2o$6b3o12b3o3$4b2o18b2o$5bo
+18bo$2b3o20b3o$2bo24bo!

@@ -1,0 +1,14 @@
+#N duelingbanjosp48glidergun.rle
+#C https://conwaylife.com/wiki/Period-48_glider_gun
+#C https://conwaylife.com/patterns/duelingbanjosp48glidergun.rle
+x = 51, y = 35, rule = B3/S23
+5b2ob2o15b2ob2o$5b2obo4b2o5b2o4bob2o$8bo2bo3b2ob2o3bo2bo$8b2obo11bob2o
+6bo$11bo11bo8b3o$3bobo6bo3bobo3bo7b2o3bo$b3ob3o5b3o3b3o8b3o2b2o$o7bo5b
+o5bo14bobo$bob6o3b3o5b3o4b2o2b4ob3o$b2o4bo4b3o5b3o4b2obo4bo3bo$3bo3b2o
+4b2o5b2o4bobobob2obo3b2o$2bobo2bobo5bo3bo5b2o3bob2obobobo$3bo2bo6bo2bo
+bo2bo4bo3bo4bob2o$6bo3bobo3bobo3bo4b3ob4o2b2o$6bo3bo2bo2bobo2bo6bobo$
+6bo6b3o3b3o7b2o2b3o$6bo2bo20bo3b2o$7bo7bo15b3o$5bobobo5bo16bo$4bobob2o
+32b2o$4bobo6bo3bo7bo15bo2bo$5b2o4b3obob3o6bo13b2o$10bo3b2o4bo3b3o12b3o
+5bo$10bob2o2b2obobo17bo2bo3bobo$11bo2b2o2b2obo18b3o3b2o$12b2o2b2obob2o
+$14bo2bobobo2bo6bo8b3o3b2o$14b4ob2o2b2o7bo6bo2bo3bobo$18bo11b3o6b3o5bo
+$16bobo21b2o$16b2o23bo2bo$42b2o$37bo$38bo$36b3o!

@@ -1,0 +1,19 @@
+#N bistableswitchgun.rle
+#C https://conwaylife.com/wiki/Bistable_switch
+#C https://www.conwaylife.com/patterns/bistableswitchgun.rle
+x = 123, y = 93, rule = B3/S23
+56b2o$55bobo$49b2o4bo$47bo2bo2b2ob4o$47b2obobobobo2bo32b2o$50bobobobo
+35bobo$50bobob2o38bo4b2o$51bo38b4ob2o2bo2bo$90bo2bobobobob2o$64b2o27bo
+bobobo$55b2o7bo29b2obobo$55b2o5bobo33bo$62b2o$84b2o$85bo7b2o$85bobo5b
+2o$86b2o25bo$111b3o$110bo$52b2o15b2o39b2o$49bo3bo15b2o$49b4o$118b2o$
+49b2o45b2o21bo$49b2o45bo22bob2o$97b3o11b2o4b3o2bo$99bo11b2o3bo3b2o$48b
+o67b4o$47bobo52b2o15bo$48bo52bobo12b3o$45b3o53bo13bo$45bo29b2o23b2o14b
+5o$74bobo43bo$75bo42bo$118b2o5$9bo$9b3o$12bo$11b2o$85b2o$85bo$3b2o81b
+3o$3bo84bo$2obo$o2b3o4b2o$b2o3bo3b2o$3b4o$3bo15b2o$4b3o12bobo34b2o$7bo
+13bo14b2o18b2o$2b5o14b2o14bo$2bo32bo$4bo30b5o14b2o$3b2o35bo13bo$37b3o
+12bobo$36bo15b2o$36b4o$34b2o3bo3b2o$33bo2b3o4b2o$33b2obo$36bo$36b2o$
+61bo$61b3o$44b2o9b2o7bo$45bo9bobo5b2o$42b3o10bo$40b3o$39bo$39b2o3$73b
+2o$66b2o5bobo$66b2o7bo$75b2o$29b2o$28bobo5b2o24bo$28bo7b2o23bobob2o$
+27b2o32bobobobo$58b2obobobobo2bo$41bo16bo2bo2b2ob4o$37b2obobo17b2o4bo$
+36bobobobo23bobo$33bo2bobobobob2o21b2o$33b4ob2o2bo2bo$37bo4b2o64bo$35b
+obo71bo$35b2o70b3o!

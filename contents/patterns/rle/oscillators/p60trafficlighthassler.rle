@@ -1,0 +1,11 @@
+#N p60trafficlighthassler.rle
+#C https://conwaylife.com/wiki/P60_traffic_light_hassler
+#C https://conwaylife.com/patterns/p60trafficlighthassler.rle
+x = 36, y = 40, rule = B3/S23
+15b2o2b2o$13bo2bo2bo2bo$13b2o2b2o2b2o2$13b2ob4ob2o$12bo2b2o2b2o2bo$12b
+3o2b2o2b3o$13bo2bo2bo2bo$13b4o2b4o$11b2o4b2o4b2o$14b2o4b2o$11b2obob4ob
+ob2o$12bobo6bobo$16bo2bo$12b3o6b3o$10b2o2b3o2b3o2b2o$13bo2bo2bo2bo$11b
+obo8bobo2$12bo10bo$12b2o8b2o$13b2o6b2o$2b2o9b10o9b2o$2b2o5bo16bo5b2o$
+8bobo14bobo$9bo5bo4bo5bo$17b2o$b3o28b3o$b3o13bo14b3o$2bo4b3o7bo8b3o4bo
+$7b3o7bo8b3o$8bo5bo12bo$12bo2bo3b3o$12bobo$13bo3bo$17bo$bo15bo16bo$obo
+30bobo$bo5b2o18b2o5bo$7b2o18b2o!

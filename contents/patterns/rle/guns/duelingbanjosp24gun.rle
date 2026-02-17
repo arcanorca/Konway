@@ -1,0 +1,11 @@
+#N duelingbanjosp24gun.rle
+#C https://conwaylife.com/wiki/Dueling_banjos
+#C https://conwaylife.com/patterns/duelingbanjosp24gun.rle
+x = 40, y = 31, rule = B3/S23
+5b2ob2o15b2ob2o$5b2obo17bob2o$8bo5bo5bo5bo$8b2o4b2o3b2o4b2o$14bobobobo
+$3bobo9b2ob2o13b3o$b3ob3o24b6o$o7bo23bob3obo$2ob4obo22bo3bob2o$bo3bo
+25b4ob4o$bobo2b2o4b2obo3bob2o6b2o4bob3o$2bobob2o5b3o3b3o5b2obob2obo2b
+2o$3bob3o6bo5bo5b2o2bob2obob2o$5b3o18b3obo4b2o$5b3o18b4ob4o$5b3o19b2ob
+o3bo$6b2o19bob3obo$7bo20b6o$5bobobo4b3o13b3o$4bobob2o12bobo$4bobo6bobo
+bo5b2o$5b2o4b3obob3o3bo$10bo5bo3bo$9bobob2o2b2obo$9bob2o2b2o2bo$8b2o4b
+o2b2o9bobo$6bo2bobobo2bo12b2o$6b2o2b2ob4o12bo$12bo$12bobo$13b2o!
