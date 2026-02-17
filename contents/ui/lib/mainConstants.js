@@ -1,0 +1,50 @@
+.pragma library
+
+var paletteDefaults = ({
+    "Calm Dark": { "alive": "#50C878", "dead": "#1A1A1A", "bg": "#1A1A1A" },
+    "Paper Light": { "alive": "#537F67", "dead": "#DDD5C6", "bg": "#F3EFE6" },
+    "Emerald": { "alive": "#4FBF8A", "dead": "#12221D", "bg": "#0D1714" },
+    "Amber": { "alive": "#CFA15C", "dead": "#2A1D10", "bg": "#18120A" },
+    "Monochrome": { "alive": "#AFAFAF", "dead": "#1D1D1D", "bg": "#101010" },
+    "Catppuccin": { "alive": "#A6E3A1", "dead": "#313244", "bg": "#1E1E2E" },
+    "Dracula": { "alive": "#50FA7B", "dead": "#44475A", "bg": "#282A36" },
+    "Tokyo Night": { "alive": "#73DACA", "dead": "#24283B", "bg": "#1A1B26" },
+    "Nord": { "alive": "#A3BE8C", "dead": "#3B4252", "bg": "#2E3440" },
+    "Gruvbox": { "alive": "#B8BB26", "dead": "#3C3836", "bg": "#282828" },
+    "Everforest": { "alive": "#A7C080", "dead": "#3D484D", "bg": "#2D353B" }
+})
+
+var coreCuratedIds = [
+    "gosperglidergun",
+    "glider",
+    "rpentomino",
+    "lwss",
+    "block",
+    "acorn",
+    "diehard"
+]
+
+var builtinGosperRle = "x = 36, y = 9, rule = B3/S23\n24bo11b$22bobo11b$12bo10bobo12b$11bo11bob2o9b$2o8bo12bo11b$2o8bo11bobo11b$10bo10bobo11b$11bo10bo12b$12b12o!"
+
+var clockGlyphs = ({
+    "0": ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
+    "1": ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
+    "2": ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
+    "3": ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
+    "4": ["00010", "00110", "01010", "10010", "11111", "00010", "00010"],
+    "5": ["11111", "10000", "11110", "00001", "00001", "10001", "01110"],
+    "6": ["00110", "01000", "10000", "11110", "10001", "10001", "01110"],
+    "7": ["11111", "00001", "00010", "00100", "01000", "01000", "01000"],
+    "8": ["01110", "10001", "10001", "01110", "10001", "10001", "01110"],
+    "9": ["01110", "10001", "10001", "01111", "00001", "00010", "11100"],
+    ":": ["0", "1", "0", "0", "1", "0", "0"]
+})
+
+var defaultCategoryWeights = ({
+    "gliders": 1.1,
+    "spaceships": 1.0,
+    "methuselahs": 0.8,
+    "oscillators": 0.6,
+    "guns": 0.12,
+    "still_lifes": 0.25
+})
