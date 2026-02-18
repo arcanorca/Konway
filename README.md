@@ -18,8 +18,6 @@ Konway is a lightweight and highly customizable live wallpaper plugin for KDE Pl
   
 ## // HOW IT WORKS
 
-Konway runs **Conway’s Game of Life** entirely on the GPU.
-
 ### 1) GPU Simulation
 - The simulation is stored in a texture (alive/dead cells).
 - Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).
