@@ -7,23 +7,27 @@ Kirigami.ScrollablePage {
     id: page
     property var cfg
     property bool showAdvanced: false
+    readonly property real extinctionCoverageThreshold: 0.35
 
-    readonly property var startupSeedProfiles: [
-        { max: 0.20, name: i18n("Firefly"), note: i18n("Tiny sparks, slow organic growth.") },
-        { max: 0.40, name: i18n("Breeze"), note: i18n("Light and calm opening density.") },
-        { max: 0.60, name: i18n("Garden"), note: i18n("Balanced opening with clear structure.") },
-        { max: 0.80, name: i18n("Storm"), note: i18n("Dense opening with fast interactions.") },
-        { max: 1.01, name: i18n("Supernova"), note: i18n("Very dense start; dramatic early collisions.") }
-    ]
-
-    function startupSeedProfile(value) {
-        const v = Number(value);
-        for (let i = 0; i < startupSeedProfiles.length; ++i) {
-            if (v < startupSeedProfiles[i].max) {
-                return startupSeedProfiles[i];
-            }
+    function startupCoverageFromIntensity(value) {
+        const v = Math.max(0.05, Math.min(1.0, Number(value)));
+        if (!Number.isFinite(v)) {
+            return 0.05;
         }
-        return startupSeedProfiles[startupSeedProfiles.length - 1];
+        if (v <= 0.5) {
+            return Math.max(0.005, 0.10 * v);
+        }
+        const t = (v - 0.5) / 0.5;
+        const boosted = 0.05 + (1.0 - 0.05) * Math.pow(t, 2.25);
+        return Math.max(0.005, Math.min(1.0, boosted));
+    }
+
+    function startupCoveragePercent(value) {
+        return Math.round(startupCoverageFromIntensity(value) * 100);
+    }
+
+    function startupExtinctionRisk(value) {
+        return startupCoverageFromIntensity(value) >= extinctionCoverageThreshold;
     }
 
     title: i18n("Simulation")
@@ -76,11 +80,14 @@ Kirigami.ScrollablePage {
 
             QQC2.Slider {
                 id: startupIntensitySlider
+                property bool extinctionRisk: page.startupExtinctionRisk(value)
                 Layout.fillWidth: true
                 from: 0.05
                 to: 1.00
                 stepSize: 0.05
                 value: cfg.cfg_initialDensity
+                palette.highlight: extinctionRisk ? "#cf4a4a" : "#50C878"
+
                 onValueChanged: {
                     if (Math.abs(cfg.cfg_initialDensity - value) > 0.0001) {
                         cfg.cfg_initialDensity = value;
@@ -89,21 +96,23 @@ Kirigami.ScrollablePage {
             }
 
             QQC2.Label {
-                text: Math.round(startupIntensitySlider.value * 100) + "%"
+                text: page.startupCoveragePercent(startupIntensitySlider.value) + "%"
                 font.family: "monospace"
+                color: startupIntensitySlider.extinctionRisk ? "#e17979" : Kirigami.Theme.textColor
             }
         }
 
         QQC2.Label {
-            Kirigami.FormData.label: i18n("Intensity info:")
-            text: i18n("Controls how strong startup and reseed begin. Very high values can trigger early mass die-off, which is normal in Life.")
+            Kirigami.FormData.label: i18n("Coverage info:")
+            text: i18n("Startup and reseed use this alive-cell coverage ratio. 100% fills the whole simulation grid.")
             wrapMode: Text.WordWrap
         }
 
         QQC2.Label {
-            Kirigami.FormData.label: i18n("Seed style:")
-            readonly property var profile: page.startupSeedProfile(startupIntensitySlider.value)
-            text: profile.name + "  -  " + profile.note
+            Kirigami.FormData.label: i18n("Warning:")
+            visible: startupIntensitySlider.extinctionRisk
+            color: Kirigami.Theme.negativeTextColor
+            text: i18n("High coverage is in overpopulation zone and may cause early mass extinction.")
             wrapMode: Text.WordWrap
         }
 

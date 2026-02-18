@@ -80,10 +80,10 @@ WallpaperItem {
     property int cfgStepsPerFrame: cfgInt("stepsPerFrame", 1, 1, 8)
     property bool cfgWrapEdges: cfgBool("wrapEdges", true)
     property string cfgRuleString: cfgString("ruleString", "B3/S23")
-    // Startup seeding intensity (0.05..1.00). 1.00 maps to the previous full-strength baseline.
+    // Startup seeding intensity dial (0.05..1.00). Mapped to effective alive-cell coverage.
     property real cfgInitialDensity: cfgReal("initialDensity", 0.50, 0.05, 1.00)
     property real startupSeedIntensity: Math.max(0.05, Math.min(1.00, cfgInitialDensity))
-    property real startupFixedDensity: Math.max(0.005, Math.min(0.10, 0.10 * startupSeedIntensity))
+    property real startupFixedDensity: startupCoverageFromIntensity(startupSeedIntensity)
     property real bootstrapSeedDensity: {
         return startupFixedDensity;
     }
@@ -278,6 +278,20 @@ WallpaperItem {
 
     function clamp01(value) {
         return Math.max(0.0, Math.min(1.0, Number(value)));
+    }
+
+    function startupCoverageFromIntensity(intensity) {
+        const v = Math.max(0.05, Math.min(1.0, Number(intensity)));
+        if (!Number.isFinite(v)) {
+            return 0.05;
+        }
+        // Keep existing default feel at 0.50, but let 1.00 reach full-grid startup coverage.
+        if (v <= 0.5) {
+            return Math.max(0.005, 0.10 * v);
+        }
+        const t = (v - 0.5) / 0.5;
+        const boosted = 0.05 + (1.0 - 0.05) * Math.pow(t, 2.25);
+        return Math.max(0.005, Math.min(1.0, boosted));
     }
 
     function normalizeProbeChannel(value) {
@@ -1237,10 +1251,24 @@ WallpaperItem {
         const density = startupFixedDensity;
         const intensity = startupSeedIntensity;
         const area = Math.max(1, simGridWidth * simGridHeight);
-        const targetDensity = Math.max(0.0025, Math.min(0.12, 0.004 + density * 0.70 + intensity * 0.025));
+        const targetDensity = Math.max(0.0025, Math.min(1.0, density));
+
+        if (targetDensity >= 0.999) {
+            const full = [];
+            for (let y = 0; y < simGridHeight; ++y) {
+                for (let x = 0; x < simGridWidth; ++x) {
+                    full.push({ x: x, y: y });
+                }
+            }
+            return full;
+        }
+
         const minByPerimeter = Math.max(24, Math.round((simGridWidth + simGridHeight) * (0.20 + intensity * 0.50)));
-        const targetCount = Math.max(minByPerimeter, Math.min(22000, Math.round(area * targetDensity)));
-        const hardCap = Math.max(targetCount + Math.round(targetCount * (0.25 + intensity * 0.45)), targetCount + 64);
+        const targetCount = Math.max(minByPerimeter, Math.min(area, Math.round(area * targetDensity)));
+        const hardCap = Math.min(
+            area,
+            Math.max(targetCount + Math.round(targetCount * (0.25 + intensity * 0.45)), targetCount + 64)
+        );
 
         const aspect = simGridWidth / Math.max(1, simGridHeight);
         const cols = Math.max(8, Math.round(Math.sqrt(targetCount * aspect)));
@@ -1337,7 +1365,31 @@ WallpaperItem {
             });
         }
 
-        return uniqueCells(cells);
+        const unique = uniqueCells(cells);
+        if (unique.length >= targetCount) {
+            return unique;
+        }
+
+        const seen = {};
+        for (let i = 0; i < unique.length; ++i) {
+            seen[cellKey(unique[i].x, unique[i].y)] = true;
+        }
+
+        for (let y = 0; y < simGridHeight; ++y) {
+            for (let x = 0; x < simGridWidth; ++x) {
+                const key = cellKey(x, y);
+                if (seen[key]) {
+                    continue;
+                }
+                unique.push({ x: x, y: y });
+                seen[key] = true;
+                if (unique.length >= targetCount) {
+                    return unique;
+                }
+            }
+        }
+
+        return unique;
     }
 
     function seedStartupScatter() {
