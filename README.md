@@ -7,7 +7,7 @@
 Konway is a lightweight and highly customizable live wallpaper plugin for KDE Plasma 6 built around Conway's Game of Life.
 
 
-[demo.webm](https://github.com/user-attachments/assets/a3591857-b170-4599-aa14-9a6be1428722)
+[demo.webm](https://github.com/user-attachments/assets/d6e9441a-389e-47eb-bada-eaa9cce79b7e)
 
 
 ## // HIGHLIGHTS
