@@ -7,12 +7,14 @@
   </defs>
 
   <g clip-path="url(#iconClip)">
+    <!-- Background -->
     <rect width="512" height="512" fill="#1a1a1a"/>
 
-    <rect x="28" y="28" width="456" height="456" rx="96" ry="96"
-          fill="none" stroke="#50C878" stroke-opacity="0.10" stroke-width="8"/>
+    <!-- OUTER BORDER (pinned to the very edge) -->
+    <rect x="0" y="0" width="512" height="512" rx="112" ry="112"
+          fill="none" stroke="#50C878" stroke-opacity="0.10" stroke-width="10"/>
 
-    <!-- 32x32 grid scaled into padding (64px) => scale 12 -->
+    <!-- 32x32 grid scaled into padding (64px) => inner 384px => scale 12 -->
     <g transform="translate(64,64) scale(12)" fill="#50C878">
 
       <!-- GLIDER (one shade + main) -->
@@ -33,7 +35,7 @@
       </g>
 
       <!-- TEXT: "konway" centered -->
-      <!-- positions: k@0 o@4 n@8 w@12 a@18 y@22 cursor@25  -->
+      <!-- positions: k@0 o@4 n@8 w@12 a@18 y@22 cursor@25 -->
 
       <!-- Shadow -->
       <g opacity="0.16" transform="translate(4,25)">
