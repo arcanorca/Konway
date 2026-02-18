@@ -46,7 +46,7 @@ Classic automata naturally decay into equilibrium (still lifes or oscillators) w
 ### 3. Visual Ergonomics
 Raw cellular automata can produce harsh, rapid flickering (1-period oscillators) that can be distracting for some people.
 * **Subtle trails:** Can be toggle on/off, decay trails create a phosphor-persistence effect, smoothing out visual noise.
-* **Safety Limits:** Integrated brightness clamping and contrast controls to prevent eye strain during long sessions.
+* **Safety Limits:** Integrated brightness clamping and contrast controls to reduce eye strain.
 
 ## // INSTALL
 
