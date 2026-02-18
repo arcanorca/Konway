@@ -6,8 +6,44 @@
 
 Konway is a lightweight and highly customizable live wallpaper plugin for KDE Plasma 6 built around Conway's Game of Life.
 
+[demo.webm](https://github.com/user-attachments/assets/09198183-d5c2-430a-a4b2-1fdf05154a2e)
 
-[demo.webm](https://github.com/user-attachments/assets/d6e9441a-389e-47eb-bada-eaa9cce79b7e)
+
+## [Settings GUI]
+
+<p align="center">
+  Konway offers a robust settings interface to tweak every aspect of the simulation.
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center" width="33%">
+      <img src="assets/screenshots/settings-model.png" alt="Model Selection" width="100%">
+      <br><b>🧬 Models</b><br>Choose between Conway, HighLife, Day & Night, etc.
+    </td>
+    <td align="center" width="33%">
+      <img src="assets/screenshots/settings-colors.png" alt="Color Customization" width="100%">
+      <br><b>🎨 Aesthetics</b><br>Full control over cell/background colors and decay trails.
+    </td>
+    <td align="center" width="33%">
+      <img src="assets/screenshots/settings-grid.png" alt="Grid Settings" width="100%">
+      <br><b>📐 Grid & Gap</b><br>Adjust cell size and gaps for pixel-perfect looks.
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="assets/screenshots/settings-interaction.png" alt="Interaction" width="100%">
+      <br><b>🖱️ Interaction</b><br>Paint life with your mouse or create barriers.
+    </td>
+    <td align="center" width="33%">
+      <img src="assets/screenshots/settings-behavior.png" alt="Behavior" width="100%">
+      <br><b>⚡ Performance</b><br>Cap FPS and simulation speed to save battery.
+    </td>
+    <td align="center" width="33%">
+      <h3>🚀<br>Runs on GPU</h3>
+    </td>
+  </tr>
+</table>
 
 
 ## // HIGHLIGHTS
