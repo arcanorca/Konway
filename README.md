@@ -4,7 +4,7 @@
   <img src="assets/konway-logo.svg" alt="Konway logo" width="220">
 </p>
 
-Konway is a lightweight and highly customizable live wallpaper plugin for KDE Plasma 6 built around Conway's Game of Life.
+Konway is a lightweight, customizable cellular automaton engine integrated as a KDE Plasma 6 wallpaper.
 
 [demo.webm](https://github.com/user-attachments/assets/09198183-d5c2-430a-a4b2-1fdf05154a2e)
 
@@ -29,7 +29,7 @@ Konway is a lightweight and highly customizable live wallpaper plugin for KDE Pl
 - Activity injector so simulation does not stall
 - Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
-- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) strings. Beyond standard Life (`B3/S23`), you can simulate other universes like HighLife (`B36/S23`) or Day & Night.
+- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) rule strings. Beyond standard Life (`B3/S23`), you can simulate other automata like HighLife (`B36/S23`) or Day & Night (`B3678/S34678`).
 - Full settings UI tabs:
   `General, Simulation, Patterns, Appearance, Performance, Safety`
   
