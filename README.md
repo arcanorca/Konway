@@ -26,7 +26,6 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
 - The simulation runs on the GPU, so even older PCs handle it well. There’s no per-cell CPU loop each frame, making Konway one of the most efficient live wallpaper plugins.
 - Calm default look with built-in palette set:
   `Calm Dark, Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine`
-- Activity injector so simulation does not stall
 - Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
 - Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) rule strings. Beyond standard Life (`B3/S23`), you can simulate other automata like HighLife (`B36/S23`) or Day & Night (`B3678/S34678`).
