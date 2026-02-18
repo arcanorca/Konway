@@ -29,7 +29,7 @@ Konway is a lightweight and highly customizable live wallpaper plugin for KDE Pl
 - Activity injector so simulation does not stall
 - Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
-- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) strings. Beyond standard Life (`B3/S23`), you can simulate other universes like HighLife (B36/S23) or Day & Night.
+- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) strings. Beyond standard Life (`B3/S23`), you can simulate other universes like HighLife (`B36/S23`) or Day & Night.
 - Full settings UI tabs:
   `General, Simulation, Patterns, Appearance, Performance, Safety`
   
