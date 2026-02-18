@@ -36,8 +36,7 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
 
 ### 1. The GPU Pipeline
 The simulation is stored in a texture (alive/dead cells).
-Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).
-No per-cell CPU loop each frame, the CPU mostly just schedules ticks. 
+Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).The CPU mostly just schedules ticks. 
 
 ### 2. Entropy Management (Auto-Injection)
 Classic automata naturally decay into equilibrium (still lifes or oscillators) within a finite grid.
