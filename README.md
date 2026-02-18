@@ -1,59 +1,65 @@
 # Konway
 
-Konway is a lightweight and highly customizable live wallpaper plugin for KDE Plasma 6 built around Conway's Game of Life.
+![Konway logo](assets/konway-logo.svg)
 
-It is fully open source, QML + GLSL only, and focused on simple, stable day-to-day use.
+Konway is a KDE Plasma 6 live wallpaper plugin based on Conway's Game of Life.
 
-Respect to John Horton Conway for that made all of this possible.
+It is QML + GLSL only, GPU-driven, and tuned for stable daily use.
 
-## What You Get
+Respect to John Horton Conway.
 
-- GPU-driven Life simulation (ping-pong textures, Qt RHI shaders)
-- Calm default visuals for long sessions
-- Randomized pattern injector so the world stays lively (can be disabled)
-- Optional local-time clock mode
-- Mouse seeding (click for glider, drag for brush)
-- Practical settings tabs (General, Simulation, Patterns, Appearance, Performance, Safety)
-- Contains several popular themes in Apperance tab such as "Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest"
+## Highlights
+
+- GPU ping-pong simulation (Qt RHI shaders, no per-cell CPU loop each frame)
+- Calm default look with built-in palette set:
+  `Calm Dark, Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest`
+- Activity injector so simulation does not stall
+- Optional clock overlay mode (`Off` / `Hybrid Local Time`)
+- Mouse seeding: left click places a glider, left drag uses brush
+- Full settings UI tabs:
+  `General, Simulation, Patterns, Appearance, Performance, Safety`
+
+## Important Simulation Note
+
+`Startup seed intensity` is interpreted as a startup/reseed **coverage ratio**.
+
+- `100%` means startup seed fills the entire simulation grid
+- Higher coverage can enter overpopulation range and cause early mass extinction (expected Life behavior)
+- UI warns this zone with red slider accent + warning text
+
+Default behavior remains technically aligned with the previous balanced startup feel.
 
 ## Install
 
 ### KDE Store
 
-Install **Konway** from `Desktop and Wallpaper` -> `Get New Plugins...` -> search `Konway`
+`Desktop and Wallpaper` -> `Get New Plugins...` -> search `Konway`
 
-### Manual Local Install
+### Local Deploy
 
-From this repo root (`life.wallpaper/`):
+Run from `life.wallpaper/`:
 
 ```bash
 ./tools/deploy_local.sh
 ```
 
-If Plasma still shows old UI text/settings, restart shell:
+If Plasma still shows stale QML/settings:
 
 ```bash
-plasmashell --replace & disown
+kquitapp6 plasmashell && kstart6 plasmashell
 ```
 
-## Quick Settings Guide
+## Quick Controls
 
-- `Cell size`: visual pixel size of cells.
-- `Target TPS`: simulation speed (ticks per second).
-- `Simulation downscale`: simulation detail level. `1` is max detail, `2` is usually enough.
-- `Sync with TPS`: recommended default. Internal driver timing follows TPS automatically.
-- `Clock mode`: `Off` or `Hybrid Local Time`. Clock size control is active only when clock mode is on.
-
-## Stability and Safety Notes
-
-- Simulation runs on GPU which is quite easy to run for even old PCs; no per-cell CPU loop per frame, this makes it one of the most efficient live wallpaper plugin.
-- Downscale has a safety guard: if grid density becomes too heavy, Konway auto-raises effective downscale to avoid freezes.
-- In Safety tab you can enable visual safety limits and reduce ticks per second even more.
-- `Pause when Plasma is inactive` is available in Performance tab.
+- `Cell size`: visual size of cells
+- `Target TPS`: simulation speed (ticks per second)
+- `Simulation downscale`: lower load by reducing simulation resolution (`1` is max detail)
+- `Sync with TPS`: keeps internal driver timing aligned with TPS
+- `Pause when Plasma is inactive`: optional power save behavior
 
 ## Build Shaders (`.qsb`)
 
-Run from `life.wallpaper/`:
+From `life.wallpaper/`:
 
 ```bash
 qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/life_step.frag.qsb contents/shaders/life_step.frag
@@ -61,7 +67,7 @@ qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/visualize.fra
 qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/population_probe.frag.qsb contents/shaders/population_probe.frag
 ```
 
-Or:
+or:
 
 ```bash
 ./tools/build_shaders.sh
@@ -69,61 +75,43 @@ Or:
 
 ## Pattern Packs
 
-Built-in patterns are under:
+Built-in pattern data:
 
 - `contents/patterns/rle/<category>/*.rle`
 - `contents/patterns/index.json`
 - `contents/patterns/patternData.js`
 
-After adding/editing `.rle` files, rebuild pattern metadata:
+Rebuild index/data after RLE edits:
 
 ```bash
 ./tools/build_patterns_index.py
 ```
 
-Optional external import helper:
+Optional external pack helper:
 
 ```bash
 ./tools/download_external_pack.sh /path/to/manifest.txt
 ```
 
-Manifest format:
+## KPackage Build
 
-- `pattern_name category`
-- `pattern_name category sha256`
-
-The importer validates name/category, blocks path traversal, and verifies hash when provided.
-
-## KDE Store / KPackage Build
-
-Konway is already a Plasma wallpaper KPackage layout (`metadata.json` + `contents/`).
-
-To produce upload/install archives:
+Create install/upload archives:
 
 ```bash
 ./tools/build_kpackage.sh
 ```
 
-Output files are written to `dist/`:
+Output:
 
-- `com.github.arcanorca.konway-<version>.kpackage.tar.gz`
-- `com.github.arcanorca.konway-<version>.kpackage.zip`
+- `dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz`
+- `dist/com.github.arcanorca.konway-<version>.kpackage.zip`
 
-Local install test:
+Local package install test:
 
 ```bash
 kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz
 ```
 
-## Main Files
-
-- `metadata.json`: plugin metadata and ID
-- `contents/ui/main.qml`: runtime logic
-- `contents/config/main.xml`: config schema
-- `contents/ui/config*.qml`: settings pages
-- `contents/shaders/*.frag`: shader sources
-- `tools/`: build, deploy, packaging, and pattern scripts
-
 ## License
 
-GPL-3.0-or-later.
+GPL-3.0-or-later

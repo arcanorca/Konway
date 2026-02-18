@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"
+     viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- background -->
+  <rect width="32" height="32" fill="#1a1a1a"/>
+
+  <!-- GLIDER: 2x shade only -->
+  <g fill="#50C878">
+    <!-- shade 1 -->
+    <g opacity="0.12" transform="translate(3,4) scale(7)">
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="1" y="0" width="1" height="1"/>
+      <rect x="1" y="2" width="1" height="1"/>
+      <rect x="2" y="1" width="1" height="1"/>
+      <rect x="2" y="2" width="1" height="1"/>
+    </g>
+
+    <!-- shade 2 -->
+    <g opacity="0.20" transform="translate(4,3) scale(7)">
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="1" y="0" width="1" height="1"/>
+      <rect x="1" y="2" width="1" height="1"/>
+      <rect x="2" y="1" width="1" height="1"/>
+      <rect x="2" y="2" width="1" height="1"/>
+    </g>
+
+    <!-- MAIN GLIDER -->
+    <g transform="translate(6,2) scale(7)">
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="1" y="0" width="1" height="1"/>
+      <rect x="1" y="2" width="1" height="1"/>
+      <rect x="2" y="1" width="1" height="1"/>
+      <rect x="2" y="2" width="1" height="1"/>
+    </g>
+  </g>
+
+  <!-- "konway" pixel hacker font -->
+  <g fill="#50C878">
+    <!-- subtle glow/shadow behind text (single layer) -->
+    <g opacity="0.16" transform="translate(5,25)">
+      <!-- k -->
+      <rect x="0" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/>
+      <rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/>
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/>
+      <rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/>
+      <!-- o -->
+      <rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/>
+      <rect x="4" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/>
+      <rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/>
+      <rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/>
+      <rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/>
+      <!-- n -->
+      <rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/>
+      <rect x="8" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/>
+      <rect x="8" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/>
+      <rect x="8" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/>
+      <rect x="8" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/>
+      <!-- w -->
+      <rect x="12" y="0" width="1" height="1"/><rect x="14" y="0" width="1" height="1"/>
+      <rect x="12" y="1" width="1" height="1"/><rect x="14" y="1" width="1" height="1"/>
+      <rect x="12" y="2" width="1" height="1"/><rect x="13" y="2" width="1" height="1"/><rect x="14" y="2" width="1" height="1"/>
+      <rect x="12" y="3" width="1" height="1"/><rect x="13" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/>
+      <rect x="12" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/>
+      <!-- a -->
+      <rect x="17" y="0" width="1" height="1"/>
+      <rect x="16" y="1" width="1" height="1"/><rect x="18" y="1" width="1" height="1"/>
+      <rect x="16" y="2" width="1" height="1"/><rect x="17" y="2" width="1" height="1"/><rect x="18" y="2" width="1" height="1"/>
+      <rect x="16" y="3" width="1" height="1"/><rect x="18" y="3" width="1" height="1"/>
+      <rect x="16" y="4" width="1" height="1"/><rect x="18" y="4" width="1" height="1"/>
+      <!-- y -->
+      <rect x="20" y="0" width="1" height="1"/><rect x="22" y="0" width="1" height="1"/>
+      <rect x="20" y="1" width="1" height="1"/><rect x="22" y="1" width="1" height="1"/>
+      <rect x="21" y="2" width="1" height="1"/>
+      <rect x="21" y="3" width="1" height="1"/>
+      <rect x="21" y="4" width="1" height="1"/>
+      <!-- underline -->
+      <rect x="0" y="6" width="23" height="1"/>
+    </g>
+
+    <!-- main text -->
+    <g transform="translate(4,24)">
+      <!-- k -->
+      <rect x="0" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/>
+      <rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/>
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/>
+      <rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/>
+
+      <!-- o -->
+      <rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/>
+      <rect x="4" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/>
+      <rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/>
+      <rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/>
+      <rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/>
+
+      <!-- n -->
+      <rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/>
+      <rect x="8" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/>
+      <rect x="8" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/>
+      <rect x="8" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/>
+      <rect x="8" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/>
+
+      <!-- w -->
+      <rect x="12" y="0" width="1" height="1"/><rect x="14" y="0" width="1" height="1"/>
+      <rect x="12" y="1" width="1" height="1"/><rect x="14" y="1" width="1" height="1"/>
+      <rect x="12" y="2" width="1" height="1"/><rect x="13" y="2" width="1" height="1"/><rect x="14" y="2" width="1" height="1"/>
+      <rect x="12" y="3" width="1" height="1"/><rect x="13" y="3" width="1" height="1"/><rect x="14" y="3" width="1" height="1"/>
+      <rect x="12" y="4" width="1" height="1"/><rect x="14" y="4" width="1" height="1"/>
+
+      <!-- a -->
+      <rect x="17" y="0" width="1" height="1"/>
+      <rect x="16" y="1" width="1" height="1"/><rect x="18" y="1" width="1" height="1"/>
+      <rect x="16" y="2" width="1" height="1"/><rect x="17" y="2" width="1" height="1"/><rect x="18" y="2" width="1" height="1"/>
+      <rect x="16" y="3" width="1" height="1"/><rect x="18" y="3" width="1" height="1"/>
+      <rect x="16" y="4" width="1" height="1"/><rect x="18" y="4" width="1" height="1"/>
+
+      <!-- y -->
+      <rect x="20" y="0" width="1" height="1"/><rect x="22" y="0" width="1" height="1"/>
+      <rect x="20" y="1" width="1" height="1"/><rect x="22" y="1" width="1" height="1"/>
+      <rect x="21" y="2" width="1" height="1"/>
+      <rect x="21" y="3" width="1" height="1"/>
+      <rect x="21" y="4" width="1" height="1"/>
+
+      <!-- underline + cursor block -->
+      <rect x="0" y="6" width="23" height="1"/>
+      <rect x="24" y="4" width="1" height="1"/>
+    </g>
+
+    <!-- subtle scanline -->
+    <rect x="3" y="31" width="26" height="1" opacity="0.10"/>
+  </g>
+</svg>
