@@ -29,28 +29,26 @@ Konway is a lightweight and highly customizable live wallpaper plugin for KDE Pl
 - Activity injector so simulation does not stall
 - Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
+- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) strings. Beyond standard Life (`B3/S23`), you can simulate other universes like HighLife (B36/S23) or Day & Night.
 - Full settings UI tabs:
   `General, Simulation, Patterns, Appearance, Performance, Safety`
   
 ## // HOW IT WORKS
 
-### 1) GPU Simulation
-- The simulation is stored in a texture (alive/dead cells).
-- Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).
-- No per-cell CPU loop each frame — the CPU mostly just schedules ticks.
+### 1. The GPU Pipeline
+The simulation is stored in a texture (alive/dead cells).
+Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).
+No per-cell CPU loop each frame — the CPU mostly just schedules ticks. 
 
-### 2) Staying Alive (Pattern Injection)
-Classic Life often settles into still lifes or emptiness.  
-Konway can keep the world lively by **stamping curated patterns** (ships, oscillators, methuselahs, etc.) when activity drops.
+### 2. Entropy Management (Auto-Injection)
+Classic automata tend to reach equilibrium (still life) over time in a closed environment. 
+* **Dynamic Seeding:** When entropy drops below a threshold, it randomly injects curated patterns (Gliders, Methuselahs, R-Pentominoes etc.).
+* **Purist Mode:** This behavior is fully configurable or can be disabled for a strictly deterministic run.
 
-- Fully configurable (thresholds, interval, pattern categories)
-- Can be disabled for “pure” Life
-
-### 3) Calm Rendering (Long-session friendly)
-Life can flicker (oscillators, rapid changes).
-- Subtle trails / persistence (reduces harsh blinking)
-- Eye-friendly palettes and brightness limits (Safety tab)
-
+### 3. Visual Ergonomics
+Raw cellular automata can produce harsh, rapid flickering (1-period oscillators) that can be distracting for a wallpaper.
+* **Subtle trails:** Adjustable decay trails create a phosphor-persistence effect, smoothing out visual noise.
+* **Safety Limits:** Integrated brightness clamping and contrast controls to prevent eye strain during long sessions.
 
 ## // INSTALL
 
