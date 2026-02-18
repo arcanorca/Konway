@@ -56,14 +56,14 @@ If Plasma still shows stale QML/settings:
 plasmashell --replace & disown
 ```
 
-## Quick Settings Guide
+## // Quick Settings Guide
 
 - `Cell size`: visual size of cells
 - `Target TPS`: simulation speed (ticks per second)
 - `Sync with TPS`: keeps internal driver timing aligned with TPS
 - `Pause when Plasma is inactive`: optional power save behavior
 
-## Build Shaders (`.qsb`)
+## // Build Shaders (`.qsb`)
 
 From `life.wallpaper/`:
 
@@ -79,7 +79,7 @@ or:
 ./tools/build_shaders.sh
 ```
 
-## Pattern Packs
+## // Pattern Packs
 
 Built-in pattern data:
 
@@ -99,7 +99,7 @@ Optional external pack helper:
 ./tools/download_external_pack.sh /path/to/manifest.txt
 ```
 
-## KPackage Build
+## // KPackage Build
 
 Create install/upload archives:
 
