@@ -138,4 +138,8 @@ GPL-3.0-or-later
 ## // Stack
 KDE Plasma 6 • Qt 6 (QML/JS) • GLSL (.qsb via Qt RHI) • kpackagetool6
 
-*Dedicated to the memory of John Horton Conway.*
+---
+
+<p align="center">
+  <i>Dedicated to the memory of John Horton Conway.</i>
+</p>
