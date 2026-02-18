@@ -40,7 +40,7 @@ Every tick, a shader reads the previous state and writes the next state (ping-po
 No per-cell CPU loop each frame, the CPU mostly just schedules ticks. 
 
 ### 2. Entropy Management (Auto-Injection)
-Classic automata tend to reach equilibrium (still life) over time in a closed environment. 
+Classic automata naturally decay into equilibrium (still lifes or oscillators) within a finite grid.
 * **Dynamic Seeding:** When entropy drops below a threshold, it randomly injects curated patterns (Gliders, Methuselahs, R-Pentominoes etc.).
 * **Purist Mode:** This behavior is fully configurable or can be disabled for a strictly deterministic run.
 
