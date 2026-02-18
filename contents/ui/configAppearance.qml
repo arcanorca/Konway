@@ -41,7 +41,7 @@ Kirigami.ScrollablePage {
             cfg.cfg_aliveColor = "#50FA7B";
         } else if (name === "Tokyo Night") {
             cfg.cfg_backgroundColor = "#1A1B26";
-            cfg.cfg_deadColor = "#24283B";
+            cfg.cfg_deadColor = "#292E42";
             cfg.cfg_aliveColor = "#73DACA";
         } else if (name === "Nord") {
             cfg.cfg_backgroundColor = "#2E3440";
@@ -50,11 +50,15 @@ Kirigami.ScrollablePage {
         } else if (name === "Gruvbox") {
             cfg.cfg_backgroundColor = "#282828";
             cfg.cfg_deadColor = "#3C3836";
-            cfg.cfg_aliveColor = "#B8BB26";
+            cfg.cfg_aliveColor = "#FABD2F";
         } else if (name === "Everforest") {
             cfg.cfg_backgroundColor = "#2D353B";
             cfg.cfg_deadColor = "#3D484D";
             cfg.cfg_aliveColor = "#A7C080";
+        } else if (name === "Rose Pine") {
+            cfg.cfg_backgroundColor = "#1F1C21";
+            cfg.cfg_deadColor = "#1F1C21";
+            cfg.cfg_aliveColor = "#A890B6";
         }
     }
 
@@ -82,7 +86,8 @@ Kirigami.ScrollablePage {
                 "Tokyo Night",
                 "Nord",
                 "Gruvbox",
-                "Everforest"
+                "Everforest",
+                "Rose Pine"
             ]
             currentIndex: Math.max(0, model.indexOf(cfg.cfg_palette))
             onActivated: {

@@ -8,10 +8,11 @@ var paletteDefaults = ({
     "Monochrome": { "alive": "#AFAFAF", "dead": "#1D1D1D", "bg": "#101010" },
     "Catppuccin": { "alive": "#A6E3A1", "dead": "#313244", "bg": "#1E1E2E" },
     "Dracula": { "alive": "#50FA7B", "dead": "#44475A", "bg": "#282A36" },
-    "Tokyo Night": { "alive": "#73DACA", "dead": "#24283B", "bg": "#1A1B26" },
+    "Tokyo Night": { "alive": "#73DACA", "dead": "#292E42", "bg": "#1A1B26" },
     "Nord": { "alive": "#A3BE8C", "dead": "#3B4252", "bg": "#2E3440" },
-    "Gruvbox": { "alive": "#B8BB26", "dead": "#3C3836", "bg": "#282828" },
-    "Everforest": { "alive": "#A7C080", "dead": "#3D484D", "bg": "#2D353B" }
+    "Gruvbox": { "alive": "#FABD2F", "dead": "#3C3836", "bg": "#282828" },
+    "Everforest": { "alive": "#A7C080", "dead": "#3D484D", "bg": "#2D353B" },
+    "Rose Pine": { "alive": "#A890B6", "dead": "#1F1C21", "bg": "#1F1C21" }
 })
 
 var coreCuratedIds = [

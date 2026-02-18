@@ -12,7 +12,7 @@ Respect to John Horton Conway.
 
 - GPU ping-pong simulation (Qt RHI shaders, no per-cell CPU loop each frame)
 - Calm default look with built-in palette set:
-  `Calm Dark, Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest`
+  `Calm Dark, Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine`
 - Activity injector so simulation does not stall
 - Optional clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
