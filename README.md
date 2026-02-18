@@ -4,7 +4,7 @@
   <img src="assets/konway-logo.svg" alt="Konway logo" width="220">
 </p>
 
-Konway is a lightweight, customizable cellular automaton engine integrated as a KDE Plasma 6 wallpaper.
+Konway is a lightweight, customizable cellular automaton engine integrated as a KDE Plasma 6 wallpaper plugin.
 
 [demo.webm](https://github.com/user-attachments/assets/09198183-d5c2-430a-a4b2-1fdf05154a2e)
 
