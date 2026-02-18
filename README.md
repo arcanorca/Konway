@@ -11,8 +11,6 @@ Konway is a lightweight and highly customizable live wallpaper plugin for KDE Pl
 
 ## [Settings GUI]
 
-<h2 align="center">Gallery</h2>
-
 <p align="center">
   <img src="assets/settings_general.png" height="200" />
   <img src="assets/settings_simulation.png" height="200" />
