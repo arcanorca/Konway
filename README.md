@@ -2,32 +2,39 @@
 
 ![Konway logo](assets/konway-logo.svg)
 
-Konway is a KDE Plasma 6 live wallpaper plugin based on Conway's Game of Life.
-
-It is QML + GLSL only, GPU-driven, and tuned for stable daily use.
-
-Respect to John Horton Conway.
+Konway is a lightweight and highly customizable live wallpaper plugin for KDE Plasma 6 built around Conway's Game of Life.
 
 ## Highlights
-
-- GPU ping-pong simulation (Qt RHI shaders, no per-cell CPU loop each frame)
+- The simulation runs on the GPU, so even older PCs handle it well. There’s no per-cell CPU loop each frame, making Konway one of the most efficient live wallpaper plugins.
 - Calm default look with built-in palette set:
   `Calm Dark, Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine`
 - Activity injector so simulation does not stall
-- Optional clock overlay mode (`Off` / `Hybrid Local Time`)
+- Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
 - Mouse seeding: left click places a glider, left drag uses brush
 - Full settings UI tabs:
   `General, Simulation, Patterns, Appearance, Performance, Safety`
+  
+## // HOW IT WORKS
 
-## Important Simulation Note
+Konway runs **Conway’s Game of Life** entirely on the GPU.
 
-`Startup seed intensity` is interpreted as a startup/reseed **coverage ratio**.
+### 1) GPU Simulation
+- The simulation is stored in a texture (alive/dead cells).
+- Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).
+- No per-cell CPU loop each frame — the CPU mostly just schedules ticks.
 
-- `100%` means startup seed fills the entire simulation grid
-- Higher coverage can enter overpopulation range and cause early mass extinction (expected Life behavior)
-- UI warns this zone with red slider accent + warning text
+### 2) Staying Alive (Pattern Injection)
+Classic Life often settles into still lifes or emptiness.  
+Konway can keep the world lively by **stamping curated patterns** (ships, oscillators, methuselahs, etc.) when activity drops.
 
-Default behavior remains technically aligned with the previous balanced startup feel.
+- Fully configurable (thresholds, interval, pattern categories)
+- Can be disabled for “pure” Life
+
+### 3) Calm Rendering (Long-session friendly)
+Life can flicker (oscillators, rapid changes).
+- Subtle trails / persistence (reduces harsh blinking)
+- Eye-friendly palettes and brightness limits (Safety tab)
+
 
 ## Install
 
@@ -46,14 +53,13 @@ Run from `life.wallpaper/`:
 If Plasma still shows stale QML/settings:
 
 ```bash
-kquitapp6 plasmashell && kstart6 plasmashell
+plasmashell --replace & disown
 ```
 
-## Quick Controls
+## Quick Settings Guide
 
 - `Cell size`: visual size of cells
 - `Target TPS`: simulation speed (ticks per second)
-- `Simulation downscale`: lower load by reducing simulation resolution (`1` is max detail)
 - `Sync with TPS`: keeps internal driver timing aligned with TPS
 - `Pause when Plasma is inactive`: optional power save behavior
 
@@ -113,5 +119,9 @@ kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway
 ```
 
 ## License
-
 GPL-3.0-or-later
+
+## Stack
+KDE Plasma 6 • Qt 6 (QML/JS) • GLSL (.qsb via Qt RHI) • kpackagetool6
+
+*Dedicated to the memory of John Horton Conway.*
