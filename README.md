@@ -170,9 +170,10 @@ kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway
 
 ### 0.1.1
 
-- Polishing update for Konway
-- Hybrid Local Time clock mode with tiered clock sizes
-- Transition fade is no longer `1` tick, now it is adjustable 1 to 8 ticks.
+- Transition fade is no longer `1` tick, now it is adjustable `1` to `8` ticks.
+- Clock rendering and spacing polish, added new clock sizes.
+- Settings UI cleanup: consistent reset controls and improved General tab clarity
+
 
 ## // License
 GPL-3.0-or-later
