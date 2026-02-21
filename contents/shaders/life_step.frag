@@ -18,6 +18,7 @@ layout(std140, binding = 0) uniform buf {
     vec4 clockRect;
     float clockEnabled;
     float clockPad;
+    float dyingDecayStep;
     float _padding0;
     float _padding1;
 } ubuf;
@@ -84,6 +85,10 @@ bool isInsideClockIsolation(vec2 pixel)
 void main()
 {
     vec2 pixel = floor(qt_TexCoord0 * ubuf.texSize);
+    vec2 prevUv = (pixel + vec2(0.5)) / max(ubuf.texSize, vec2(1.0));
+    vec4 prevSample = texture(prevState, prevUv);
+    float prevAlive = step(0.5, prevSample.r);
+    float prevDying = clamp(prevSample.g, 0.0, 1.0);
 
     float alive;
     if (ubuf.seedMode > 0.5) {
@@ -110,7 +115,7 @@ void main()
             }
         }
 
-        float current = sampleAlive(pixel);
+        float current = prevAlive;
         float n = clamp(floor(neighbors + 0.5), 0.0, 8.0);
         float born = isRuleBitSet(ubuf.bornMask, n);
         float survive = isRuleBitSet(ubuf.surviveMask, n);
@@ -129,5 +134,15 @@ void main()
         alive = 0.0;
     }
 
-    fragColor = vec4(alive, 0.0, 0.0, 1.0) * ubuf.qt_Opacity;
+    float aliveBinary = step(0.5, alive);
+    float decayStep = clamp(ubuf.dyingDecayStep, 0.0, 1.0);
+    float decayedDying = max(0.0, prevDying - decayStep);
+    float justDied = (1.0 - aliveBinary) * prevAlive;
+    float dying = (1.0 - aliveBinary) * max(justDied, decayedDying);
+
+    if (ubuf.seedMode > 0.5) {
+        dying = 0.0;
+    }
+
+    fragColor = vec4(aliveBinary, dying, 0.0, 1.0) * ubuf.qt_Opacity;
 }

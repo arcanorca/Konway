@@ -14,6 +14,7 @@ Kirigami.ScrollablePage {
     property bool showAdvanced: false
     property int intervalMinMs: 500
     property int intervalMaxMs: 12000
+    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     function parseCategories() {
         const categories = (cfg.cfg_enabledCategories || "").split(",").map(s => s.trim()).filter(s => s.length > 0);
@@ -279,9 +280,12 @@ Kirigami.ScrollablePage {
         }
 
         QQC2.Button {
-            Kirigami.FormData.isSection: true
-            text: i18n("Reset Pattern Settings to Defaults")
+            Kirigami.FormData.label: i18n("Patterns tab:")
+            text: i18n("Reset Patterns Tab")
             icon.name: "edit-undo"
+            Layout.preferredWidth: page.resetButtonWidth
+            Layout.minimumWidth: page.resetButtonWidth
+            Layout.maximumWidth: page.resetButtonWidth
             onClicked: cfg.resetPatternsDefaults()
         }
     }

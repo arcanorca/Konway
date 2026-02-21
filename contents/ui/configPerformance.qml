@@ -7,6 +7,7 @@ Kirigami.ScrollablePage {
     id: page
     property var cfg
     property bool showAdvanced: false
+    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     title: i18n("Performance")
 
@@ -95,9 +96,12 @@ Kirigami.ScrollablePage {
         }
 
         QQC2.Button {
-            Kirigami.FormData.isSection: true
-            text: i18n("Reset Performance to Defaults")
+            Kirigami.FormData.label: i18n("Performance tab:")
+            text: i18n("Reset Performance Tab")
             icon.name: "edit-undo"
+            Layout.preferredWidth: page.resetButtonWidth
+            Layout.minimumWidth: page.resetButtonWidth
+            Layout.maximumWidth: page.resetButtonWidth
             onClicked: cfg.resetPerformanceDefaults()
         }
     }

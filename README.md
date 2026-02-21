@@ -130,6 +130,19 @@ Local package install test:
 kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz
 ```
 
+## // CHANGELOG
+
+### 0.1.1 (2026-02-21)
+
+- Post-release polish update for Konway
+- GPU Game of Life simulation (QML + GLSL, Qt RHI, shader ping-pong)
+- Activity injection + curated pattern pack to keep the world alive
+- Hybrid Local Time clock mode with tiered clock sizes
+- Mouse seeding support (left click glider, left drag brush)
+- Photosensitive safety controls and practical preset levels
+- Polished settings UX with consistent reset actions across tabs
+- Transition fade is enabled by default (`1` tick)
+
 ## // License
 GPL-3.0-or-later
 

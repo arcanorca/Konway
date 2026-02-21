@@ -7,6 +7,7 @@ Kirigami.ScrollablePage {
     id: page
     property var cfg
     readonly property real sliderWidth: Kirigami.Units.gridUnit * 11
+    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     title: i18n("Safety")
 
@@ -100,9 +101,12 @@ Kirigami.ScrollablePage {
         }
 
         QQC2.Button {
-            Kirigami.FormData.isSection: true
-            text: i18n("Reset Safety to Defaults")
+            Kirigami.FormData.label: i18n("Safety tab:")
+            text: i18n("Reset Safety Tab")
             icon.name: "edit-undo"
+            Layout.preferredWidth: page.resetButtonWidth
+            Layout.minimumWidth: page.resetButtonWidth
+            Layout.maximumWidth: page.resetButtonWidth
             onClicked: cfg.resetSafetyDefaults()
         }
     }

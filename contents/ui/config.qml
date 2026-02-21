@@ -50,6 +50,7 @@ ColumnLayout {
     property color cfg_backgroundColor
     property string cfg_cellShape
     property bool cfg_dyingFadeEnabled
+    property int cfg_dyingFadeTicks
 
     property bool cfg_photosensitiveSafe
     property double cfg_safeContrast
@@ -193,6 +194,7 @@ ColumnLayout {
         cfg_backgroundColor = defaults.backgroundColor;
         cfg_cellShape = defaults.cellShape;
         cfg_dyingFadeEnabled = defaults.dyingFadeEnabled;
+        cfg_dyingFadeTicks = defaults.dyingFadeTicks;
     }
 
     function resetPerformanceDefaults() {

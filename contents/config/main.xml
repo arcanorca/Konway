@@ -144,7 +144,11 @@
     </entry>
     <entry name="dyingFadeEnabled" type="Bool">
       <label>Enable soft fading for dying cells</label>
-      <default>false</default>
+      <default>true</default>
+    </entry>
+    <entry name="dyingFadeTicks" type="Int">
+      <label>Dying-cell transition length in ticks</label>
+      <default>1</default>
     </entry>
   </group>
 

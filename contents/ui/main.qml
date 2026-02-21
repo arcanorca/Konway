@@ -12,6 +12,7 @@ WallpaperItem {
     readonly property var coreCuratedIds: MainConstants.coreCuratedIds
     readonly property string builtinGosperRle: MainConstants.builtinGosperRle
     readonly property var clockGlyphs: MainConstants.clockGlyphs
+    readonly property var miniClockGlyphs: MainConstants.miniClockGlyphs
     readonly property var defaultCategoryWeights: MainConstants.defaultCategoryWeights
 
     property var patternCatalog: []
@@ -73,7 +74,7 @@ WallpaperItem {
     property bool cfgDebug: cfgBool("debugLogging", false)
     property string cfgReseedRequest: cfgString("reseedRequest", "")
     property string cfgClockMode: cfgString("clockMode", "Off")
-    property real cfgClockScale: cfgReal("clockScale", 1.0, 0.5, 1.5)
+    property real cfgClockScale: cfgReal("clockScale", 1.0, 0.35, 2.0)
 
     property int cfgCellSize: cfgInt("cellSize", 10, 2, 64)
     property int cfgTps: cfgInt("tps", 3, 1, 240)
@@ -109,7 +110,8 @@ WallpaperItem {
     property color cfgDeadColor: cfgColor("deadColor", paletteColor("dead"))
     property color cfgBackgroundColor: cfgColor("backgroundColor", paletteColor("bg"))
     property string cfgCellShape: cfgString("cellShape", "Go Board")
-    property bool cfgDyingFadeEnabled: cfgBool("dyingFadeEnabled", false)
+    property bool cfgDyingFadeEnabled: cfgBool("dyingFadeEnabled", true)
+    property int cfgDyingFadeTicks: cfgInt("dyingFadeTicks", 1, 1, 8)
 
     property bool cfgPhotoSafe: cfgBool("photosensitiveSafe", false)
     property real cfgSafeContrast: cfgReal("safeContrast", 0.78, 0.4, 1.0)
@@ -659,53 +661,148 @@ WallpaperItem {
         };
     }
 
+    function snappedClockScale(rawValue) {
+        const stops = [0.35, 0.55, 0.75, 1.00, 1.35, 1.75, 2.00];
+        const value = Math.max(0.35, Math.min(2.0, Number(rawValue)));
+        let nearest = stops[0];
+        let bestDistance = Math.abs(value - nearest);
+        for (let i = 1; i < stops.length; ++i) {
+            const distance = Math.abs(value - stops[i]);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                nearest = stops[i];
+            }
+        }
+        return nearest;
+    }
+
+    function clockOverlayScale() {
+        const s = snappedClockScale(cfgClockScale);
+        // Desk Clock: emulate ~1.5px stroke thickness without switching to full 2px blocks.
+        if (Math.abs(s - 0.75) < 0.001) {
+            return 1.5;
+        }
+        // Preserve crisp pixel-art look for small tiers (Pocket/Wristwatch/Desk Clock).
+        if (s <= 0.80) {
+            return 1.0;
+        }
+        // For bigger tiers, allow controlled enlargement while keeping readability.
+        return Math.max(1.0, Math.min(1.38, 0.86 + s * 0.29));
+    }
+
     function buildClockCellsForText(text) {
         if (!text || !text.length) {
             return null;
         }
 
         const chars = text.split("");
-        const scale = Math.max(0.5, Math.min(1.5, Number(cfgClockScale)));
-        // Discrete sizing keeps Wristwatch visibly smaller and thin (single-cell stroke).
-        let pixelPitch = 2;
-        let pixelBlock = 2;
-        let charSpacing = 1;
-        if (scale <= 0.75) {
-            pixelPitch = 1;
-            pixelBlock = 1;
-            charSpacing = 1;
-        } else if (scale <= 1.00) {
-            pixelPitch = 2;
-            pixelBlock = 2;
-            charSpacing = 1;
-        } else if (scale <= 1.25) {
-            pixelPitch = 2;
-            pixelBlock = 2;
-            charSpacing = 2;
-        } else {
-            pixelPitch = 3;
-            pixelBlock = 3;
-            charSpacing = 2;
+        const scale = snappedClockScale(cfgClockScale);
+        const profiles = [
+            { scale: 0.35, glyphs: miniClockGlyphs, pixelPitch: 1, pixelBlock: 1, charSpacing: 1, colonSlotFactor: 0.62 },
+            { scale: 0.55, glyphs: clockGlyphs, pixelPitch: 1, pixelBlock: 1, charSpacing: 1, colonSlotFactor: 0.52 },
+            { scale: 0.75, glyphs: clockGlyphs, pixelPitch: 2, pixelBlock: 1, charSpacing: 2, colonSlotFactor: 0.50 },
+            { scale: 1.00, glyphs: clockGlyphs, pixelPitch: 2, pixelBlock: 2, charSpacing: 1, colonSlotFactor: 0.50 },
+            { scale: 1.35, glyphs: clockGlyphs, pixelPitch: 3, pixelBlock: 2, charSpacing: 2, colonSlotFactor: 0.48 },
+            { scale: 1.75, glyphs: clockGlyphs, pixelPitch: 4, pixelBlock: 3, charSpacing: 2, colonSlotFactor: 0.46 },
+            { scale: 2.00, glyphs: clockGlyphs, pixelPitch: 4, pixelBlock: 4, charSpacing: 3, colonSlotFactor: 0.46 }
+        ];
+
+        function glyphFor(profile, ch) {
+            const set = profile.glyphs || clockGlyphs;
+            return set[ch] || set["0"] || clockGlyphs[ch] || clockGlyphs["0"];
         }
 
-        let totalW = 0;
-        let totalH = 0;
-        for (let i = 0; i < chars.length; ++i) {
-            const glyph = clockGlyphs[chars[i]] || clockGlyphs["0"];
+        function glyphPixelWidth(profile, glyph) {
             if (!glyph || glyph.length === 0) {
-                continue;
+                return 0;
             }
             const glyphW = glyph[0].length;
-            const glyphH = glyph.length;
-            const glyphPixelW = (glyphW - 1) * pixelPitch + pixelBlock;
-            const glyphPixelH = (glyphH - 1) * pixelPitch + pixelBlock;
-            totalW += glyphPixelW;
-            if (i < chars.length - 1) {
-                totalW += charSpacing;
-            }
-            totalH = Math.max(totalH, glyphPixelH);
+            return (glyphW - 1) * profile.pixelPitch + profile.pixelBlock;
         }
 
+        function glyphPixelHeight(profile, glyph) {
+            if (!glyph || glyph.length === 0) {
+                return 0;
+            }
+            const glyphH = glyph.length;
+            return (glyphH - 1) * profile.pixelPitch + profile.pixelBlock;
+        }
+
+        function colonAdvanceWidth(profile, glyph) {
+            if (!glyph || glyph.length === 0) {
+                return 0;
+            }
+            const baseWidth = glyphPixelWidth(profile, glyph);
+            if (chars.length !== 5 || chars[2] !== ":" || chars[0] === undefined || chars[1] === undefined) {
+                return baseWidth;
+            }
+            const refGlyph = glyphFor(profile, "0");
+            const refWidth = glyphPixelWidth(profile, refGlyph);
+            // Digital clocks look more balanced when ":" occupies about half a digit slot.
+            const factor = Math.max(0.35, Math.min(0.80, Number(profile.colonSlotFactor || 0.50)));
+            const ideal = Math.max(baseWidth, Math.floor(refWidth * factor));
+            return ideal;
+        }
+
+        function glyphAdvanceWidth(profile, ch, glyph) {
+            if (ch === ":") {
+                return colonAdvanceWidth(profile, glyph);
+            }
+            return glyphPixelWidth(profile, glyph);
+        }
+
+        function glyphDrawOffsetX(profile, ch, glyph) {
+            if (ch !== ":") {
+                return 0;
+            }
+            const advance = glyphAdvanceWidth(profile, ch, glyph);
+            const base = glyphPixelWidth(profile, glyph);
+            return Math.max(0, Math.floor((advance - base) * 0.5));
+        }
+
+        function measurePattern(profile) {
+            let w = 0;
+            let h = 0;
+            for (let i = 0; i < chars.length; ++i) {
+                const ch = chars[i];
+                const glyph = glyphFor(profile, ch);
+                if (!glyph || glyph.length === 0) {
+                    continue;
+                }
+                const glyphPixelW = glyphAdvanceWidth(profile, ch, glyph);
+                const glyphPixelH = glyphPixelHeight(profile, glyph);
+                w += glyphPixelW;
+                if (i < chars.length - 1) {
+                    w += profile.charSpacing;
+                }
+                h = Math.max(h, glyphPixelH);
+            }
+            return { w: w, h: h };
+        }
+
+        let profileIndex = 0;
+        let bestDistance = 999.0;
+        for (let i = 0; i < profiles.length; ++i) {
+            const distance = Math.abs(scale - profiles[i].scale);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                profileIndex = i;
+            }
+        }
+
+        let profile = profiles[profileIndex];
+        let measured = measurePattern(profile);
+
+        // Keep geometry distinct by selected size as much as possible.
+        // Only downshift if the chosen profile cannot fit in current simulation grid.
+        while (profileIndex > 0 && (measured.w + 3 >= simGridWidth || measured.h + 3 >= simGridHeight)) {
+            profileIndex -= 1;
+            profile = profiles[profileIndex];
+            measured = measurePattern(profile);
+        }
+
+        const totalW = measured.w;
+        const totalH = measured.h;
         if (totalW < 1 || totalH < 1) {
             return null;
         }
@@ -720,12 +817,13 @@ WallpaperItem {
         let cursor = 0;
 
         for (let ci = 0; ci < chars.length; ++ci) {
-            const glyph = clockGlyphs[chars[ci]] || clockGlyphs["0"];
+            const ch = chars[ci];
+            const glyph = glyphFor(profile, ch);
             if (!glyph || glyph.length === 0) {
                 continue;
             }
 
-            const glyphW = glyph[0].length;
+            const drawOffsetX = glyphDrawOffsetX(profile, ch, glyph);
             for (let gy = 0; gy < glyph.length; ++gy) {
                 const row = glyph[gy];
                 for (let gx = 0; gx < row.length; ++gx) {
@@ -733,20 +831,20 @@ WallpaperItem {
                         continue;
                     }
 
-                    const baseX = originX + cursor + gx * pixelPitch;
-                    const baseY = originY + gy * pixelPitch;
+                    const baseX = originX + cursor + drawOffsetX + gx * profile.pixelPitch;
+                    const baseY = originY + gy * profile.pixelPitch;
 
-                    for (let by = 0; by < pixelBlock; ++by) {
-                        for (let bx = 0; bx < pixelBlock; ++bx) {
+                    for (let by = 0; by < profile.pixelBlock; ++by) {
+                        for (let bx = 0; bx < profile.pixelBlock; ++bx) {
                             cells.push({ x: baseX + bx, y: baseY + by });
                         }
                     }
                 }
             }
 
-            cursor += (glyphW - 1) * pixelPitch + pixelBlock;
+            cursor += glyphAdvanceWidth(profile, ch, glyph);
             if (ci < chars.length - 1) {
-                cursor += charSpacing;
+                cursor += profile.charSpacing;
             }
         }
 
@@ -2114,6 +2212,7 @@ WallpaperItem {
         property vector4d clockRect: Qt.vector4d(clockRegionX, clockRegionY, clockRegionW, clockRegionH)
         property real clockEnabled: clockModeEnabled && clockRegionValid ? 1.0 : 0.0
         property real clockPad: clockBarrierPadding
+        property real dyingDecayStep: 1.0 / Math.max(1, cfgDyingFadeTicks)
         property real _padding0: 0.0
         property real _padding1: 0.0
 
@@ -2152,6 +2251,7 @@ WallpaperItem {
         property vector4d clockRect: Qt.vector4d(clockRegionX, clockRegionY, clockRegionW, clockRegionH)
         property real clockEnabled: clockModeEnabled && clockRegionValid ? 1.0 : 0.0
         property real clockPad: clockBarrierPadding
+        property real dyingDecayStep: 1.0 / Math.max(1, cfgDyingFadeTicks)
         property real _padding0: 0.0
         property real _padding1: 0.0
 
@@ -2315,11 +2415,16 @@ WallpaperItem {
 
                 readonly property real cellW: root.width / Math.max(1, root.simGridWidth)
                 readonly property real cellH: root.height / Math.max(1, root.simGridHeight)
+                readonly property real visualScale: root.clockOverlayScale()
+                readonly property real pixelW: Math.max(1, Math.ceil(cellW * visualScale))
+                readonly property real pixelH: Math.max(1, Math.ceil(cellH * visualScale))
+                readonly property real baseX: (modelData.x / Math.max(1, root.simGridWidth)) * root.width
+                readonly property real baseY: (modelData.y / Math.max(1, root.simGridHeight)) * root.height
 
-                x: Math.floor((modelData.x / Math.max(1, root.simGridWidth)) * root.width) - clockFaceOverlay.x
-                y: Math.floor((modelData.y / Math.max(1, root.simGridHeight)) * root.height) - clockFaceOverlay.y
-                width: Math.max(1, Math.ceil(cellW))
-                height: Math.max(1, Math.ceil(cellH))
+                x: Math.floor(baseX + (cellW - pixelW) * 0.5) - clockFaceOverlay.x
+                y: Math.floor(baseY + (cellH - pixelH) * 0.5) - clockFaceOverlay.y
+                width: pixelW
+                height: pixelH
                 color: root.renderPaletteActivity(1.0, cfgPhotoSafe ? 0.88 : 1.0)
                 radius: cfgCellShape === "Square" ? 0 : Math.min(width, height) * 0.5
             }
@@ -2578,6 +2683,7 @@ WallpaperItem {
     onCfgSafeUltraLowTpsEnabledChanged: stepBudget = 0.0
     onCfgSafeUltraLowTpsChanged: stepBudget = 0.0
     onCfgPhotoSafeChanged: stepBudget = 0.0
+    onCfgDyingFadeTicksChanged: logDebug("dying fade ticks=" + cfgDyingFadeTicks)
     onCfgPreviewSeedRequestChanged: checkPreviewSeedRequest()
     onCfgReseedRequestChanged: checkReseedRequest()
     onCfgClockScaleChanged: {

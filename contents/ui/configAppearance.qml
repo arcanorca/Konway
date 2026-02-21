@@ -7,8 +7,19 @@ import org.kde.kquickcontrols as KQuickControls
 Kirigami.ScrollablePage {
     id: page
     property var cfg
+    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     title: i18n("Appearance")
+
+    function setTransitionTicks(rawValue) {
+        const rounded = Math.max(1, Math.min(8, Math.round(Number(rawValue))));
+        if (cfg.cfg_dyingFadeTicks !== rounded) {
+            cfg.cfg_dyingFadeTicks = rounded;
+        }
+        if (cfg.wallpaperConfiguration) {
+            cfg.wallpaperConfiguration["dyingFadeTicks"] = rounded;
+        }
+    }
 
     function applyPalette(name) {
         if (name === "Calm Dark") {
@@ -162,21 +173,58 @@ Kirigami.ScrollablePage {
 
         QQC2.CheckBox {
             Kirigami.FormData.label: i18n("Transition:")
-            text: i18n("Soft fade for dying cells (1 tick)")
+            text: i18n("Enable soft fade for dying cells")
             checked: cfg.cfg_dyingFadeEnabled
-            onToggled: cfg.cfg_dyingFadeEnabled = checked
+            onToggled: {
+                cfg.cfg_dyingFadeEnabled = checked;
+                if (cfg.wallpaperConfiguration) {
+                    cfg.wallpaperConfiguration["dyingFadeEnabled"] = checked;
+                }
+            }
+        }
+
+        RowLayout {
+            Kirigami.FormData.label: i18n("Transition ticks:")
+            Layout.fillWidth: true
+            enabled: cfg.cfg_dyingFadeEnabled
+            spacing: Kirigami.Units.smallSpacing
+
+            QQC2.Slider {
+                id: fadeTicksSlider
+                Layout.fillWidth: true
+                from: 1
+                to: 8
+                stepSize: 1
+                snapMode: QQC2.Slider.SnapAlways
+                value: Math.max(1, Math.min(8, cfg.cfg_dyingFadeTicks))
+                onMoved: page.setTransitionTicks(value)
+                onValueChanged: if (pressed) {
+                    page.setTransitionTicks(value);
+                }
+            }
+
+            QQC2.Label {
+                text: String(Math.max(1, Math.min(8, Math.round(fadeTicksSlider.value))))
+                horizontalAlignment: Text.AlignRight
+                Layout.minimumWidth: Kirigami.Units.gridUnit * 2
+            }
         }
 
         QQC2.Label {
             Kirigami.FormData.label: i18n("Transition info:")
-            text: i18n("When enabled, dying cells are rendered at 50% intensity for one tick.")
+            text: cfg.cfg_dyingFadeEnabled
+                ? i18n("Dying cells fade out over %1 tick(s) at 50% max intensity.", Math.max(1, cfg.cfg_dyingFadeTicks))
+                : i18n("Fade is disabled.")
             wrapMode: Text.WordWrap
         }
 
         QQC2.Button {
-            Kirigami.FormData.isSection: true
-            text: i18n("Reset Appearance to Defaults")
+            Kirigami.FormData.label: i18n("Appearance tab:")
+            text: i18n("Reset Appearance Tab")
             icon.name: "edit-undo"
+            Layout.preferredWidth: page.resetButtonWidth
+            Layout.minimumWidth: page.resetButtonWidth
+            Layout.maximumWidth: page.resetButtonWidth
             onClicked: cfg.resetAppearanceDefaults()
         }
     }

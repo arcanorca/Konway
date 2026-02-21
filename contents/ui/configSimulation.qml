@@ -8,6 +8,7 @@ Kirigami.ScrollablePage {
     property var cfg
     property bool showAdvanced: false
     readonly property real extinctionCoverageThreshold: 0.35
+    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     function startupCoverageFromIntensity(value) {
         const v = Math.max(0.05, Math.min(1.0, Number(value)));
@@ -156,9 +157,12 @@ Kirigami.ScrollablePage {
         }
 
         QQC2.Button {
-            Kirigami.FormData.isSection: true
-            text: i18n("Reset Simulation to Defaults")
+            Kirigami.FormData.label: i18n("Simulation tab:")
+            text: i18n("Reset Simulation Tab")
             icon.name: "edit-undo"
+            Layout.preferredWidth: page.resetButtonWidth
+            Layout.minimumWidth: page.resetButtonWidth
+            Layout.maximumWidth: page.resetButtonWidth
             onClicked: cfg.resetSimulationDefaults()
         }
     }

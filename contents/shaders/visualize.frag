@@ -23,9 +23,12 @@ layout(binding = 2) uniform sampler2D prevStateTexture;
 
 void main()
 {
-    float alive = step(0.5, texture(stateTexture, qt_TexCoord0).r);
+    vec4 stateSample = texture(stateTexture, qt_TexCoord0);
+    float alive = step(0.5, stateSample.r);
     float prevAlive = step(0.5, texture(prevStateTexture, qt_TexCoord0).r);
-    float dying = (1.0 - alive) * prevAlive * clamp(ubuf.dyingPower, 0.0, 1.0);
+    float dyingTrail = clamp(stateSample.g, 0.0, 1.0);
+    float instantDying = (1.0 - alive) * prevAlive;
+    float dying = max(dyingTrail, instantDying) * clamp(ubuf.dyingPower, 0.0, 1.0);
     float activity = max(alive, dying);
 
     vec2 cellUv = fract(qt_TexCoord0 * ubuf.texSize);
