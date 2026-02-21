@@ -68,6 +68,42 @@ If Plasma still shows stale QML/settings:
 plasmashell --replace & disown
 ```
 
+## // UPDATE (Already Installed)
+
+### KDE Store Install
+
+- Open `Desktop and Wallpaper` -> `Get New Plugins...`
+- Check for updates and update `Konway`
+- If the old QML stays cached, restart Plasma:
+
+```bash
+kquitapp6 plasmashell && kstart6 plasmashell
+```
+
+### Local Deploy Install
+
+From your cloned repo:
+
+```bash
+git pull
+cd life.wallpaper
+./tools/deploy_local.sh
+```
+
+If needed:
+
+```bash
+kquitapp6 plasmashell && kstart6 plasmashell
+```
+
+### KPackage Install
+
+If you install from `dist/*.kpackage.tar.gz`, use upgrade:
+
+```bash
+kpackagetool6 --type Plasma/Wallpaper --upgrade dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz
+```
+
 ## // Quick Settings Guide
 
 - `Cell size`: visual size of cells
