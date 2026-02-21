@@ -132,16 +132,11 @@ kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway
 
 ## // CHANGELOG
 
-### 0.1.1 (2026-02-21)
+### 0.1.1
 
-- Post-release polish update for Konway
-- GPU Game of Life simulation (QML + GLSL, Qt RHI, shader ping-pong)
-- Activity injection + curated pattern pack to keep the world alive
+- Polishing update for Konway
 - Hybrid Local Time clock mode with tiered clock sizes
-- Mouse seeding support (left click glider, left drag brush)
-- Photosensitive safety controls and practical preset levels
-- Polished settings UX with consistent reset actions across tabs
-- Transition fade is enabled by default (`1` tick)
+- Transition fade is no longer `1` tick, now it is adjustable 1 to 8 ticks.
 
 ## // License
 GPL-3.0-or-later
