@@ -93,7 +93,7 @@ cd life.wallpaper
 If needed:
 
 ```bash
-kquitapp6 plasmashell && kstart6 plasmashell
+plasmashell --replace & disown
 ```
 
 ### KPackage Install
