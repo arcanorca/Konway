@@ -372,7 +372,7 @@ ColumnLayout {
                     required property var modelData
                     text: modelData.label
                     icon.name: modelData.icon
-                    display: root.width < Kirigami.Units.gridUnit * 44 ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+                    display: root.width < Kirigami.Units.gridUnit * 56 ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
                     width: implicitWidth
                     QQC2.ToolTip.visible: hovered
                     QQC2.ToolTip.text: modelData.label

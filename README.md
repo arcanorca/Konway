@@ -24,15 +24,30 @@ A lightweight Conway's Game of Life live wallpaper for KDE Plasma 6. The simulat
 
 ## Features
 
-- **GPU simulation:** no per-cell CPU loop, so it stays light even on older machines.
-- **Adaptive auto-injection:** the wallpaper watches which parts of the screen have gone quiet and adds gliders, growth seeds and small soups there, so it never settles into a few static blinkers. A Liveliness slider sets how busy it stays. The old timer-based injector is still available as Classic, and injection can be turned off.
-- **Zen mode:** slow breathing tempo, soft trails, gentle injections and an optional evening dim.
-- **Profiles:** Zen, Balanced, Lively.
-- **48 palettes:** Catppuccin, Dracula, Nord, Gruvbox, Tokyo Night, Rose Pine, Kanagawa, Game Boy, Commodore 64 and more, plus custom colors.
-- **Clock overlay:** 24-hour or 12-hour with optional AM/PM. Keeps ticking while paused (can be turned off).
+- **GPU simulation:** the world lives in a texture and a shader computes each generation, so there is no per-cell CPU loop. It stays light even on older machines.
+- **Adaptive auto-injection:** classic Life settles into a few static blinkers and still lifes. Konway reduces the grid to a small activity map on the GPU, finds the areas that have gone quiet, and responds there: growth seeds (R-pentomino, Acorn and other long-lived patterns) in empty areas, gliders drifting across empty space, small random soups, and gliders aimed at leftover clusters that have stopped changing. One **Liveliness** slider sets how busy the screen is kept. The older timer-based injector is still available as **Classic**, and injection can be switched off for a strictly deterministic run.
+- **Zen mode:** a relaxing profile with a slowly breathing tempo, long soft trails, gentle injections (mostly drifting gliders), and an optional evening dim on a schedule.
+- **Profiles:** Zen, Balanced and Lively set speed, cell size, injection and power options together.
+- **48 palettes:** Catppuccin, Dracula, Nord, Gruvbox, Tokyo Night, Rose Pine, Kanagawa, One Dark, Solarized Dark, Game Boy, Commodore 64 and more, plus fully custom colors and three cell styles (Square, Go Board, Circle).
+- **Clock overlay:** 24-hour or 12-hour with optional AM/PM and leading zero, in seven sizes. Cells never grow into it, and it keeps ticking while the simulation is paused (can be turned off).
 - **Any B/S rule:** Life (`B3/S23`), HighLife (`B36/S23`), Day & Night (`B3678/S34678`), Seeds (`B2/S`) and others.
 - **Mouse:** click places a glider, drag paints cells.
-- **Comfort options:** fading trails, contrast and saturation limits, speed limiter.
+- **Comfort options:** fading phosphor-style trails, contrast and saturation limits, and a speed limiter.
+- **Power:** pauses when Plasma is inactive (on by default) and lowers detail automatically if the grid gets too dense.
+
+## Settings tabs
+
+| Tab | What it controls |
+| --- | --- |
+| General | Profiles, reseed, clock (format, size, AM/PM, paused behavior) |
+| Simulation | Cell size, speed, wrap edges, startup seed intensity, B/S rules |
+| Activity | Auto-injection style and liveliness, mouse drawing, allowed pattern categories, pattern library |
+| Appearance | Palettes, cell style, fading trails, custom colors |
+| Zen | Breathing tempo, soft fades, gentle injections, evening dim |
+| Performance | Downscale, timing, pause when inactive |
+| Safety | Contrast, saturation and speed limits |
+
+The **Advanced** switch reveals rarely needed options on every tab. The window also works at small sizes.
 
 ## Install
 
