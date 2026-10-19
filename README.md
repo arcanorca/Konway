@@ -4,12 +4,11 @@
   <img src="assets/konway-logo.svg" alt="Konway logo" width="220">
 </p>
 
-Konway is a lightweight, customizable cellular automaton engine integrated as a KDE Plasma 6 wallpaper plugin.
+A lightweight Conway's Game of Life live wallpaper for KDE Plasma 6. The simulation runs on the GPU.
 
 [demo.webm](https://github.com/user-attachments/assets/09198183-d5c2-430a-a4b2-1fdf05154a2e)
 
-
-## <p align="center">[Settings GUI]</p>
+## Settings
 
 <p align="center">
   <img src="assets/settings_general.png" width="32%" />
@@ -23,182 +22,67 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
   <img src="assets/settings_safety.png" width="32%" />
 </p>
 
+## Features
 
-## // HIGHLIGHTS
-- The simulation runs on the GPU, so even older PCs handle it well. There’s no per-cell CPU loop each frame, making Konway one of the most efficient live wallpaper plugins.
-- Designed with a calm default look, featuring popular palettes like
-  27 palettes, including `Paper Light, Emerald, Amber, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine, Kanagawa, One Dark, Solarized Dark, Monokai, Night Owl, Ayu Mirage, Synthwave 84, Material Ocean, Zenburn, Nixie, Oscilloscope, VFD Hi-Fi, Game Boy, Cyberpunk, Commodore 64`
-- Optional resizable digital clock overlay (24h / 12h with AM/PM), keeps ticking while paused (opt-out)
-- Mouse seeding: left click places a glider, left drag uses brush
-- Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) rule strings. Beyond standard Life (`B3/S23`), you can simulate other automata like HighLife (`B36/S23`) or Day & Night (`B3678/S34678`).
-- Full settings UI tabs:
-  `General, Simulation, Activity, Appearance, Zen, Performance, Safety`
-  
-## // HOW IT WORKS
+- **GPU simulation:** no per-cell CPU loop, so it stays light even on older machines.
+- **Adaptive auto-injection:** the wallpaper watches which parts of the screen have gone quiet and adds gliders, growth seeds and small soups there, so it never settles into a few static blinkers. A Liveliness slider sets how busy it stays. The old timer-based injector is still available as Classic, and injection can be turned off.
+- **Zen mode:** slow breathing tempo, soft trails, gentle injections and an optional evening dim.
+- **Profiles:** Zen, Balanced, Lively.
+- **48 palettes:** Catppuccin, Dracula, Nord, Gruvbox, Tokyo Night, Rose Pine, Kanagawa, Game Boy, Commodore 64 and more, plus custom colors.
+- **Clock overlay:** 24-hour or 12-hour with optional AM/PM. Keeps ticking while paused (can be turned off).
+- **Any B/S rule:** Life (`B3/S23`), HighLife (`B36/S23`), Day & Night (`B3678/S34678`), Seeds (`B2/S`) and others.
+- **Mouse:** click places a glider, drag paints cells.
+- **Comfort options:** fading trails, contrast and saturation limits, speed limiter.
 
-### 1. The GPU Pipeline
-The simulation is stored in a texture (alive/dead cells).
-Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).The CPU mostly just schedules ticks. 
+## Install
 
-### 2. Entropy Management (Adaptive Auto-Injection)
-The default **Adaptive** injector reduces the grid on the GPU to a coarse tile map (alive + changed fraction per tile, `tile_probe.frag`), reads it back, and decides *what* to add *where*: growth seeds in empty areas, travelling gliders across voids, small soups, and gliders aimed at isolated leftovers (still lifes, blinkers) that have stopped changing. A **Liveliness** dial sets how busy the screen is kept. The previous timer-based behaviour remains available as **Classic**.
+**KDE Store:** Desktop and Wallpaper → Get New Plugins → search `Konway`.
 
-Legacy description:
-Classic automata naturally decay into equilibrium (still lifes or oscillators) within a finite grid.
-* **Dynamic Seeding:** When entropy drops below a threshold, it randomly injects curated patterns (Gliders, Methuselahs, R-Pentominoes etc.).
-* **Purist Mode:** This behavior is fully configurable or can be disabled for a strictly deterministic run.
-
-### 3. Visual Ergonomics
-Raw cellular automata can produce harsh, rapid flickering (1-period oscillators) that can be distracting for some people.
-* **Subtle trails:** Can be toggle on/off, decay trails create a phosphor-persistence effect, smoothing out visual noise like old CRT monitors.
-* **Safety Limits:** Integrated brightness clamping and contrast controls to reduce eye strain.
-
-## // INSTALL
-
-### KDE Store
-
-`Desktop and Wallpaper` -> `Get New Plugins...` -> search `Konway`
-
-### Local Deploy
-
-Run from `life.wallpaper/`:
+**From source:**
 
 ```bash
+git clone https://github.com/arcanorca/Konway.git
+cd Konway
 ./tools/deploy_local.sh
 ```
 
-If Plasma still shows stale QML/settings:
-
-```bash
-plasmashell --replace & disown
-```
-
-## // UPDATE (Already Installed)
-
-### KDE Store Install
-
-- Open `Desktop and Wallpaper` -> `Get New Plugins...`
-- Check for updates and update `Konway`
-- If the old QML stays cached, restart Plasma:
-
-```bash
-kquitapp6 plasmashell && kstart6 plasmashell
-```
-
-### Local Deploy Install
-
-From your cloned repo:
-
-```bash
-git pull
-cd life.wallpaper
-./tools/deploy_local.sh
-```
-
-If needed:
-
-```bash
-plasmashell --replace & disown
-```
-
-### KPackage Install
-
-If you install from `dist/*.kpackage.tar.gz`, use upgrade:
+**From a package:**
 
 ```bash
 kpackagetool6 --type Plasma/Wallpaper --upgrade dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz
 ```
 
-## // Quick Settings Guide
-
-- `Cell size`: visual size of cells
-- `Target TPS`: simulation speed (ticks per second)
-- `Sync with TPS`: keeps internal driver timing aligned with TPS
-- `Pause when Plasma is inactive`: optional resource save behavior
-
-## // Build Shaders (`.qsb`)
-
-From `life.wallpaper/`:
+If Plasma shows the old version, restart it:
 
 ```bash
-qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/life_step.frag.qsb contents/shaders/life_step.frag
-qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/visualize.frag.qsb contents/shaders/visualize.frag
-qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/population_probe.frag.qsb contents/shaders/population_probe.frag
+kquitapp6 plasmashell && kstart plasmashell
 ```
 
-or:
+## Development
 
-```bash
-./tools/build_shaders.sh
-```
+- Rebuild shaders: `./tools/build_shaders.sh`
+- Rebuild the pattern index after editing `.rle` files: `./tools/build_patterns_index.py`
+- Build install packages into `dist/`: `./tools/build_kpackage.sh`
+- Check the adaptive injector without Plasma: `node tools/simulate_injection.js`
 
-## // Pattern Packs
-
-Built-in pattern data:
-
-- `contents/patterns/rle/<category>/*.rle`
-- `contents/patterns/index.json`
-- `contents/patterns/patternData.js`
-
-Rebuild index/data after RLE edits:
-
-```bash
-./tools/build_patterns_index.py
-```
-
-Optional external pack helper:
-
-```bash
-./tools/download_external_pack.sh /path/to/manifest.txt
-```
-
-## // KPackage Build
-
-Create install/upload archives:
-
-```bash
-./tools/build_kpackage.sh
-```
-
-Output:
-
-- `dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz`
-- `dist/com.github.arcanorca.konway-<version>.kpackage.zip`
-
-Local package install test:
-
-```bash
-kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway-<version>.kpackage.tar.gz
-```
-
-## // CHANGELOG
+## Changelog
 
 ### 0.2.0
 
-- Three profiles: Zen, Balanced, Lively. Pause-when-hidden is now on by default; speed capped at 20.
-- 48 palettes (all SunReactor themes + extras), larger scrollable picker.
-- Clock keeps ticking while paused (opt-out).
-- Chill mode renamed **Zen**; evening dim follows the palette background.
-- New **Adaptive** injector: screen-aware, replaces blind random/center injection (Classic stays selectable). The old alive-ratio probe could never read pixels under Qt 6, so injection was effectively blind.
-- New **Zen** tab/preset: breathing tempo, soft long fades, gentle injections, optional evening dim.
-- Clock: 12-hour format with optional AM/PM and leading zero.
-- Settings UI redesign: icon tabs, profile cards, palette swatches, live preview, inline hints, shared Advanced switch, confirmed Reset All.
-- Dev: `tools/simulate_injection.js` (headless injector check), `tools/build_shaders.sh` builds `tile_probe`.
+- New Adaptive injector (Classic stays selectable).
+- New Zen mode; profiles are now Zen, Balanced, Lively.
+- 12-hour clock with AM/PM; clock keeps ticking while paused.
+- 48 palettes with a larger picker.
+- Redesigned settings that work in small windows.
+- Pause when inactive is on by default; speed is capped at 20.
 
 ### 0.1.1
 
-- Transition fade is no longer `1` tick, now it is adjustable `1` to `8` ticks.
-- Clock rendering and spacing polish, added new clock sizes.
-- Settings UI cleanup: consistent reset controls and improved General tab clarity
+- Adjustable fade length (1 to 8 ticks), clock polish, new clock sizes, settings cleanup.
 
+## License
 
-## // License
-GPL-3.0-or-later
-
-## // Stack
-KDE Plasma 6 • Qt 6 (QML/JS) • GLSL (.qsb via Qt RHI) • kpackagetool6
-
----
+GPL-3.0-or-later. Built with KDE Plasma 6, Qt 6 (QML/JS), GLSL.
 
 <p align="center">
   <i>Dedicated to the memory of John Horton Conway.</i>
