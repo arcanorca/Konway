@@ -10,17 +10,24 @@ A lightweight Conway's Game of Life live wallpaper for KDE Plasma 6. The simulat
 
 ## Settings
 
-<p align="center">
-  <img src="assets/settings_general.png" width="32%" />
-  <img src="assets/settings_simulation.png" width="32%" />
-  <img src="assets/settings_activity.png" width="32%" />
-  <br>
-  <img src="assets/settings_appearance.png" width="32%" />
-  <img src="assets/settings_zen.png" width="32%" />
-  <img src="assets/settings_performance.png" width="32%" />
-  <br>
-  <img src="assets/settings_safety.png" width="32%" />
-</p>
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="assets/settings_general.png" width="100%"><br><b>General</b><br><sub>Profiles (Zen, Balanced, Lively), reseed, and the clock: 24h/12h, AM/PM, size.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_simulation.png" width="100%"><br><b>Simulation</b><br><sub>Cell size, speed, wrap edges and startup seed intensity. Rules under Advanced.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/settings_activity.png" width="100%"><br><b>Activity</b><br><sub>Auto-injection style and liveliness, mouse drawing, allowed pattern categories.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_appearance.png" width="100%"><br><b>Appearance</b><br><sub>48 palettes, cell style, fading trails and custom colors.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/settings_zen.png" width="100%"><br><b>Zen</b><br><sub>Breathing tempo, soft trails, gentle injections and evening dim.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_performance.png" width="100%"><br><b>Performance</b><br><sub>Simulation downscale, timing and pause when inactive.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/settings_safety.png" width="100%"><br><b>Safety</b><br><sub>Contrast and saturation limits and a speed limiter.</sub></td>
+    <td></td>
+  </tr>
+</table>
 
 ## Features
 
