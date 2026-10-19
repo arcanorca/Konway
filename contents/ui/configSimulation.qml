@@ -2,13 +2,22 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import "components"
 
 Kirigami.ScrollablePage {
     id: page
     property var cfg
-    property bool showAdvanced: false
+
     readonly property real extinctionCoverageThreshold: 0.35
-    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
+    readonly property var rulePresets: [
+        { "name": i18n("Conway's Life"), "rule": "B3/S23" },
+        { "name": i18n("HighLife"), "rule": "B36/S23" },
+        { "name": i18n("Day & Night"), "rule": "B3678/S34678" },
+        { "name": i18n("Seeds"), "rule": "B2/S" },
+        { "name": i18n("Life without Death"), "rule": "B3/S012345678" }
+    ]
+
+    readonly property var ruleModel: rulePresets.map(function (r) { return r.name + "  (" + r.rule + ")"; }).concat([i18n("Custom")])
 
     function startupCoverageFromIntensity(value) {
         const v = Math.max(0.05, Math.min(1.0, Number(value)));
@@ -31,139 +40,140 @@ Kirigami.ScrollablePage {
         return startupCoverageFromIntensity(value) >= extinctionCoverageThreshold;
     }
 
+    function rulePresetIndex(rule) {
+        for (let i = 0; i < rulePresets.length; ++i) {
+            if (rulePresets[i].rule === rule) {
+                return i;
+            }
+        }
+        return rulePresets.length;
+    }
+
     title: i18n("Simulation")
 
     Kirigami.FormLayout {
         width: parent.width
 
-        Kirigami.InlineMessage {
+        Kirigami.Separator {
             Kirigami.FormData.isSection: true
-            Layout.fillWidth: true
-            type: Kirigami.MessageType.Information
-            text: i18n("Cell size controls visual scale. Target TPS controls simulation speed.")
+            Kirigami.FormData.label: i18n("World")
         }
 
-        QQC2.SpinBox {
+        RowLayout {
             Kirigami.FormData.label: i18n("Cell size:")
-            from: 2
-            to: 32
-            value: cfg.cfg_cellSize
-            editable: true
-            onValueModified: cfg.cfg_cellSize = value
+            QQC2.SpinBox {
+                from: 2
+                to: 32
+                value: cfg.cfg_cellSize
+                editable: true
+                onValueModified: cfg.cfg_cellSize = value
+            }
+            QQC2.Label {
+                text: i18n("px")
+                color: Kirigami.Theme.disabledTextColor
+            }
         }
 
-        QQC2.SpinBox {
-            Kirigami.FormData.label: i18n("Target TPS:")
-            from: 1
-            to: 120
-            value: cfg.cfg_tps
-            editable: true
-            onValueModified: cfg.cfg_tps = value
+
+        RowLayout {
+            Kirigami.FormData.label: i18n("Speed:")
+            QQC2.SpinBox {
+                from: 1
+                to: 20
+                value: cfg.cfg_tps
+                editable: true
+                onValueModified: cfg.cfg_tps = value
+            }
+            QQC2.Label {
+                text: i18n("generations / second")
+                color: Kirigami.Theme.disabledTextColor
+            }
         }
 
-        QQC2.CheckBox {
-            Kirigami.FormData.label: i18n("World edges:")
-            text: i18n("Wrap around edges (toroidal topology)")
+        Hint {
+            text: i18n("1–3 is relaxed, 6–10 is lively. Very high values are rarely useful on a wallpaper.")
+        }
+
+        QQC2.Switch {
+            Kirigami.FormData.label: i18n("Wrap edges:")
+            text: checked ? i18n("On (torus)") : i18n("Off")
             checked: cfg.cfg_wrapEdges
             onToggled: cfg.cfg_wrapEdges = checked
         }
 
-        QQC2.Label {
-            Kirigami.FormData.label: i18n("Topology info:")
+        Hint {
             text: cfg.cfg_wrapEdges
-                  ? i18n("ON: Left/right and top/bottom are connected.")
-                  : i18n("OFF: Cells outside the screen are treated as dead.")
-            wrapMode: Text.WordWrap
+                  ? i18n("Left and right, top and bottom are connected, so gliders keep travelling.")
+                  : i18n("Cells outside the screen count as dead, so travelling patterns die at the edges.")
         }
 
-        RowLayout {
-            Kirigami.FormData.label: i18n("Startup seed intensity:")
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Startup")
+        }
 
-            QQC2.Slider {
-                id: startupIntensitySlider
-                property bool extinctionRisk: page.startupExtinctionRisk(value)
-                Layout.fillWidth: true
-                from: 0.05
-                to: 1.00
-                stepSize: 0.05
-                value: cfg.cfg_initialDensity
-                palette.highlight: extinctionRisk ? "#cf4a4a" : "#50C878"
+        SliderRow {
+            id: startupIntensity
+            Kirigami.FormData.label: i18n("Seed intensity:")
+            from: 0.05
+            to: 1.00
+            stepSize: 0.05
+            value: cfg.cfg_initialDensity
+            accent: page.startupExtinctionRisk(value) ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
+            formatter: function (v) { return page.startupCoveragePercent(v) + "%"; }
+            onValueEdited: function (v) { cfg.cfg_initialDensity = v; }
+        }
 
-                onValueChanged: {
-                    if (Math.abs(cfg.cfg_initialDensity - value) > 0.0001) {
-                        cfg.cfg_initialDensity = value;
-                    }
+
+        Hint {
+            visible: page.startupExtinctionRisk(cfg.cfg_initialDensity)
+            warning: true
+            text: i18n("This is in the overpopulation zone and may cause early mass extinction.")
+        }
+
+        Kirigami.Separator {
+            visible: cfg.showAdvanced
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Rules")
+        }
+
+        QQC2.ComboBox {
+            visible: cfg.showAdvanced
+            Kirigami.FormData.label: i18n("Rule set:")
+            model: page.ruleModel
+            currentIndex: page.rulePresetIndex(cfg.cfg_ruleString)
+            onActivated: function (index) {
+                if (index < page.rulePresets.length) {
+                    cfg.cfg_ruleString = page.rulePresets[index].rule;
                 }
             }
-
-            QQC2.Label {
-                text: page.startupCoveragePercent(startupIntensitySlider.value) + "%"
-                font.family: "monospace"
-                color: startupIntensitySlider.extinctionRisk ? "#e17979" : Kirigami.Theme.textColor
-            }
-        }
-
-        QQC2.Label {
-            Kirigami.FormData.label: i18n("Coverage info:")
-            text: i18n("Startup and reseed use this alive-cell coverage ratio. 100% fills the whole simulation grid.")
-            wrapMode: Text.WordWrap
-        }
-
-        QQC2.Label {
-            Kirigami.FormData.label: i18n("Warning:")
-            visible: startupIntensitySlider.extinctionRisk
-            color: Kirigami.Theme.negativeTextColor
-            text: i18n("High coverage is in overpopulation zone and may cause early mass extinction.")
-            wrapMode: Text.WordWrap
-        }
-
-        QQC2.CheckBox {
-            Kirigami.FormData.label: i18n("Advanced:")
-            text: i18n("Show advanced simulation controls")
-            checked: page.showAdvanced
-            onToggled: page.showAdvanced = checked
         }
 
         QQC2.TextField {
+            visible: cfg.showAdvanced
             Kirigami.FormData.label: i18n("Rule (B/S):")
-            visible: page.showAdvanced
             text: cfg.cfg_ruleString
             placeholderText: "B3/S23"
-            onEditingFinished: {
-                cfg.cfg_ruleString = text.length > 0 ? text : "B3/S23"
-            }
+            onEditingFinished: cfg.cfg_ruleString = text.length > 0 ? text : "B3/S23"
         }
 
-        QQC2.Label {
-            Kirigami.FormData.label: i18n("Rule meaning:")
-            visible: page.showAdvanced
-            text: i18n("B3/S23: birth with exactly 3 neighbors, survival with 2 or 3 neighbors.")
-            wrapMode: Text.WordWrap
+        Hint {
+            visible: cfg.showAdvanced
+            text: i18n("B3/S23 means: a cell is born with exactly 3 neighbours and survives with 2 or 3. Built-in patterns assume this rule.")
         }
 
-        QQC2.Label {
-            Kirigami.FormData.label: i18n("Example rules:")
-            visible: page.showAdvanced
-            text: i18n("HighLife (B36/S23), Day & Night (B3678/S34678), Seeds (B2/S), Life without Death (B3/S012345678)")
-            wrapMode: Text.WordWrap
+        Kirigami.Separator {
+            visible: cfg.showAdvanced
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Diagnostics")
         }
 
         QQC2.CheckBox {
-            Kirigami.FormData.label: i18n("Diagnostics:")
-            visible: page.showAdvanced
-            text: i18n("Enable debug logging")
+            visible: cfg.showAdvanced
+            Kirigami.FormData.label: i18n("Debug:")
+            text: i18n("Show debug overlay and log activity decisions")
             checked: cfg.cfg_debugLogging
             onToggled: cfg.cfg_debugLogging = checked
-        }
-
-        QQC2.Button {
-            Kirigami.FormData.label: i18n("Simulation tab:")
-            text: i18n("Reset Simulation Tab")
-            icon.name: "edit-undo"
-            Layout.preferredWidth: page.resetButtonWidth
-            Layout.minimumWidth: page.resetButtonWidth
-            Layout.maximumWidth: page.resetButtonWidth
-            onClicked: cfg.resetSimulationDefaults()
         }
     }
 }

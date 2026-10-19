@@ -6,10 +6,6 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="enabled" type="Bool">
-      <label>Enable simulation</label>
-      <default>true</default>
-    </entry>
     <entry name="preset" type="String">
       <label>Quality preset name</label>
       <default>Balanced</default>
@@ -29,6 +25,22 @@
     <entry name="clockScale" type="Double">
       <label>Clock overlay size multiplier</label>
       <default>1.00</default>
+    </entry>
+    <entry name="clockHourFormat" type="String">
+      <label>Clock hour format: 24h or 12h</label>
+      <default>24h</default>
+    </entry>
+    <entry name="clockShowAmPm" type="Bool">
+      <label>Show AM/PM marker in 12-hour clock</label>
+      <default>true</default>
+    </entry>
+    <entry name="clockWhilePaused" type="Bool">
+      <label>Keep the clock visible and ticking while the simulation is paused</label>
+      <default>true</default>
+    </entry>
+    <entry name="clockLeadingZero" type="Bool">
+      <label>Show leading zero for the hour in 12-hour clock</label>
+      <default>false</default>
     </entry>
   </group>
 
@@ -63,6 +75,14 @@
     <entry name="autoInject" type="Bool">
       <label>Enable automatic pattern injection</label>
       <default>true</default>
+    </entry>
+    <entry name="injectionStyle" type="String">
+      <label>Injection strategy: Adaptive (screen-aware) or Classic</label>
+      <default>Adaptive</default>
+    </entry>
+    <entry name="liveliness" type="Double">
+      <label>How busy the Adaptive injector keeps the screen (0 serene .. 1 busy)</label>
+      <default>0.50</default>
     </entry>
     <entry name="injectIntervalMs" type="Int">
       <label>Interval between injection checks in milliseconds</label>
@@ -152,6 +172,41 @@
     </entry>
   </group>
 
+  <group name="Chill">
+    <entry name="chillMode" type="Bool">
+      <label>Enable Chill mode</label>
+      <default>false</default>
+    </entry>
+    <entry name="chillBreathing" type="Double">
+      <label>Depth of the slow tempo drift while Chill mode is on</label>
+      <default>0.25</default>
+    </entry>
+    <entry name="chillSoftFade" type="Bool">
+      <label>Use long, soft fades for dying cells in Chill mode</label>
+      <default>true</default>
+    </entry>
+    <entry name="chillGentleInjection" type="Bool">
+      <label>Use gentle injections in Chill mode</label>
+      <default>true</default>
+    </entry>
+    <entry name="chillDimEnabled" type="Bool">
+      <label>Dim the wallpaper in the evening while Chill mode is on</label>
+      <default>false</default>
+    </entry>
+    <entry name="chillDimLevel" type="Double">
+      <label>Maximum evening dim amount</label>
+      <default>0.35</default>
+    </entry>
+    <entry name="chillDimStart" type="Int">
+      <label>Hour (0-23) at which evening dimming starts</label>
+      <default>21</default>
+    </entry>
+    <entry name="chillDimEnd" type="Int">
+      <label>Hour (0-23) at which evening dimming ends</label>
+      <default>6</default>
+    </entry>
+  </group>
+
   <group name="Safety">
     <entry name="photosensitiveSafe" type="Bool">
       <label>Enable photosensitive-safe clamping</label>
@@ -190,7 +245,7 @@
     </entry>
     <entry name="pauseWhenHidden" type="Bool">
       <label>Pause simulation when wallpaper is hidden</label>
-      <default>false</default>
+      <default>true</default>
     </entry>
   </group>
 </kcfg>

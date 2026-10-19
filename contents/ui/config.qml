@@ -13,13 +13,18 @@ ColumnLayout {
     property var configDialog
     property var wallpaperConfiguration
     property var parentLayout
+    // Lets tests and tooling jump to a tab.
+    property alias currentTabIndex: tabBar.currentIndex
 
-    property bool cfg_enabled
     property string cfg_preset
     property bool cfg_debugLogging
     property string cfg_reseedRequest
     property string cfg_clockMode
     property double cfg_clockScale
+    property string cfg_clockHourFormat
+    property bool cfg_clockShowAmPm
+    property bool cfg_clockLeadingZero
+    property bool cfg_clockWhilePaused
 
     property int cfg_cellSize
     property int cfg_tps
@@ -29,6 +34,8 @@ ColumnLayout {
     property double cfg_initialDensity
 
     property bool cfg_autoInject
+    property string cfg_injectionStyle
+    property double cfg_liveliness
     property int cfg_injectIntervalMs
     property double cfg_minAliveRatio
     property double cfg_rarePatternChance
@@ -52,6 +59,15 @@ ColumnLayout {
     property bool cfg_dyingFadeEnabled
     property int cfg_dyingFadeTicks
 
+    property bool cfg_chillMode
+    property double cfg_chillBreathing
+    property bool cfg_chillSoftFade
+    property bool cfg_chillGentleInjection
+    property bool cfg_chillDimEnabled
+    property double cfg_chillDimLevel
+    property int cfg_chillDimStart
+    property int cfg_chillDimEnd
+
     property bool cfg_photosensitiveSafe
     property double cfg_safeContrast
     property double cfg_safeSaturation
@@ -62,6 +78,10 @@ ColumnLayout {
     property bool cfg_syncFpsWithTps
     property int cfg_maxFps
     property bool cfg_pauseWhenHidden
+
+    // Shared by every tab: reveals the rarely needed controls.
+    property bool showAdvanced: false
+
     property bool presetApplyInProgress: false
     property bool presetTrackingReady: false
     property string currentConwayQuote: ""
@@ -76,6 +96,16 @@ ColumnLayout {
     readonly property var defaults: Presets.defaults
     readonly property var practicalPresetOrder: Presets.practicalPresetOrder
     readonly property var practicalPresets: Presets.practicalPresets
+
+    readonly property var tabs: [
+        { "source": "configGeneral.qml", "label": i18n("General"), "icon": "configure" },
+        { "source": "configSimulation.qml", "label": i18n("Simulation"), "icon": "applications-science" },
+        { "source": "configActivity.qml", "label": i18n("Activity"), "icon": "games-config-board" },
+        { "source": "configAppearance.qml", "label": i18n("Appearance"), "icon": "preferences-desktop-color" },
+        { "source": "configChill.qml", "label": i18n("Zen"), "icon": "weather-clear-night" },
+        { "source": "configPerformance.qml", "label": i18n("Performance"), "icon": "speedometer" },
+        { "source": "configSafety.qml", "label": i18n("Safety"), "icon": "security-high" }
+    ]
 
     function triggerReseed() {
         const token = String(Date.now()) + "-" + String(Math.floor(Math.random() * 1000000));
@@ -102,6 +132,8 @@ ColumnLayout {
         cfg_minAliveRatio = preset.minAliveRatio;
         cfg_rarePatternChance = preset.rarePatternChance;
         cfg_forcedInjectChance = preset.forcedInjectChance;
+        cfg_liveliness = preset.liveliness;
+        cfg_chillMode = preset.chillMode;
         cfg_simDownscale = preset.simDownscale;
         cfg_syncFpsWithTps = preset.syncFpsWithTps;
         cfg_maxFps = preset.maxFps;
@@ -115,7 +147,48 @@ ColumnLayout {
         presetApplyInProgress = false;
     }
 
+    function presetTagline(name) {
+        if (name === "Zen") {
+            return i18n("Slow, soft and calm. Turns on Zen mode.");
+        }
+        if (name === "Quiet") {
+            return i18n("Minimal motion, light on resources.");
+        }
+        if (name === "Balanced") {
+            return i18n("Steady activity for everyday use.");
+        }
+        if (name === "Lively") {
+            return i18n("Faster ticks and a busier screen.");
+        }
+        if (name === "Showcase") {
+            return i18n("Dense, fast and eye-catching.");
+        }
+        return "";
+    }
+
+    function presetIcon(name) {
+        if (name === "Zen") {
+            return "weather-clear-night";
+        }
+        if (name === "Quiet") {
+            return "audio-volume-low";
+        }
+        if (name === "Balanced") {
+            return "games-config-board";
+        }
+        if (name === "Lively") {
+            return "media-playback-start";
+        }
+        if (name === "Showcase") {
+            return "starred-symbolic";
+        }
+        return "configure";
+    }
+
     function presetDescription(name) {
+        if (name === "Zen") {
+            return i18n("Relaxing profile: slow ticks, soft contrast, gentle injections, long fades and a gently breathing tempo.");
+        }
         if (name === "Quiet") {
             return i18n("Lower motion profile: reduced TPS, lighter injection, and Pause when hidden enabled.");
         }
@@ -155,9 +228,12 @@ ColumnLayout {
     }
 
     function resetGeneralDefaults() {
-        cfg_enabled = defaults.enabled;
         cfg_reseedRequest = defaults.reseedRequest;
         cfg_clockMode = defaults.clockMode;
+        cfg_clockHourFormat = defaults.clockHourFormat;
+        cfg_clockShowAmPm = defaults.clockShowAmPm;
+        cfg_clockLeadingZero = defaults.clockLeadingZero;
+        cfg_clockWhilePaused = defaults.clockWhilePaused;
         applyPracticalPreset(defaults.preset);
     }
 
@@ -171,8 +247,10 @@ ColumnLayout {
         cfg_debugLogging = defaults.debugLogging;
     }
 
-    function resetPatternsDefaults() {
+    function resetActivityDefaults() {
         cfg_autoInject = defaults.autoInject;
+        cfg_injectionStyle = defaults.injectionStyle;
+        cfg_liveliness = defaults.liveliness;
         cfg_injectIntervalMs = defaults.injectIntervalMs;
         cfg_minAliveRatio = defaults.minAliveRatio;
         cfg_rarePatternChance = defaults.rarePatternChance;
@@ -197,6 +275,17 @@ ColumnLayout {
         cfg_dyingFadeTicks = defaults.dyingFadeTicks;
     }
 
+    function resetChillDefaults() {
+        cfg_chillMode = defaults.chillMode;
+        cfg_chillBreathing = defaults.chillBreathing;
+        cfg_chillSoftFade = defaults.chillSoftFade;
+        cfg_chillGentleInjection = defaults.chillGentleInjection;
+        cfg_chillDimEnabled = defaults.chillDimEnabled;
+        cfg_chillDimLevel = defaults.chillDimLevel;
+        cfg_chillDimStart = defaults.chillDimStart;
+        cfg_chillDimEnd = defaults.chillDimEnd;
+    }
+
     function resetPerformanceDefaults() {
         cfg_simDownscale = defaults.simDownscale;
         cfg_syncFpsWithTps = defaults.syncFpsWithTps;
@@ -216,10 +305,30 @@ ColumnLayout {
     function resetAllDefaults() {
         resetGeneralDefaults();
         resetSimulationDefaults();
-        resetPatternsDefaults();
+        resetActivityDefaults();
         resetAppearanceDefaults();
+        resetChillDefaults();
         resetPerformanceDefaults();
         resetSafetyDefaults();
+    }
+
+    function resetCurrentTab() {
+        const source = tabs[tabBar.currentIndex].source;
+        if (source === "configGeneral.qml") {
+            resetGeneralDefaults();
+        } else if (source === "configSimulation.qml") {
+            resetSimulationDefaults();
+        } else if (source === "configActivity.qml") {
+            resetActivityDefaults();
+        } else if (source === "configAppearance.qml") {
+            resetAppearanceDefaults();
+        } else if (source === "configChill.qml") {
+            resetChillDefaults();
+        } else if (source === "configPerformance.qml") {
+            resetPerformanceDefaults();
+        } else if (source === "configSafety.qml") {
+            resetSafetyDefaults();
+        }
     }
 
     onCfg_cellSizeChanged: markPresetCustom()
@@ -230,6 +339,8 @@ ColumnLayout {
     onCfg_minAliveRatioChanged: markPresetCustom()
     onCfg_rarePatternChanceChanged: markPresetCustom()
     onCfg_forcedInjectChanceChanged: markPresetCustom()
+    onCfg_livelinessChanged: markPresetCustom()
+    onCfg_chillModeChanged: markPresetCustom()
     onCfg_simDownscaleChanged: markPresetCustom()
     onCfg_syncFpsWithTpsChanged: markPresetCustom()
     onCfg_maxFpsChanged: markPresetCustom()
@@ -246,65 +357,97 @@ ColumnLayout {
         presetTrackingReady = true;
     }
 
-    readonly property var pageSources: [
-        "configGeneral.qml",
-        "configSimulation.qml",
-        "configPatterns.qml",
-        "configAppearance.qml",
-        "configPerformance.qml",
-        "configSafety.qml"
-    ]
-
-    QQC2.Frame {
+    // ---- Tab strip ------------------------------------------------------------------
+    RowLayout {
         Layout.fillWidth: true
-        visible: currentConwayQuote.length > 0
+        spacing: Kirigami.Units.largeSpacing
 
-        ColumnLayout {
-            anchors.fill: parent
-            spacing: Kirigami.Units.smallSpacing
+        QQC2.TabBar {
+            id: tabBar
+            Layout.fillWidth: true
 
-            QQC2.Label {
-                text: i18n("John Horton Conway")
-                font.bold: true
-            }
-
-            QQC2.Label {
-                Layout.fillWidth: true
-                text: "\"" + currentConwayQuote + "\""
-                wrapMode: Text.WordWrap
-                font.italic: true
+            Repeater {
+                model: root.tabs
+                delegate: QQC2.TabButton {
+                    required property var modelData
+                    text: modelData.label
+                    icon.name: modelData.icon
+                    display: root.width < Kirigami.Units.gridUnit * 44 ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+                    width: implicitWidth
+                    QQC2.ToolTip.visible: hovered
+                    QQC2.ToolTip.text: modelData.label
+                }
             }
         }
-    }
 
-    QQC2.TabBar {
-        id: tabs
-        Layout.fillWidth: true
-
-        QQC2.TabButton { text: i18n("General") }
-        QQC2.TabButton { text: i18n("Simulation") }
-        QQC2.TabButton { text: i18n("Patterns") }
-        QQC2.TabButton { text: i18n("Appearance") }
-        QQC2.TabButton { text: i18n("Performance") }
-        QQC2.TabButton { text: i18n("Safety") }
+        QQC2.Switch {
+            text: i18n("Advanced")
+            checked: root.showAdvanced
+            onToggled: root.showAdvanced = checked
+            QQC2.ToolTip.visible: hovered
+            QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+            QQC2.ToolTip.text: i18n("Show rarely needed controls on every tab")
+        }
     }
 
     Loader {
         id: pageLoader
         Layout.fillWidth: true
         Layout.fillHeight: true
-        
+
         function loadCurrentPage() {
-            setSource(pageSources[tabs.currentIndex], { "cfg": root });
+            setSource(root.tabs[tabBar.currentIndex].source, { "cfg": root });
         }
 
         Component.onCompleted: loadCurrentPage()
     }
 
     Connections {
-        target: tabs
+        target: tabBar
         function onCurrentIndexChanged() {
             pageLoader.loadCurrentPage();
         }
+    }
+
+    Kirigami.Separator {
+        Layout.fillWidth: true
+    }
+
+    // ---- Footer ---------------------------------------------------------------------
+    RowLayout {
+        Layout.fillWidth: true
+        spacing: Kirigami.Units.largeSpacing
+
+        QQC2.Label {
+            Layout.fillWidth: true
+            visible: currentConwayQuote.length > 0 && root.width > Kirigami.Units.gridUnit * 36
+            text: "“" + currentConwayQuote + "” — John Horton Conway"
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
+            elide: Text.ElideRight
+            font.pointSize: Kirigami.Theme.smallFont.pointSize
+            font.italic: true
+            color: Kirigami.Theme.disabledTextColor
+        }
+
+        QQC2.Button {
+            text: root.width < Kirigami.Units.gridUnit * 30 ? "" : i18n("Reset This Tab")
+            icon.name: "edit-undo"
+            onClicked: root.resetCurrentTab()
+        }
+
+        QQC2.Button {
+            text: i18n("Reset All…")
+            icon.name: "edit-reset"
+            onClicked: resetAllDialog.open()
+        }
+    }
+
+    Kirigami.PromptDialog {
+        id: resetAllDialog
+        title: i18n("Reset all settings?")
+        subtitle: i18n("Every Konway option returns to its default value. This only takes effect when you press Apply.")
+        standardButtons: Kirigami.Dialog.Ok | Kirigami.Dialog.Cancel
+        onAccepted: root.resetAllDefaults()
     }
 }

@@ -9,3 +9,4 @@ fi
 "${QSB_BIN}" --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/life_step.frag.qsb contents/shaders/life_step.frag
 "${QSB_BIN}" --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/visualize.frag.qsb contents/shaders/visualize.frag
 "${QSB_BIN}" --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/population_probe.frag.qsb contents/shaders/population_probe.frag
+"${QSB_BIN}" --glsl "100 es,120,150" --hlsl 50 --msl 12 -o contents/shaders/tile_probe.frag.qsb contents/shaders/tile_probe.frag

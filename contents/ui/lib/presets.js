@@ -1,12 +1,15 @@
 .pragma library
 
 var defaults = {
-    enabled: true,
     preset: "Balanced",
     debugLogging: false,
     reseedRequest: "",
     clockMode: "Off",
     clockScale: 1.00,
+    clockHourFormat: "24h",
+    clockShowAmPm: true,
+    clockLeadingZero: false,
+    clockWhilePaused: true,
     cellSize: 10,
     tps: 3,
     stepsPerFrame: 1,
@@ -14,6 +17,8 @@ var defaults = {
     ruleString: "B3/S23",
     initialDensity: 0.50,
     autoInject: true,
+    injectionStyle: "Adaptive",
+    liveliness: 0.50,
     injectIntervalMs: 2000,
     minAliveRatio: 0.20,
     rarePatternChance: 0.10,
@@ -41,30 +46,40 @@ var defaults = {
     simDownscale: 1,
     syncFpsWithTps: true,
     maxFps: 60,
-    pauseWhenHidden: false
+    pauseWhenHidden: true,
+    chillMode: false,
+    chillBreathing: 0.25,
+    chillSoftFade: true,
+    chillGentleInjection: true,
+    chillDimEnabled: false,
+    chillDimLevel: 0.35,
+    chillDimStart: 21,
+    chillDimEnd: 6
 };
 
-var practicalPresetOrder = ["Quiet", "Balanced", "Lively", "Showcase"];
+var practicalPresetOrder = ["Zen", "Balanced", "Lively"];
 
 var practicalPresets = {
-    "Quiet": {
+    "Zen": {
         cellSize: 12,
-        tps: 1,
+        tps: 2,
         stepsPerFrame: 1,
         initialDensity: 0.30,
         injectIntervalMs: 3000,
         minAliveRatio: 0.18,
-        rarePatternChance: 0.06,
-        forcedInjectChance: 0.06,
-        simDownscale: 2,
+        rarePatternChance: 0.05,
+        forcedInjectChance: 0.05,
+        liveliness: 0.30,
+        chillMode: true,
+        simDownscale: 1,
         syncFpsWithTps: true,
         maxFps: 30,
         pauseWhenHidden: true,
-        photosensitiveSafe: true,
-        safeContrast: 0.72,
-        safeSaturation: 0.45,
+        photosensitiveSafe: false,
+        safeContrast: 0.78,
+        safeSaturation: 0.50,
         safeUltraLowTpsEnabled: false,
-        safeUltraLowTps: 0.70,
+        safeUltraLowTps: 0.99,
         clockScale: 0.75
     },
     "Balanced": {
@@ -72,6 +87,8 @@ var practicalPresets = {
         tps: 3,
         stepsPerFrame: 1,
         initialDensity: 0.50,
+        liveliness: 0.50,
+        chillMode: false,
         injectIntervalMs: 2000,
         minAliveRatio: 0.20,
         rarePatternChance: 0.10,
@@ -79,7 +96,7 @@ var practicalPresets = {
         simDownscale: 1,
         syncFpsWithTps: true,
         maxFps: 60,
-        pauseWhenHidden: false,
+        pauseWhenHidden: true,
         photosensitiveSafe: false,
         safeContrast: 0.78,
         safeSaturation: 0.50,
@@ -92,6 +109,8 @@ var practicalPresets = {
         tps: 6,
         stepsPerFrame: 1,
         initialDensity: 0.65,
+        liveliness: 0.75,
+        chillMode: false,
         injectIntervalMs: 1300,
         minAliveRatio: 0.22,
         rarePatternChance: 0.12,
@@ -99,32 +118,12 @@ var practicalPresets = {
         simDownscale: 1,
         syncFpsWithTps: true,
         maxFps: 75,
-        pauseWhenHidden: false,
+        pauseWhenHidden: true,
         photosensitiveSafe: false,
         safeContrast: 0.78,
         safeSaturation: 0.50,
         safeUltraLowTpsEnabled: false,
         safeUltraLowTps: 0.99,
         clockScale: 1.25
-    },
-    "Showcase": {
-        cellSize: 7,
-        tps: 9,
-        stepsPerFrame: 2,
-        initialDensity: 0.80,
-        injectIntervalMs: 900,
-        minAliveRatio: 0.25,
-        rarePatternChance: 0.16,
-        forcedInjectChance: 0.14,
-        simDownscale: 1,
-        syncFpsWithTps: true,
-        maxFps: 120,
-        pauseWhenHidden: false,
-        photosensitiveSafe: false,
-        safeContrast: 0.80,
-        safeSaturation: 0.55,
-        safeUltraLowTpsEnabled: false,
-        safeUltraLowTps: 0.99,
-        clockScale: 1.50
     }
 };

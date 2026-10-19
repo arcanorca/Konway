@@ -2,112 +2,74 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import "components"
 
 Kirigami.ScrollablePage {
     id: page
     property var cfg
-    readonly property real sliderWidth: Kirigami.Units.gridUnit * 11
-    readonly property int resetButtonWidth: Kirigami.Units.gridUnit * 11
 
     title: i18n("Safety")
 
     Kirigami.FormLayout {
         width: parent.width
 
-        QQC2.CheckBox {
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Visual comfort")
+        }
+
+        QQC2.Switch {
             Kirigami.FormData.label: i18n("Safe mode:")
-            text: i18n("Enable visual safety limits")
+            text: checked ? i18n("On") : i18n("Off")
             checked: cfg.cfg_photosensitiveSafe
             onToggled: cfg.cfg_photosensitiveSafe = checked
         }
 
-        RowLayout {
+        Hint {
+            text: i18n("Limits contrast and saturation to reduce eye strain and harsh flicker. Auto-injection also slows down while it is on.")
+        }
+
+        SliderRow {
             Kirigami.FormData.label: i18n("Contrast:")
-
-            QQC2.Slider {
-                id: safeContrastSlider
-                Layout.preferredWidth: page.sliderWidth
-                Layout.maximumWidth: page.sliderWidth
-                from: 0.40
-                to: 1.00
-                value: cfg.cfg_safeContrast
-                enabled: cfg.cfg_photosensitiveSafe
-                onMoved: cfg.cfg_safeContrast = value
-            }
-
-            QQC2.Label {
-                text: Number(safeContrastSlider.value).toFixed(2)
-                font.family: "monospace"
-            }
+            enabled: cfg.cfg_photosensitiveSafe
+            from: 0.40
+            to: 1.00
+            value: cfg.cfg_safeContrast
+            onValueEdited: function (v) { cfg.cfg_safeContrast = v; }
         }
 
-        RowLayout {
+        SliderRow {
             Kirigami.FormData.label: i18n("Saturation:")
-
-            QQC2.Slider {
-                id: safeSaturationSlider
-                Layout.preferredWidth: page.sliderWidth
-                Layout.maximumWidth: page.sliderWidth
-                from: 0.00
-                to: 1.00
-                value: cfg.cfg_safeSaturation
-                enabled: cfg.cfg_photosensitiveSafe
-                onMoved: cfg.cfg_safeSaturation = value
-            }
-
-            QQC2.Label {
-                text: Number(safeSaturationSlider.value).toFixed(2)
-                font.family: "monospace"
-            }
+            enabled: cfg.cfg_photosensitiveSafe
+            from: 0.00
+            to: 1.00
+            value: cfg.cfg_safeSaturation
+            onValueEdited: function (v) { cfg.cfg_safeSaturation = v; }
         }
 
-        RowLayout {
-            Kirigami.FormData.label: i18n("Optional speed limiter:")
-
-            QQC2.CheckBox {
-                text: i18n("Enable TPS multiplier limit")
-                checked: cfg.cfg_safeUltraLowTpsEnabled
-                enabled: cfg.cfg_photosensitiveSafe
-                onToggled: cfg.cfg_safeUltraLowTpsEnabled = checked
-            }
-        }
-
-        RowLayout {
-            Kirigami.FormData.label: i18n("TPS multiplier:")
-
-            QQC2.Slider {
-                id: ultraLowTpsSlider
-                Layout.preferredWidth: page.sliderWidth
-                Layout.maximumWidth: page.sliderWidth
-                from: 0.10
-                to: 0.99
-                stepSize: 0.01
-                value: cfg.cfg_safeUltraLowTps
-                enabled: cfg.cfg_photosensitiveSafe && cfg.cfg_safeUltraLowTpsEnabled
-                onMoved: cfg.cfg_safeUltraLowTps = value
-            }
-
-            QQC2.Label {
-                text: Number(ultraLowTpsSlider.value).toFixed(2) + "x"
-                font.family: "monospace"
-            }
-        }
-
-        Kirigami.InlineMessage {
+        Kirigami.Separator {
             Kirigami.FormData.isSection: true
-            Layout.fillWidth: true
-            type: Kirigami.MessageType.Warning
-            text: i18n("Safe mode limits contrast and saturation. Optional TPS limiter reduces motion rate.")
+            Kirigami.FormData.label: i18n("Motion")
         }
 
-        QQC2.Button {
-            Kirigami.FormData.label: i18n("Safety tab:")
-            text: i18n("Reset Safety Tab")
-            icon.name: "edit-undo"
-            Layout.preferredWidth: page.resetButtonWidth
-            Layout.minimumWidth: page.resetButtonWidth
-            Layout.maximumWidth: page.resetButtonWidth
-            onClicked: cfg.resetSafetyDefaults()
+        QQC2.Switch {
+            Kirigami.FormData.label: i18n("Speed limiter:")
+            enabled: cfg.cfg_photosensitiveSafe
+            text: checked ? i18n("On") : i18n("Off")
+            checked: cfg.cfg_safeUltraLowTpsEnabled
+            onToggled: cfg.cfg_safeUltraLowTpsEnabled = checked
         }
+
+        SliderRow {
+            Kirigami.FormData.label: i18n("Speed multiplier:")
+            enabled: cfg.cfg_photosensitiveSafe && cfg.cfg_safeUltraLowTpsEnabled
+            from: 0.10
+            to: 0.99
+            stepSize: 0.01
+            value: cfg.cfg_safeUltraLowTps
+            formatter: function (v) { return Number(v).toFixed(2) + "×"; }
+            onValueEdited: function (v) { cfg.cfg_safeUltraLowTps = v; }
+        }
+
     }
 }

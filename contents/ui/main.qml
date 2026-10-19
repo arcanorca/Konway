@@ -4,6 +4,9 @@ import QtQuick.Controls as QQC2
 import org.kde.plasma.plasmoid
 import "../patterns/patternData.js" as PatternData
 import "lib/mainConstants.js" as MainConstants
+import "lib/activityMap.js" as ActivityMap
+import "lib/chill.js" as Chill
+import "lib/clockFormat.js" as ClockFormat
 
 WallpaperItem {
     id: root
@@ -13,6 +16,7 @@ WallpaperItem {
     readonly property string builtinGosperRle: MainConstants.builtinGosperRle
     readonly property var clockGlyphs: MainConstants.clockGlyphs
     readonly property var miniClockGlyphs: MainConstants.miniClockGlyphs
+    readonly property var ampmGlyphs: MainConstants.ampmGlyphs
     readonly property var defaultCategoryWeights: MainConstants.defaultCategoryWeights
 
     property var patternCatalog: []
@@ -69,15 +73,18 @@ WallpaperItem {
     property string lastPreviewSeedRequest: ""
     property string lastReseedRequest: ""
 
-    property bool cfgEnabled: cfgBool("enabled", true)
-    property string cfgPreset: cfgString("preset", "Balanced")
     property bool cfgDebug: cfgBool("debugLogging", false)
     property string cfgReseedRequest: cfgString("reseedRequest", "")
     property string cfgClockMode: cfgString("clockMode", "Off")
     property real cfgClockScale: cfgReal("clockScale", 1.0, 0.35, 2.0)
+    property string cfgClockHourFormat: cfgString("clockHourFormat", "24h")
+    property bool cfgClockShowAmPm: cfgBool("clockShowAmPm", true)
+    property bool cfgClockLeadingZero: cfgBool("clockLeadingZero", false)
+    property bool cfgClockWhilePaused: cfgBool("clockWhilePaused", true)
+    property bool clockUse12h: cfgClockHourFormat === "12h"
 
     property int cfgCellSize: cfgInt("cellSize", 10, 2, 64)
-    property int cfgTps: cfgInt("tps", 3, 1, 240)
+    property int cfgTps: cfgInt("tps", 3, 1, 20)
     property int cfgStepsPerFrame: cfgInt("stepsPerFrame", 1, 1, 8)
     property bool cfgWrapEdges: cfgBool("wrapEdges", true)
     property string cfgRuleString: cfgString("ruleString", "B3/S23")
@@ -94,6 +101,8 @@ WallpaperItem {
     property real cfgMinAliveRatio: cfgReal("minAliveRatio", 0.20, 0.01, 0.95)
     property real cfgRarePatternChance: cfgReal("rarePatternChance", 0.10, 0.0, 1.0)
     property real cfgForcedInjectChance: cfgReal("forcedInjectChance", 0.10, 0.0, 1.0)
+    property string cfgInjectionStyle: cfgString("injectionStyle", "Adaptive")
+    property real cfgLiveliness: cfgReal("liveliness", 0.5, 0.0, 1.0)
 
     property string cfgInjectorMode: cfgString("injectorMode", "Mixed")
     property string cfgCategoryWeights: cfgString("categoryWeights", "{\"gliders\":1.1,\"spaceships\":1.0,\"methuselahs\":0.8,\"oscillators\":0.6,\"guns\":0.12,\"still_lifes\":0.25}")
@@ -122,7 +131,22 @@ WallpaperItem {
     property int cfgSimDownscale: cfgInt("simDownscale", 1, 1, 12)
     property bool cfgSyncFpsWithTps: cfgBool("syncFpsWithTps", true)
     property int cfgMaxFps: cfgInt("maxFps", 60, 10, 240)
-    property bool cfgPauseWhenHidden: cfgBool("pauseWhenHidden", false)
+    property bool cfgPauseWhenHidden: cfgBool("pauseWhenHidden", true)
+
+    property bool cfgChillMode: cfgBool("chillMode", false)
+    property real cfgChillBreathing: cfgReal("chillBreathing", 0.25, 0.0, 0.6)
+    property bool cfgChillSoftFade: cfgBool("chillSoftFade", true)
+    property bool cfgChillGentleInjection: cfgBool("chillGentleInjection", true)
+    property bool cfgChillDimEnabled: cfgBool("chillDimEnabled", false)
+    property real cfgChillDimLevel: cfgReal("chillDimLevel", 0.35, 0.05, 0.8)
+    property int cfgChillDimStart: cfgInt("chillDimStart", 21, 0, 23)
+    property int cfgChillDimEnd: cfgInt("chillDimEnd", 6, 0, 23)
+    property real chillTempoFactor: 1.0
+    property real chillDimAmount: 0.0
+    property real chillTempoActive: cfgChillMode ? chillTempoFactor : 1.0
+    property bool chillFadeActive: cfgChillMode && cfgChillSoftFade
+    property bool effectiveDyingFadeEnabled: cfgDyingFadeEnabled || chillFadeActive
+    property int effectiveDyingFadeTicks: chillFadeActive ? Math.max(cfgDyingFadeTicks, 4) : cfgDyingFadeTicks
 
     property int effectiveCellSize: cfgCellSize
     property real effectiveTps: cfgPhotoSafe
@@ -130,10 +154,10 @@ WallpaperItem {
             0.1,
             Math.min(
                 12.0,
-                cfgTps * (cfgSafeUltraLowTpsEnabled ? cfgSafeUltraLowTps : 1.0)
+                cfgTps * (cfgSafeUltraLowTpsEnabled ? cfgSafeUltraLowTps : 1.0) * chillTempoActive
             )
         )
-        : Math.max(0.1, cfgTps)
+        : Math.max(0.1, cfgTps * chillTempoActive)
     property int effectiveMaxFps: cfgMaxFps
     property int simCellBudget: 450000
     property int maxSafetyDownscale: 12
@@ -190,6 +214,24 @@ WallpaperItem {
     property int aliveRatioProbeRequestId: 0
     property real aliveRatioSyntheticMomentum: startupFixedDensity
     property int lastStampedCellCount: 0
+
+    // Adaptive injector: tile-level activity model fed by the GPU tile probe.
+    property int activityCols: ActivityMap.tileCountsFor(simGridWidth, simGridHeight).cols
+    property int activityRows: ActivityMap.tileCountsFor(simGridWidth, simGridHeight).rows
+    property var activityState: null
+    property bool tileProbeInFlight: false
+    property int tileProbeRequestId: 0
+    property int tileProbeFailureStreak: 0
+    property real tileProbeNonce: 0.0
+    property real activityMeanDensity: 0.0
+    property var activityInfo: ({ occupancy: 0, hotCoverage: 0, pressure: 0, stale: 0 })
+    property bool tileProbeHealthy: tileProbeFailureStreak < 5
+    property bool adaptiveWanted: cfgAutoInject && cfgInjectionStyle !== "Classic"
+    property bool adaptiveInjectionActive: adaptiveWanted && tileProbeHealthy
+    property bool classicInjectionActive: cfgAutoInject && !adaptiveInjectionActive
+    property real effectiveLiveliness: cfgPhotoSafe ? Math.min(cfgLiveliness, 0.45) : cfgLiveliness
+    property int adaptiveTickMs: Math.max(700, Math.min(4000, Math.round(6000 / Math.max(0.5, effectiveTps))))
+    property int tileProbeIntervalMs: Math.max(600, Math.min(3000, Math.round(2400 / Math.max(0.5, effectiveTps))))
 
     function cfgValue(name, fallback) {
         const value = configuration[name];
@@ -421,7 +463,7 @@ WallpaperItem {
     }
 
     function requestAliveRatioProbe(force) {
-        if (!simulationInitialized || !renderRunning) {
+        if (!simulationInitialized || !renderRunning || !classicInjectionActive) {
             return;
         }
         if (!aliveRatioProbeSupported) {
@@ -653,10 +695,14 @@ WallpaperItem {
 
     function clockNowSnapshot() {
         const now = new Date();
-        const hh = String(now.getHours()).padStart(2, "0");
-        const mm = String(now.getMinutes()).padStart(2, "0");
+        const formatted = ClockFormat.formatClock(now, {
+            hour12: clockUse12h,
+            showAmPm: cfgClockShowAmPm,
+            leadingZero: cfgClockLeadingZero
+        });
         return {
-            text: hh + ":" + mm,
+            text: formatted.text,
+            suffix: formatted.suffix,
             minuteToken: now.getHours() * 60 + now.getMinutes()
         };
     }
@@ -690,7 +736,7 @@ WallpaperItem {
         return Math.max(1.0, Math.min(1.38, 0.86 + s * 0.29));
     }
 
-    function buildClockCellsForText(text) {
+    function buildClockCellsForText(text, suffix) {
         if (!text || !text.length) {
             return null;
         }
@@ -733,7 +779,7 @@ WallpaperItem {
                 return 0;
             }
             const baseWidth = glyphPixelWidth(profile, glyph);
-            if (chars.length !== 5 || chars[2] !== ":" || chars[0] === undefined || chars[1] === undefined) {
+            if (chars.length < 4 || chars.indexOf(":") < 0) {
                 return baseWidth;
             }
             const refGlyph = glyphFor(profile, "0");
@@ -760,7 +806,61 @@ WallpaperItem {
             return Math.max(0, Math.floor((advance - base) * 0.5));
         }
 
+        // AM/PM is drawn at roughly half size, bottom-aligned after the digits.
+        const suffixChars = (suffix && suffix.length) ? suffix.split("") : [];
+
+        function suffixPitch(profile) {
+            return Math.max(1, Math.ceil(profile.pixelPitch / 2));
+        }
+
+        function suffixBlock(profile) {
+            return Math.max(1, Math.ceil(profile.pixelBlock / 2));
+        }
+
+        function suffixGlyphWidth(profile, glyph) {
+            return (glyph[0].length - 1) * suffixPitch(profile) + suffixBlock(profile);
+        }
+
+        function suffixGlyphHeight(profile, glyph) {
+            return (glyph.length - 1) * suffixPitch(profile) + suffixBlock(profile);
+        }
+
+        function suffixGap(profile) {
+            return profile.pixelPitch * 2 + profile.charSpacing;
+        }
+
+        function measureSuffix(profile) {
+            let w = 0;
+            let h = 0;
+            for (let i = 0; i < suffixChars.length; ++i) {
+                const glyph = ampmGlyphs[suffixChars[i]];
+                if (!glyph) {
+                    continue;
+                }
+                w += suffixGlyphWidth(profile, glyph);
+                if (i < suffixChars.length - 1) {
+                    w += suffixPitch(profile);
+                }
+                h = Math.max(h, suffixGlyphHeight(profile, glyph));
+            }
+            return { w: w, h: h };
+        }
+
         function measurePattern(profile) {
+            const digits = measureDigits(profile);
+            if (suffixChars.length === 0) {
+                return { w: digits.w, h: digits.h, digitsW: digits.w, digitsH: digits.h };
+            }
+            const tail = measureSuffix(profile);
+            return {
+                w: digits.w + suffixGap(profile) + tail.w,
+                h: Math.max(digits.h, tail.h),
+                digitsW: digits.w,
+                digitsH: digits.h
+            };
+        }
+
+        function measureDigits(profile) {
             let w = 0;
             let h = 0;
             for (let i = 0; i < chars.length; ++i) {
@@ -848,6 +948,37 @@ WallpaperItem {
             }
         }
 
+        if (suffixChars.length > 0) {
+            const sp = suffixPitch(profile);
+            const sb = suffixBlock(profile);
+            const tail = measureSuffix(profile);
+            let tailCursor = originX + measured.digitsW + suffixGap(profile);
+            const tailTop = originY + Math.max(0, measured.h - tail.h);
+
+            for (let si = 0; si < suffixChars.length; ++si) {
+                const glyph = ampmGlyphs[suffixChars[si]];
+                if (!glyph) {
+                    continue;
+                }
+                for (let gy = 0; gy < glyph.length; ++gy) {
+                    for (let gx = 0; gx < glyph[gy].length; ++gx) {
+                        if (glyph[gy][gx] !== "1") {
+                            continue;
+                        }
+                        for (let by = 0; by < sb; ++by) {
+                            for (let bx = 0; bx < sb; ++bx) {
+                                cells.push({
+                                    x: tailCursor + gx * sp + bx,
+                                    y: tailTop + gy * sp + by
+                                });
+                            }
+                        }
+                    }
+                }
+                tailCursor += suffixGlyphWidth(profile, glyph) + sp;
+            }
+        }
+
         const deduped = uniqueCells(cells);
         if (deduped.length === 0) {
             return null;
@@ -896,16 +1027,18 @@ WallpaperItem {
     }
 
     function refreshClock(forceInstant) {
-        if (!clockModeEnabled || !simulationInitialized || !renderRunning) {
+        if (!clockModeEnabled || !simulationInitialized || (!renderRunning && !cfgClockWhilePaused)) {
             return;
         }
+        // The transition animation is driven by simulation steps, so snap while paused.
+        forceInstant = forceInstant || !renderRunning;
 
         const snapshot = clockNowSnapshot();
         if (!forceInstant && snapshot.minuteToken === clockLastMinuteToken) {
             return;
         }
 
-        const pattern = buildClockCellsForText(snapshot.text);
+        const pattern = buildClockCellsForText(snapshot.text, snapshot.suffix);
         if (!pattern) {
             return;
         }
@@ -913,6 +1046,13 @@ WallpaperItem {
         if (scheduleClockPattern(pattern, forceInstant)) {
             clockLastMinuteToken = snapshot.minuteToken;
             clockLastText = snapshot.text;
+        }
+    }
+
+    function rebuildClockNow() {
+        if (clockModeEnabled && simulationInitialized) {
+            clearClockPatternFromSimulation();
+            refreshClock(true);
         }
     }
 
@@ -1649,16 +1789,6 @@ WallpaperItem {
         lastStampedCellCount = 0;
     }
 
-    function writeKillCells(killCells, allowClockRegion) {
-        const filtered = filterStampCells(killCells, allowClockRegion === true);
-        killCanvas.pendingCells = filtered;
-        killCanvas.requestPaint();
-        killTexture.scheduleUpdate();
-        killActive = filtered.length > 0;
-        killHoldSteps = killActive ? 1 : 0;
-        killClearPending = false;
-    }
-
     function clearKillTexture() {
         killCanvas.pendingCells = [];
         killCanvas.requestPaint();
@@ -1934,6 +2064,255 @@ WallpaperItem {
         }
     }
 
+    // ---- Adaptive injector -------------------------------------------------------------
+    // Simulation time in "reference seconds" (3 generations each), so behaviour is
+    // independent of the configured TPS.
+    function activityClockSec() {
+        return generation / 3.0;
+    }
+
+    function resetActivityModel() {
+        activityState = ActivityMap.createState(activityCols, activityRows);
+        tileProbeInFlight = false;
+        tileProbeRequestId += 1;
+        tileProbeTimeout.stop();
+        activityMeanDensity = 0.0;
+        activityInfo = ({ occupancy: 0, hotCoverage: 0, pressure: 0, stale: 0 });
+    }
+
+    function finishTileProbe(success, reason) {
+        tileProbeTimeout.stop();
+        tileProbeInFlight = false;
+        if (success) {
+            tileProbeFailureStreak = 0;
+            return;
+        }
+        tileProbeFailureStreak += 1;
+        if (tileProbeFailureStreak <= 3 || tileProbeFailureStreak % 10 === 0) {
+            logDebug("tile probe failed (" + reason + ") streak=" + tileProbeFailureStreak);
+        }
+        if (tileProbeFailureStreak === 5) {
+            logDebug("tile probe unavailable; falling back to classic injector");
+        }
+    }
+
+    function requestTileProbe() {
+        if (!simulationInitialized || !renderRunning || !adaptiveWanted || tileProbeInFlight) {
+            return;
+        }
+        if (!activityState || activityState.cols !== activityCols || activityState.rows !== activityRows) {
+            resetActivityModel();
+        }
+
+        tileProbeInFlight = true;
+        tileProbeRequestId += 1;
+        const requestId = tileProbeRequestId;
+        tileProbeNonce = Math.random() * 1000.0;
+        tileProbeTimeout.requestId = requestId;
+        tileProbeTimeout.restart();
+
+        tileProbeTexture.scheduleUpdate();
+        tileProbeTexture.grabToImage(function (result) {
+            if (requestId !== tileProbeRequestId || !tileProbeInFlight) {
+                return;
+            }
+            if (!result || !result.url) {
+                finishTileProbe(false, "no grab");
+                return;
+            }
+            // The grabbed image is decoded by an Image item and read back through a Canvas:
+            // QImage pixels are not reachable from QML directly.
+            tileProbeImage.source = result.url;
+        }, Qt.size(activityCols, activityRows));
+    }
+
+    function consumeTileProbe(pixels, imageW, imageH) {
+        if (!activityState || !pixels || imageW < 1 || imageH < 1) {
+            finishTileProbe(false, "empty image");
+            return;
+        }
+
+        const cols = activityCols;
+        const rows = activityRows;
+        if (activityState.cols !== cols || activityState.rows !== rows) {
+            finishTileProbe(false, "stale size");
+            return;
+        }
+
+        // Display scaling can resize the grab; every tile is read at its centre pixel.
+        const density = new Float32Array(cols * rows);
+        const change = new Float32Array(cols * rows);
+        let densitySum = 0.0;
+        for (let j = 0; j < rows; ++j) {
+            const py = Math.min(imageH - 1, Math.floor((j + 0.5) / rows * imageH));
+            for (let i = 0; i < cols; ++i) {
+                const px = Math.min(imageW - 1, Math.floor((i + 0.5) / cols * imageW));
+                const k = (py * imageW + px) * 4;
+                const d = pixels[k] / 255.0;
+                density[j * cols + i] = d;
+                change[j * cols + i] = pixels[k + 1] / 255.0;
+                densitySum += d;
+            }
+        }
+
+        ActivityMap.ingest(activityState, density, change, activityClockSec());
+        activityMeanDensity = densitySum / (cols * rows);
+        finishTileProbe(true, "");
+    }
+
+    function adaptiveContext() {
+        const clockRect = (clockModeEnabled && clockRegionValid)
+            ? {
+                x: clockRegionX,
+                y: clockRegionY,
+                w: clockRegionW,
+                h: clockRegionH,
+                pad: Math.max(2, clockBarrierPadding) + 2
+            }
+            : null;
+        const categories = parseEnabledCategories();
+        return {
+            nowSec: activityClockSec(),
+            liveliness: effectiveLiveliness,
+            chill: cfgChillMode && cfgChillGentleInjection,
+            gridW: simGridWidth,
+            gridH: simGridHeight,
+            wrap: cfgWrapEdges,
+            lifeRule: normalizeRule(cfgRuleString) === "B3/S23",
+            allowShips: categories.indexOf("gliders") >= 0 || categories.indexOf("spaceships") >= 0,
+            allowGrowth: categories.indexOf("methuselahs") >= 0,
+            clock: clockRect
+        };
+    }
+
+    function stampLoadedPatternAtCell(loaded, gx, gy, allowRandomTransform) {
+        let pattern = loaded;
+        if (allowRandomTransform) {
+            pattern = transformCells(
+                loaded,
+                Math.floor(Math.random() * 4),
+                Math.random() < 0.5,
+                Math.random() < 0.5
+            );
+        }
+
+        const originX = gx - Math.floor(pattern.bboxW * 0.5);
+        const originY = gy - Math.floor(pattern.bboxH * 0.5);
+        const stampCells = [];
+        for (let i = 0; i < pattern.cells.length; ++i) {
+            const mapped = projectCellToGrid(
+                originX + pattern.cells[i].x,
+                originY + pattern.cells[i].y,
+                "floor",
+                "discard"
+            );
+            if (mapped) {
+                stampCells.push(mapped);
+            }
+        }
+        if (!stampCells.length) {
+            return false;
+        }
+
+        // A half-clipped methuselah would just be debris: keep it whole or skip it.
+        const filtered = filterStampCells(stampCells, false);
+        if (filtered.length !== stampCells.length) {
+            return false;
+        }
+        return appendStampCells(filtered);
+    }
+
+    function injectGrowthPattern(center) {
+        const candidate = pickPatternCandidate("", "Methuselah");
+        if (!candidate) {
+            return false;
+        }
+        const loaded = loadRleCells(candidate);
+        if (!loaded) {
+            return false;
+        }
+        if (!cfgAllowLargePatterns && Math.max(loaded.bboxW, loaded.bboxH) > cfgMaxPatternSize) {
+            return false;
+        }
+        const ok = stampLoadedPatternAtCell(loaded, center.x, center.y, true);
+        if (ok) {
+            logDebug("adaptive bloom: " + candidate.id);
+        }
+        return ok;
+    }
+
+    function applyAdaptiveAction(action) {
+        if (!action) {
+            return false;
+        }
+
+        let ok = false;
+        let cells = action.cells;
+        if (action.kind === "bloom") {
+            ok = injectGrowthPattern(action.center);
+            if (!ok) {
+                cells = ActivityMap.buildSoup(action.center, 7, 0.42, Math.random);
+            }
+        }
+        if (!ok && cells && cells.length > 0) {
+            ok = appendStampCells(cells);
+        }
+        if (ok) {
+            inactivityCounter = 0;
+            stepsSincePatternInjection = 0;
+        }
+        logDebug("adaptive " + action.kind + " at tile " + (action.tile ? action.tile.i + "," + action.tile.j : "-")
+            + " pressure=" + Number(action.pressure).toFixed(2) + " ok=" + ok);
+        return ok;
+    }
+
+    function adaptiveInjectTick() {
+        if (!activityState || activityState.probes < 1) {
+            requestTileProbe();
+            return;
+        }
+
+        const ctx = adaptiveContext();
+        activityInfo = ActivityMap.describe(activityState, ctx);
+        const action = ActivityMap.decide(activityState, ctx, Math.random);
+        if (action) {
+            applyAdaptiveAction(action);
+        }
+    }
+
+    function runInjectorTick() {
+        if (!cfgAutoInject || !simulationInitialized) {
+            return;
+        }
+        if (adaptiveInjectionActive) {
+            adaptiveInjectTick();
+        } else {
+            maybeInjectEnergy();
+        }
+    }
+
+    // ---- Chill mode --------------------------------------------------------------------
+    function updateChillState() {
+        const now = new Date();
+
+        let tempo = 1.0;
+        if (cfgChillMode && cfgChillBreathing > 0.001) {
+            // 150 s breathing cycle, quantised so bindings do not churn every second.
+            tempo = Math.round(Chill.tempoMultiplier(now.getTime(), cfgChillBreathing, 150) * 50.0) / 50.0;
+        }
+        if (Math.abs(tempo - chillTempoFactor) > 0.001) {
+            chillTempoFactor = tempo;
+        }
+
+        let dim = 0.0;
+        if (cfgChillMode && cfgChillDimEnabled) {
+            dim = Chill.dimFraction(now.getHours(), now.getMinutes(), cfgChillDimStart, cfgChillDimEnd, 45) * cfgChillDimLevel;
+        }
+        if (Math.abs(dim - chillDimAmount) > 0.002) {
+            chillDimAmount = dim;
+        }
+    }
+
     function checkPreviewSeedRequest() {
         if (!renderRunning) {
             return;
@@ -2084,6 +2463,7 @@ WallpaperItem {
         aliveRatioSyntheticMomentum = clamp01(startupFixedDensity);
         lastStampedCellCount = 0;
         aliveRatioProbeTimeout.stop();
+        resetActivityModel();
         startupScatterDone = seedStartupScatter();
         startupGosperInjected = injectGuaranteedStartupGosper();
         const kickstartOk = seedGuaranteedKickstart();
@@ -2212,7 +2592,7 @@ WallpaperItem {
         property vector4d clockRect: Qt.vector4d(clockRegionX, clockRegionY, clockRegionW, clockRegionH)
         property real clockEnabled: clockModeEnabled && clockRegionValid ? 1.0 : 0.0
         property real clockPad: clockBarrierPadding
-        property real dyingDecayStep: 1.0 / Math.max(1, cfgDyingFadeTicks)
+        property real dyingDecayStep: 1.0 / Math.max(1, effectiveDyingFadeTicks)
         property real _padding0: 0.0
         property real _padding1: 0.0
 
@@ -2251,7 +2631,7 @@ WallpaperItem {
         property vector4d clockRect: Qt.vector4d(clockRegionX, clockRegionY, clockRegionW, clockRegionH)
         property real clockEnabled: clockModeEnabled && clockRegionValid ? 1.0 : 0.0
         property real clockPad: clockBarrierPadding
-        property real dyingDecayStep: 1.0 / Math.max(1, cfgDyingFadeTicks)
+        property real dyingDecayStep: 1.0 / Math.max(1, effectiveDyingFadeTicks)
         property real _padding0: 0.0
         property real _padding1: 0.0
 
@@ -2372,8 +2752,78 @@ WallpaperItem {
     }
 
     ShaderEffect {
+        id: tileProbePass
+        visible: false
+        x: 0
+        y: 0
+        width: Math.max(1, activityCols)
+        height: Math.max(1, activityRows)
+
+        property variant stateTexture: currentStateIsA ? stateATexture : stateBTexture
+        property variant prevStateTexture: currentStateIsA ? stateBTexture : stateATexture
+        property vector2d texSize: Qt.vector2d(simGridWidth, simGridHeight)
+        property vector2d tiles: Qt.vector2d(activityCols, activityRows)
+        property real nonce: tileProbeNonce
+        property real _padding0: 0.0
+
+        fragmentShader: Qt.resolvedUrl("../shaders/tile_probe.frag.qsb")
+    }
+
+    ShaderEffectSource {
+        id: tileProbeTexture
+        visible: false
+        // grabToImage() refuses items without a size.
+        width: Math.max(1, activityCols)
+        height: Math.max(1, activityRows)
+        sourceItem: tileProbePass
+        hideSource: true
+        live: false
+        recursive: false
+        smooth: false
+        textureSize: Qt.size(Math.max(1, activityCols), Math.max(1, activityRows))
+    }
+
+    Image {
+        id: tileProbeImage
+        visible: false
+        cache: false
+        asynchronous: false
+        onStatusChanged: {
+            if (status === Image.Ready) {
+                tileProbeCanvas.requestPaint();
+            } else if (status === Image.Error && root.tileProbeInFlight) {
+                root.finishTileProbe(false, "image error");
+            }
+        }
+    }
+
+    Canvas {
+        id: tileProbeCanvas
+        visible: false
+        width: Math.max(1, tileProbeImage.sourceSize.width)
+        height: Math.max(1, tileProbeImage.sourceSize.height)
+        renderTarget: Canvas.Image
+
+        onPaint: {
+            if (tileProbeImage.status !== Image.Ready || !root.tileProbeInFlight) {
+                return;
+            }
+            const w = tileProbeImage.sourceSize.width;
+            const h = tileProbeImage.sourceSize.height;
+            if (w < 1 || h < 1) {
+                root.finishTileProbe(false, "zero size");
+                return;
+            }
+            const ctx = getContext("2d");
+            ctx.clearRect(0, 0, w, h);
+            ctx.drawImage(tileProbeImage, 0, 0);
+            root.consumeTileProbe(ctx.getImageData(0, 0, w, h).data, w, h);
+        }
+    }
+
+    ShaderEffect {
         id: visualizePass
-        visible: renderRunning && simulationInitialized
+        visible: (renderRunning || (cfgClockWhilePaused && clockModeEnabled)) && simulationInitialized
         anchors.fill: parent
 
         property variant stateTexture: currentStateIsA ? stateATexture : stateBTexture
@@ -2384,7 +2834,7 @@ WallpaperItem {
         property real contrast: cfgPhotoSafe ? cfgSafeContrast : 1.0
         property real safeMode: cfgPhotoSafe ? 1.0 : 0.0
         property real safeSaturation: cfgSafeSaturation
-        property real dyingPower: cfgDyingFadeEnabled ? 0.5 : 0.0
+        property real dyingPower: effectiveDyingFadeEnabled ? 0.5 : 0.0
         property vector2d texSize: Qt.vector2d(simGridWidth, simGridHeight)
         property real cellShapeMode: cfgCellShape === "Go Board" ? 2.0 : (cfgCellShape === "Circle" ? 1.0 : 0.0)
         property real goBoardGrid: cfgCellShape === "Go Board" ? 1.0 : 0.0
@@ -2396,7 +2846,7 @@ WallpaperItem {
 
     Rectangle {
         id: clockFaceOverlay
-        visible: clockModeEnabled && clockRegionValid && renderRunning
+        visible: clockModeEnabled && clockRegionValid && (renderRunning || cfgClockWhilePaused)
         z: 14
         clip: true
         radius: 6
@@ -2433,7 +2883,7 @@ WallpaperItem {
 
     Rectangle {
         id: clockBoundaryOverlay
-        visible: clockModeEnabled && clockRegionValid && renderRunning
+        visible: clockModeEnabled && clockRegionValid && (renderRunning || cfgClockWhilePaused)
         z: 15
         color: "transparent"
         radius: 6
@@ -2446,6 +2896,16 @@ WallpaperItem {
 
         border.width: Math.max(1, clockBarrierThickness)
         border.color: root.renderPaletteActivity(0.72, 0.55)
+    }
+
+    Rectangle {
+        id: chillDimOverlay
+        anchors.fill: parent
+        z: 18
+        color: Qt.darker(cfgBackgroundColor, 3.0)
+        opacity: chillDimAmount
+        visible: chillDimAmount > 0.002 && renderRunning
+        Behavior on opacity { NumberAnimation { duration: 1500 } }
     }
 
     MouseArea {
@@ -2507,6 +2967,12 @@ WallpaperItem {
             + " | driverHz=" + effectiveStepRate
             + (cfgSyncFpsWithTps ? " (sync)" : " (manual)")
             + " | alive~" + Number(aliveRatioEstimate).toFixed(3)
+            + (adaptiveInjectionActive
+                ? " | adaptive occ=" + Number(activityInfo.occupancy).toFixed(2)
+                    + " hot=" + Number(activityInfo.hotCoverage).toFixed(2)
+                    + " P=" + Number(activityInfo.pressure).toFixed(2)
+                    + " stale=" + activityInfo.stale
+                : " | classic")
         color: "#d8e4de"
         font.pixelSize: 12
         z: 5
@@ -2543,14 +3009,46 @@ WallpaperItem {
         id: injectorTimer
         repeat: true
         running: renderRunning && cfgAutoInject
-        interval: effectiveInjectIntervalMs
-        onTriggered: root.maybeInjectEnergy()
+        interval: adaptiveInjectionActive ? adaptiveTickMs : effectiveInjectIntervalMs
+        onTriggered: root.runInjectorTick()
+    }
+
+    Timer {
+        id: tileProbeTimer
+        repeat: true
+        // While unhealthy the classic injector covers for us; keep retrying slowly.
+        running: renderRunning && simulationInitialized && adaptiveWanted
+        interval: tileProbeHealthy ? tileProbeIntervalMs : 10000
+        onTriggered: root.requestTileProbe()
+    }
+
+    Timer {
+        id: tileProbeTimeout
+        repeat: false
+        interval: 1500
+        property int requestId: 0
+        onTriggered: {
+            if (!tileProbeInFlight || requestId !== tileProbeRequestId) {
+                return;
+            }
+            tileProbeRequestId += 1;
+            root.finishTileProbe(false, "timeout");
+        }
+    }
+
+    Timer {
+        id: chillTimer
+        repeat: true
+        running: renderRunning && cfgChillMode
+        triggeredOnStart: true
+        interval: 1000
+        onTriggered: root.updateChillState()
     }
 
     Timer {
         id: aliveRatioProbeTimer
         repeat: true
-        running: renderRunning && simulationInitialized
+        running: renderRunning && simulationInitialized && classicInjectionActive
         interval: Math.max(700, Math.round(effectiveInjectIntervalMs * 0.5))
         onTriggered: root.requestAliveRatioProbe(false)
     }
@@ -2573,7 +3071,7 @@ WallpaperItem {
     Timer {
         id: clockTimer
         repeat: true
-        running: renderRunning && clockModeEnabled
+        running: clockModeEnabled && simulationInitialized && (renderRunning || cfgClockWhilePaused)
         interval: 1000
         onTriggered: root.refreshClock(false)
     }
@@ -2686,12 +3184,10 @@ WallpaperItem {
     onCfgDyingFadeTicksChanged: logDebug("dying fade ticks=" + cfgDyingFadeTicks)
     onCfgPreviewSeedRequestChanged: checkPreviewSeedRequest()
     onCfgReseedRequestChanged: checkReseedRequest()
-    onCfgClockScaleChanged: {
-        if (clockModeEnabled && simulationInitialized) {
-            clearClockPatternFromSimulation();
-            refreshClock(true);
-        }
-    }
+    onCfgClockScaleChanged: rebuildClockNow()
+    onCfgClockHourFormatChanged: rebuildClockNow()
+    onCfgClockShowAmPmChanged: rebuildClockNow()
+    onCfgClockLeadingZeroChanged: rebuildClockNow()
     onCfgClockModeChanged: {
         requestReset(clockModeEnabled ? "clock mode enabled" : "clock mode disabled");
     }
@@ -2715,8 +3211,23 @@ WallpaperItem {
             }
             checkConfigRequests();
             requestAliveRatioProbe(true);
+            requestTileProbe();
+            updateChillState();
         }
     }
+
+    onCfgChillModeChanged: updateChillState()
+    onCfgChillBreathingChanged: updateChillState()
+    onCfgChillDimEnabledChanged: updateChillState()
+    onCfgChillDimLevelChanged: updateChillState()
+    onCfgChillDimStartChanged: updateChillState()
+    onCfgChillDimEndChanged: updateChillState()
+    onCfgInjectionStyleChanged: {
+        tileProbeFailureStreak = 0;
+        resetActivityModel();
+    }
+    onActivityColsChanged: resetActivityModel()
+    onActivityRowsChanged: resetActivityModel()
 
     onCfgDebugChanged: console.log("[konway] debug logging " + (cfgDebug ? "enabled" : "disabled"))
 
@@ -2730,6 +3241,9 @@ WallpaperItem {
         stepTimer.running = false;
         injectorTimer.running = false;
         aliveRatioProbeTimer.running = false;
+        tileProbeTimer.running = false;
+        tileProbeTimeout.running = false;
+        chillTimer.running = false;
         clockTimer.running = false;
         resetTimer.running = false;
         aliveRatioProbeTimeout.running = false;

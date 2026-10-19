@@ -25,12 +25,12 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
 ## // HIGHLIGHTS
 - The simulation runs on the GPU, so even older PCs handle it well. There’s no per-cell CPU loop each frame, making Konway one of the most efficient live wallpaper plugins.
 - Designed with a calm default look, featuring popular palettes like
-  `Paper Light, Emerald, Amber, Monochrome, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine`
-- Optional resizable digital clock overlay mode (`Off` / `Hybrid Local Time`)
+  27 palettes, including `Paper Light, Emerald, Amber, Catppuccin, Dracula, Tokyo Night, Nord, Gruvbox, Everforest, Rose Pine, Kanagawa, One Dark, Solarized Dark, Monokai, Night Owl, Ayu Mirage, Synthwave 84, Material Ocean, Zenburn, Nixie, Oscilloscope, VFD Hi-Fi, Game Boy, Cyberpunk, Commodore 64`
+- Optional resizable digital clock overlay (24h / 12h with AM/PM), keeps ticking while paused (opt-out)
 - Mouse seeding: left click places a glider, left drag uses brush
 - Adjustable simulation rules. Supports arbitrary B/S (Birth/Survival) rule strings. Beyond standard Life (`B3/S23`), you can simulate other automata like HighLife (`B36/S23`) or Day & Night (`B3678/S34678`).
 - Full settings UI tabs:
-  `General, Simulation, Patterns, Appearance, Performance, Safety`
+  `General, Simulation, Activity, Appearance, Zen, Performance, Safety`
   
 ## // HOW IT WORKS
 
@@ -38,7 +38,10 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
 The simulation is stored in a texture (alive/dead cells).
 Every tick, a shader reads the previous state and writes the next state (ping-pong / feedback).The CPU mostly just schedules ticks. 
 
-### 2. Entropy Management (Auto-Injection)
+### 2. Entropy Management (Adaptive Auto-Injection)
+The default **Adaptive** injector reduces the grid on the GPU to a coarse tile map (alive + changed fraction per tile, `tile_probe.frag`), reads it back, and decides *what* to add *where*: growth seeds in empty areas, travelling gliders across voids, small soups, and gliders aimed at isolated leftovers (still lifes, blinkers) that have stopped changing. A **Liveliness** dial sets how busy the screen is kept. The previous timer-based behaviour remains available as **Classic**.
+
+Legacy description:
 Classic automata naturally decay into equilibrium (still lifes or oscillators) within a finite grid.
 * **Dynamic Seeding:** When entropy drops below a threshold, it randomly injects curated patterns (Gliders, Methuselahs, R-Pentominoes etc.).
 * **Purist Mode:** This behavior is fully configurable or can be disabled for a strictly deterministic run.
@@ -167,6 +170,18 @@ kpackagetool6 --type Plasma/Wallpaper --install dist/com.github.arcanorca.konway
 ```
 
 ## // CHANGELOG
+
+### 0.2.0
+
+- Three profiles: Zen, Balanced, Lively. Pause-when-hidden is now on by default; speed capped at 20.
+- 48 palettes (all SunReactor themes + extras), larger scrollable picker.
+- Clock keeps ticking while paused (opt-out).
+- Chill mode renamed **Zen**; evening dim follows the palette background.
+- New **Adaptive** injector: screen-aware, replaces blind random/center injection (Classic stays selectable). The old alive-ratio probe could never read pixels under Qt 6, so injection was effectively blind.
+- New **Zen** tab/preset: breathing tempo, soft long fades, gentle injections, optional evening dim.
+- Clock: 12-hour format with optional AM/PM and leading zero.
+- Settings UI redesign: icon tabs, profile cards, palette swatches, live preview, inline hints, shared Advanced switch, confirmed Reset All.
+- Dev: `tools/simulate_injection.js` (headless injector check), `tools/build_shaders.sh` builds `tile_probe`.
 
 ### 0.1.1
 
