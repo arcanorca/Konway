@@ -14,10 +14,12 @@ Konway is a lightweight, customizable cellular automaton engine integrated as a 
 <p align="center">
   <img src="assets/settings_general.png" width="32%" />
   <img src="assets/settings_simulation.png" width="32%" />
-  <img src="assets/settings_patterns.png" width="32%" />
+  <img src="assets/settings_activity.png" width="32%" />
   <br>
-  <img src="assets/settings_appearence.png" width="32%" />
+  <img src="assets/settings_appearance.png" width="32%" />
+  <img src="assets/settings_zen.png" width="32%" />
   <img src="assets/settings_performance.png" width="32%" />
+  <br>
   <img src="assets/settings_safety.png" width="32%" />
 </p>
 
