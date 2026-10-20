@@ -12,19 +12,19 @@ A lightweight Conway's Game of Life live wallpaper for KDE Plasma 6. The simulat
 
 <table>
   <tr>
-    <td width="50%" align="center"><img src="assets/settings_general.png" width="400"><br><b>General</b><br><sub>Profiles (Zen, Balanced, Lively), reseed, and the clock: 24h/12h, AM/PM, size.</sub></td>
-    <td width="50%" align="center"><img src="assets/settings_simulation.png" width="400"><br><b>Simulation</b><br><sub>Cell size, speed, wrap edges and startup seed intensity. Rules under Advanced.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_general.png" width="300"><br><small><b>General</b></small><br><sub>Profiles (Zen, Balanced, Lively), reseed, and the clock: 24h/12h, AM/PM, size.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_simulation.png" width="300"><br><small><b>Simulation</b></small><br><sub>Cell size, speed, wrap edges and startup seed intensity. Rules under Advanced.</sub></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="assets/settings_activity.png" width="400"><br><b>Activity</b><br><sub>Auto-injection style and liveliness, mouse drawing, allowed pattern categories.</sub></td>
-    <td width="50%" align="center"><img src="assets/settings_appearance.png" width="400"><br><b>Appearance</b><br><sub>48 palettes, cell style, fading trails and custom colors.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_activity.png" width="300"><br><small><b>Activity</b></small><br><sub>Auto-injection style and liveliness, mouse drawing, allowed pattern categories.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_appearance.png" width="300"><br><small><b>Appearance</b></small><br><sub>48 palettes, cell style, fading trails and custom colors.</sub></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="assets/settings_zen.png" width="400"><br><b>Zen</b><br><sub>Breathing tempo, soft trails, gentle injections and evening dim.</sub></td>
-    <td width="50%" align="center"><img src="assets/settings_performance.png" width="400"><br><b>Performance</b><br><sub>Simulation downscale, timing and pause when inactive.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_zen.png" width="300"><br><small><b>Zen</b></small><br><sub>Breathing tempo, soft trails, gentle injections and evening dim.</sub></td>
+    <td width="50%" align="center"><img src="assets/settings_performance.png" width="300"><br><small><b>Performance</b></small><br><sub>Simulation downscale, timing and pause when inactive.</sub></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="assets/settings_safety.png" width="400"><br><b>Safety</b><br><sub>Contrast and saturation limits and a speed limiter.</sub></td>
+    <td colspan="2" align="center"><img src="assets/settings_safety.png" width="300"><br><small><b>Safety</b></small><br><sub>Contrast and saturation limits and a speed limiter.</sub></td>
   </tr>
 </table>
 
